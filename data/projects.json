@@ -1,0 +1,251 @@
+{
+  "projects": [
+    {
+      "id": "kroma-cloud",
+      "slug": "kroma-cloud",
+      "title": "Kroma Cloud Monitoring Platform",
+      "client": "Kroma Systems Inc.",
+      "category": "SaaS Platform",
+      "year": "2025",
+      "role": "Lead Product Designer & Principal Full-Stack Engineer",
+      "shortDescription": "Next-generation telemetry and infrastructure orchestration platform with millisecond latency monitoring.",
+      "description": "An enterprise-scale distributed cloud monitor delivering real-time telemetry, visual node topology maps, and predictive capacity analytics for modern DevOps teams.",
+      "technologies": ["Next.js 15", "TypeScript", "Tailwind CSS", "C# / .NET 9", "PostgreSQL", "WebSockets", "D3.js"],
+      "cover": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
+      "gallery": [
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop"
+      ],
+      "liveUrl": "https://kromacloud.example.com",
+      "githubUrl": "https://github.com/techusar/kroma-cloud",
+      "featured": true,
+      "status": "live",
+      "isWebDev": true,
+      "challenge": "DevOps engineers faced fragmented tools requiring context-switching between log aggregators, AWS metrics, and APM tracing. The client needed a unified dashboard processing 120,000 events/second without browser lag.",
+      "approach": "Designed an ultra-dense, low-cognitive-load UI inspired by avionics instrumentation. Architected a multi-threaded web worker pipeline for real-time D3 rendering and high-frequency WebSocket streaming.",
+      "designDirection": "Monochrome slate canvas with purposeful semantic status indicators.",
+      "developmentDetails": "Built a C# .NET Core telemetry gateway connecting to TimescaleDB and Redis Streams with Next.js App Router.",
+      "metrics": [
+        { "label": "Event Throughput", "value": "120k /sec" },
+        { "label": "Dashboard Latency", "value": "< 18ms" },
+        { "label": "Incident Resolution", "value": "-42%" }
+      ],
+      "keyFeatures": [
+        "Interactive visual cluster topology explorer with live node health",
+        "Instant query engine with syntax highlighting and autocompletion",
+        "Custom alert escalation matrix with Slack and WhatsApp webhooks"
+      ]
+    },
+    {
+      "id": "vanguard-capital",
+      "slug": "vanguard-capital",
+      "title": "Vanguard Capital Wealth Portal",
+      "client": "Vanguard Asset Group",
+      "category": "Full-Stack",
+      "year": "2024",
+      "role": "Principal Full-Stack Developer & UI Designer",
+      "shortDescription": "High-frequency wealth portal with real-time portfolio rebalancing and algorithmic trade execution.",
+      "description": "An institutional investment platform managing multi-asset portfolios, private equity liquidity allocations, and regulatory tax compliance for family offices.",
+      "technologies": ["Next.js 15", "TypeScript", "Laravel / PHP", "PostgreSQL", "Tailwind CSS", "Recharts"],
+      "cover": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop",
+      "gallery": [
+        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format&fit=crop"
+      ],
+      "liveUrl": "https://vanguard-capital.example.com",
+      "githubUrl": "https://github.com/techusar/vanguard-portal",
+      "featured": true,
+      "status": "live",
+      "isWebDev": true,
+      "challenge": "Migrating legacy financial management spreadsheets into a browser-native portal while maintaining rigorous compliance and encryption.",
+      "approach": "Engineered a dual-ledger accounting database in PostgreSQL paired with a clean, trustworthy editorial interface.",
+      "designDirection": "High-end Swiss typography, muted sage and charcoal accents.",
+      "developmentDetails": "Hybrid backend with PHP 8.3 APIs and Next.js frontend with optimistic UI updates.",
+      "metrics": [
+        { "label": "Assets Managed", "value": "$840M" },
+        { "label": "Report Generation", "value": "1.2s" },
+        { "label": "Audit Compliance", "value": "Zero Errors" }
+      ],
+      "keyFeatures": [
+        "Multi-currency automated rebalancing simulation with slider controls",
+        "One-click PDF investor memorandum and tax statement generation",
+        "Bank-grade biometric WebAuthn multi-factor authentication"
+      ]
+    },
+    {
+      "id": "strata-design-system",
+      "slug": "strata-design-system",
+      "title": "Strata Design System & Web Components",
+      "client": "Internal Studio / Open Source",
+      "category": "Design System",
+      "year": "2025",
+      "role": "Creator, Design Systems Architect & Frontend Engineer",
+      "shortDescription": "Multi-brand headless token framework and React/Tailwind component ecosystem for engineering teams.",
+      "description": "A comprehensive multi-platform design architecture bridging Figma tokens with React, Vue, and Next.js implementations, boasting 90+ accessible components.",
+      "technologies": ["React 19", "TypeScript", "Tailwind CSS v4", "Radix UI", "Storybook"],
+      "cover": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1600&auto=format&fit=crop",
+      "gallery": [
+        "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=1600&auto=format&fit=crop"
+      ],
+      "liveUrl": "https://strata.techusar.dev",
+      "githubUrl": "https://github.com/techusar/strata-design-system",
+      "featured": true,
+      "status": "live",
+      "isWebDev": true,
+      "challenge": "Engineering teams suffered from inconsistent UX, redundant styling debt, and painful dark-mode regressions across releases.",
+      "approach": "Established a strict mathematical spacing scale, centralized token schema, and automated sync pipelines.",
+      "designDirection": "Subtle borders, micro-radii, restrained color accents.",
+      "developmentDetails": "Crafted with headless Radix primitives, Tailwind CSS v4 custom variants, and comprehensive TypeScript strict typing.",
+      "metrics": [
+        { "label": "UI Consistency", "value": "99.4%" },
+        { "label": "Sprint Velocity Gain", "value": "+35%" },
+        { "label": "Accessibility Score", "value": "100 / 100" }
+      ],
+      "keyFeatures": [
+        "Automated Figma-to-Code token synchronization",
+        "Accessible focus-rings and full keyboard navigation primitives",
+        "Dual-theme color engine calibrated for WCAG contrast"
+      ]
+    },
+    {
+      "id": "lumen-commerce",
+      "slug": "lumen-commerce",
+      "title": "Lumen Architectural Storefront",
+      "client": "Lumen Objects Copenhagen",
+      "category": "E-commerce",
+      "year": "2024",
+      "role": "Art Director & Full-Stack Developer",
+      "shortDescription": "Editorial e-commerce experience for an artisan architectural lighting atelier.",
+      "description": "A bespoke headless commerce experience blending Scandinavian editorial photography with an interactive 3D luminaire customizer and instant checkout.",
+      "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Shopify Storefront API", "Three.js", "Stripe"],
+      "cover": "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1600&auto=format&fit=crop",
+      "gallery": [
+        "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=1600&auto=format&fit=crop"
+      ],
+      "liveUrl": "https://lumenatelier.example.com",
+      "githubUrl": "https://github.com/techusar/lumen-store",
+      "featured": false,
+      "status": "live",
+      "isWebDev": true,
+      "challenge": "Showcasing intricate glass and brass finishes realistically without heavy page load penalties on mobile shoppers.",
+      "approach": "Crafted an editorial storytelling flow with progressive WebGL model streaming, ambient occlusion, and micro-interactions.",
+      "designDirection": "Warm alabaster surfaces, refined serif typography paired with technical monospace specifications.",
+      "developmentDetails": "Next.js dynamic caching, edge middleware geo-pricing, and seamless headless checkout.",
+      "metrics": [
+        { "label": "Checkout Conversion", "value": "+48%" },
+        { "label": "Session Duration", "value": "4m 12s" },
+        { "label": "Mobile Performance", "value": "99 / 100" }
+      ],
+      "keyFeatures": [
+        "Real-time material and finish switch with dynamic lighting reflection",
+        "Instant sub-second bag drawer with localized currency conversion",
+        "Architectural spec sheet PDF auto-generator for interior designers"
+      ]
+    },
+    {
+      "id": "synthetix-audio",
+      "slug": "synthetix-audio",
+      "title": "Synthetix Web Digital Audio Workstation",
+      "client": "Synthetix Soundworks",
+      "category": "Web App",
+      "year": "2024",
+      "role": "UI/UX Designer & Web Audio Engineer",
+      "shortDescription": "Browser-based generative synthesizer and multi-track sequencer with spatial audio effects.",
+      "description": "An in-browser digital audio workstation powered by the Web Audio API and WebAssembly, enabling modular patch synthesis and collaborative cloud sessions.",
+      "technologies": ["React", "TypeScript", "Web Audio API", "WebAssembly (Rust)", "Tailwind CSS", "Canvas API"],
+      "cover": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1600&auto=format&fit=crop",
+      "gallery": [
+        "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1600&auto=format&fit=crop"
+      ],
+      "liveUrl": "https://synthetix.techusar.dev",
+      "githubUrl": "https://github.com/techusar/synthetix-daw",
+      "featured": false,
+      "status": "live",
+      "isWebDev": true,
+      "challenge": "Achieving zero audio glitching and jitter-free canvas waveform visualization during complex playback.",
+      "approach": "Offloaded audio DSP algorithms into compiled Rust/Wasm modules executed on dedicated Web Audio Worklet threads.",
+      "designDirection": "Hardware rackmount aesthetic reimagined through modern flat minimalism.",
+      "developmentDetails": "Custom virtualized timeline component handling 32 simultaneous stereo tracks with lossless WAV export.",
+      "metrics": [
+        { "label": "DSP Latency", "value": "4.2ms" },
+        { "label": "Active Producers", "value": "45,000+" },
+        { "label": "Frame Rate", "value": "Locked 60 FPS" }
+      ],
+      "keyFeatures": [
+        "Modular cable patching matrix with drag-and-drop node connections",
+        "Polyphonic wavetable synthesis with custom harmonic shape drawing",
+        "Hardware MIDI keyboard auto-mapping via Web MIDI API"
+      ]
+    },
+    {
+      "id": "nexus-pos-enterprise",
+      "slug": "nexus-pos-enterprise",
+      "title": "Enterprise Cloud POS & Inventory System",
+      "client": "Retail Client Network",
+      "category": "Web App",
+      "year": "2025",
+      "role": "Full-Stack Web Architect",
+      "shortDescription": "High-throughput cloud point-of-sale with offline barcode scanning and multi-branch inventory synchronization.",
+      "description": "A mission-critical web application designed for multi-branch retail operations with offline SQLite sync, instant receipt printing, and live sales telemetry.",
+      "technologies": ["Next.js 15", "TypeScript", "Tailwind CSS", "IndexedDB", "PostgreSQL", "Node.js"],
+      "cover": "https://images.unsplash.com/photo-1556742049-0a67e55722c0?q=80&w=1600&auto=format&fit=crop",
+      "gallery": [
+        "https://images.unsplash.com/photo-1556742049-0a67e55722c0?q=80&w=1600&auto=format&fit=crop"
+      ],
+      "liveUrl": "https://nexuspos.techusar.dev",
+      "githubUrl": "https://github.com/techusar/nexus-pos",
+      "featured": false,
+      "status": "in_progress",
+      "isWebDev": true,
+      "challenge": "Ensuring zero cashier downtime during internet outages while reconciling branch inventories automatically upon reconnection.",
+      "approach": "Implemented local-first IndexedDB persistence with two-way conflict-free replicated data types (CRDTs).",
+      "designDirection": "High-contrast touch-optimized interface with prominent numerical keypad and tactile feedback.",
+      "developmentDetails": "Built using Next.js 15 App Router and service worker background sync API.",
+      "metrics": [
+        { "label": "Checkout Speed", "value": "1.8s / ticket" },
+        { "label": "Offline Uptime", "value": "100%" },
+        { "label": "Branch Sync", "value": "< 250ms" }
+      ],
+      "keyFeatures": [
+        "Instant thermal receipt generation and ESC/POS printer pairing",
+        "Multi-warehouse stock allocation and low-stock WhatsApp alerts",
+        "Role-based cashier permissions with shift reconciliation"
+      ]
+    },
+    {
+      "id": "upcoming-web-project",
+      "slug": "upcoming-web-project",
+      "title": "Next-Gen Web Application [Asset Pending]",
+      "client": "Confidential Client",
+      "category": "Full-Stack",
+      "year": "2025",
+      "role": "Full-Stack Developer",
+      "shortDescription": "Upcoming custom web application. Screenshot and full case study will be published once assets are uploaded.",
+      "description": "A tailored web application currently in active staging. All architecture modules, database migrations, and responsive interfaces are in final user testing.",
+      "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma"],
+      "cover": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
+      "gallery": [
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop"
+      ],
+      "liveUrl": "#",
+      "featured": false,
+      "status": "coming_soon",
+      "isWebDev": true,
+      "challenge": "Pending asset delivery from client.",
+      "approach": "Modular component architecture ready to ingest uploaded screenshots.",
+      "designDirection": "Clean minimal typography with dark mode support.",
+      "developmentDetails": "Ready to be linked with uploaded screenshots via the Admin Media Manager.",
+      "metrics": [
+        { "label": "Progress", "value": "85%" },
+        { "label": "Milestones", "value": "4/5 Ready" }
+      ],
+      "keyFeatures": [
+        "Asset slot configured for upcoming project delivery",
+        "Direct one-click image replacement in Admin panel"
+      ]
+    }
+  ]
+}

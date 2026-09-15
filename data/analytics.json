@@ -1,0 +1,69 @@
+{
+  "totalVisits": 1428,
+  "uniqueVisitors": 894,
+  "totalClicks": 3412,
+  "pageViews": {
+    "/": 542,
+    "/contact": 198,
+    "/ai-bot-development": 184,
+    "/web-development": 146,
+    "/templates": 210,
+    "/tools": 178,
+    "/projects": 115,
+    "/services": 98,
+    "/graphic-design": 82
+  },
+  "clicksByTarget": {
+    "whatsapp_click": 214,
+    "contact_form_submit": 48,
+    "template_download_click": 164,
+    "estimator_commission_click": 86,
+    "tool_use_click": 380,
+    "cv_download_click": 72,
+    "email_click": 65
+  },
+  "recentClicks": [
+    {
+      "id": "clk_01",
+      "element": "whatsapp_float",
+      "label": "Direct WhatsApp Inquiry (+923318917330)",
+      "page": "/contact",
+      "timestamp": "2026-09-12T01:15:00.000Z"
+    },
+    {
+      "id": "clk_02",
+      "element": "template_download",
+      "label": "Downloaded Free Starter Template",
+      "page": "/templates/free",
+      "timestamp": "2026-09-12T00:50:00.000Z"
+    },
+    {
+      "id": "clk_03",
+      "element": "contact_submit",
+      "label": "Form submission: Custom AI Bot Inquiry",
+      "page": "/ai-bot-development",
+      "timestamp": "2026-09-11T23:30:00.000Z"
+    },
+    {
+      "id": "clk_04",
+      "element": "estimator_cta",
+      "label": "Project Estimator: Commission Project",
+      "page": "/services",
+      "timestamp": "2026-09-11T21:10:00.000Z"
+    },
+    {
+      "id": "clk_05",
+      "element": "whatsapp_header",
+      "label": "Header WhatsApp Button clicked",
+      "page": "/",
+      "timestamp": "2026-09-11T19:40:00.000Z"
+    }
+  ],
+  "dailyStats": {
+    "2026-09-08": { "visits": 180, "unique": 112, "clicks": 420, "formsFilled": 4 },
+    "2026-09-09": { "visits": 210, "unique": 138, "clicks": 510, "formsFilled": 7 },
+    "2026-09-10": { "visits": 245, "unique": 160, "clicks": 590, "formsFilled": 9 },
+    "2026-09-11": { "visits": 310, "unique": 194, "clicks": 740, "formsFilled": 11 },
+    "2026-09-12": { "visits": 483, "unique": 290, "clicks": 1152, "formsFilled": 17 }
+  }
+}
