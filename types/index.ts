@@ -51,6 +51,7 @@ export interface Theme {
 export interface Project {
   id: string;
   slug: string;
+  projectNumber?: string;
   title: string;
   client: string;
   category: 'Web App' | 'SaaS Platform' | 'Design System' | 'E-commerce' | 'Full-Stack';

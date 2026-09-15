@@ -28,8 +28,40 @@ export const metadata: Metadata = {
 };
 
 export default function DesignPage() {
+  const designJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Graphic Design Showcase & Vector Systems — TechUsar',
+    description:
+      'Visual identity, Swiss typography posters, brand guidelines, and vector design systems created by Hafiz Muhammad Usman.',
+    url: 'https://techusar.dev/design',
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: designProjects.map((design, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'VisualArtwork',
+          name: design.title,
+          description: design.description,
+          artform: design.category,
+          creator: {
+            '@type': 'Person',
+            name: 'Hafiz Muhammad Usman',
+          },
+        },
+      })),
+    },
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-12">
+      {/* Schema.org Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(designJsonLd) }}
+      />
+
       {/* Header */}
       <div className="space-y-4 max-w-3xl">
         <div className="inline-flex items-center gap-1.5 text-xs font-mono text-purple-600 dark:text-purple-400 uppercase tracking-widest">

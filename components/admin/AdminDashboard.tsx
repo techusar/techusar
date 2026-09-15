@@ -37,6 +37,10 @@ import {
 import { FormSubmission } from '@/app/api/submissions/route';
 import { MediaManager } from './MediaManager';
 import { WebProjectsManager } from './WebProjectsManager';
+import { ThemesManager } from './ThemesManager';
+import { DesignsManager } from './DesignsManager';
+import { BlogsManager } from './BlogsManager';
+import { ShoppingBag, Palette, BookOpen } from 'lucide-react';
 
 interface AnalyticsData {
   totalVisits: number;
@@ -63,7 +67,9 @@ export function AdminDashboard() {
   const [loggingIn, setLoggingIn] = useState(false);
 
   // Tab State
-  const [activeTab, setActiveTab] = useState<'overview' | 'submissions' | 'media' | 'webprojects'>('overview');
+  const [activeTab, setActiveTab] = useState<
+    'overview' | 'submissions' | 'media' | 'webprojects' | 'themes' | 'designs' | 'blogs'
+  >('overview');
   const [currentLogo, setCurrentLogo] = useState<string | null>(null);
 
   // Dashboard state
@@ -463,7 +469,43 @@ export function AdminDashboard() {
           }`}
         >
           <Code className="w-4 h-4" />
-          <span>Web Development Projects</span>
+          <span>Web Dev Projects (50)</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('themes')}
+          className={`px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 ${
+            activeTab === 'themes'
+              ? 'bg-blue-600 text-white shadow-xs'
+              : 'bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'
+          }`}
+        >
+          <ShoppingBag className="w-4 h-4" />
+          <span>Themes &amp; Templates</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('designs')}
+          className={`px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 ${
+            activeTab === 'designs'
+              ? 'bg-blue-600 text-white shadow-xs'
+              : 'bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'
+          }`}
+        >
+          <Palette className="w-4 h-4" />
+          <span>Graphic Design Showcase</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('blogs')}
+          className={`px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 ${
+            activeTab === 'blogs'
+              ? 'bg-blue-600 text-white shadow-xs'
+              : 'bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'
+          }`}
+        >
+          <BookOpen className="w-4 h-4" />
+          <span>Blogs &amp; Articles</span>
         </button>
       </div>
 
@@ -704,6 +746,86 @@ export function AdminDashboard() {
               </div>
             </div>
           </div>
+
+          {/* Recent Live Clicks Stream (Real-Time Click Tracker) */}
+          <div className="p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/50 shadow-xs space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex items-center gap-2.5">
+                <div className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-neutral-950 dark:text-white flex items-center gap-2">
+                    <span>Live Real-Time Clicks Stream</span>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-semibold">
+                      data/analytics.json (Live)
+                    </span>
+                  </h3>
+                  <p className="text-xs text-neutral-500">
+                    Real-time log of buttons, links, tools, CV downloads &amp; WhatsApp interactions clicked by users.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={fetchData}
+                  className="px-3 py-1.5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-xs font-mono text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-1.5"
+                >
+                  <RefreshCw className="w-3.5 h-3.5" />
+                  <span>Refresh Real Clicks</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-2 max-h-96 overflow-y-auto pr-1">
+              {analytics?.recentClicks && analytics.recentClicks.length > 0 ? (
+                analytics.recentClicks.map((clk) => {
+                  const clickDate = new Date(clk.timestamp);
+                  const timeFormatted = clickDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                  const dateFormatted = clickDate.toLocaleDateString([], { month: 'short', day: 'numeric' });
+
+                  return (
+                    <div
+                      key={clk.id}
+                      className="p-3.5 rounded-xl bg-neutral-50/80 dark:bg-neutral-800/40 border border-neutral-200/60 dark:border-neutral-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs hover:border-neutral-300 dark:hover:border-neutral-600 transition-colors"
+                    >
+                      <div className="flex items-start sm:items-center gap-3 min-w-0">
+                        <div className="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 flex items-center justify-center shrink-0">
+                          <MousePointer className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="font-semibold text-neutral-900 dark:text-white truncate">
+                              {clk.label}
+                            </span>
+                            <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300">
+                              {clk.element}
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-neutral-500 font-mono mt-0.5 truncate">
+                            Page: <span className="text-blue-600 dark:text-blue-400">{clk.page}</span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 shrink-0 sm:text-right font-mono text-[11px] text-neutral-500">
+                        <span className="text-neutral-700 dark:text-neutral-300 font-medium">{dateFormatted}</span>
+                        <span>{timeFormatted}</span>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="p-8 text-center rounded-xl bg-neutral-50 dark:bg-neutral-800/30 border border-dashed border-neutral-200 dark:border-neutral-800 text-neutral-500 space-y-1">
+                  <MousePointer className="w-6 h-6 mx-auto text-neutral-400 opacity-60" />
+                  <p className="text-xs">No clicks recorded in this session yet.</p>
+                  <p className="text-[11px]">Clicking any button, tool, or template on the live site will append here instantly.</p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
 
@@ -915,6 +1037,15 @@ export function AdminDashboard() {
       {activeTab === 'webprojects' && (
         <WebProjectsManager onProjectsUpdated={fetchData} />
       )}
+
+      {/* TAB 5: THEMES & TEMPLATES MARKETPLACE */}
+      {activeTab === 'themes' && <ThemesManager />}
+
+      {/* TAB 6: GRAPHIC DESIGN SHOWCASE */}
+      {activeTab === 'designs' && <DesignsManager />}
+
+      {/* TAB 7: BLOGS & EDITORIAL GUIDES */}
+      {activeTab === 'blogs' && <BlogsManager />}
 
       {/* MANUAL LEAD MODAL */}
       {manualModalOpen && (

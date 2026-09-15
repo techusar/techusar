@@ -191,9 +191,9 @@
       "shortDescription": "High-throughput cloud point-of-sale with offline barcode scanning and multi-branch inventory synchronization.",
       "description": "A mission-critical web application designed for multi-branch retail operations with offline SQLite sync, instant receipt printing, and live sales telemetry.",
       "technologies": ["Next.js 15", "TypeScript", "Tailwind CSS", "IndexedDB", "PostgreSQL", "Node.js"],
-      "cover": "https://images.unsplash.com/photo-1556742049-0a67e55722c0?q=80&w=1600&auto=format&fit=crop",
+      "cover": "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=1600&auto=format&fit=crop",
       "gallery": [
-        "https://images.unsplash.com/photo-1556742049-0a67e55722c0?q=80&w=1600&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=1600&auto=format&fit=crop"
       ],
       "liveUrl": "https://nexuspos.techusar.dev",
       "githubUrl": "https://github.com/techusar/nexus-pos",

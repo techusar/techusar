@@ -5,16 +5,20 @@ import { notFound } from 'next/navigation';
 import { projects } from '@/data/projects';
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
 import { constructMetadata, SITE_URL } from '@/lib/seo';
+import { ProjectLiveViewer } from '@/components/projects/ProjectLiveViewer';
 import {
-  ArrowLeft,
   ExternalLink,
   Github,
   CheckCircle2,
   ArrowRight,
+  ArrowLeft,
   ShieldCheck,
   Cpu,
   Layers,
   Sparkles,
+  MessageCircle,
+  HelpCircle,
+  Code2,
 } from 'lucide-react';
 import type { Metadata } from 'next';
 
@@ -26,25 +30,12 @@ export async function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
 
-const descriptiveTitles: Record<string, string> = {
-  'kroma-cloud': 'Kroma Cloud — Enterprise Distributed Telemetry Platform | TechUsar Projects',
-  'strata-design-system':
-    'Strata Design System — Headless React & Tailwind Tokens | TechUsar Projects',
-  'vanguard-capital':
-    'Vanguard Capital — Institutional Wealth Management Portal | TechUsar Projects',
-  'synthetix-audio':
-    'Synthetix Web DAW — Browser Audio Synthesis & Sequencer | TechUsar Projects',
-  'lumen-commerce':
-    'Lumen Atelier — Luxury Architectural Lighting E-commerce | TechUsar Projects',
-};
-
 export async function generateMetadata({ params }: CaseStudyProps): Promise<Metadata> {
   const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);
   if (!project) return { title: 'Project Not Found — TechUsar' };
 
-  const title =
-    descriptiveTitles[project.slug] || `${project.title} — Full-Stack Case Study | TechUsar`;
+  const title = `${project.title} — Web Development & UI Case Study | TechUsar`;
 
   return constructMetadata({
     title,
@@ -54,10 +45,12 @@ export async function generateMetadata({ params }: CaseStudyProps): Promise<Meta
       project.title,
       project.category,
       project.client,
+      project.liveUrl || '',
       ...project.technologies,
-      'TechUsar case study',
-      'Full stack web application',
-      'Web development project',
+      'TechUsar web development project',
+      'Free Next.js template download',
+      'Full stack portfolio Pakistan',
+      'Modern web application demo',
     ],
     ogImage: project.cover,
   });
@@ -65,19 +58,37 @@ export async function generateMetadata({ params }: CaseStudyProps): Promise<Meta
 
 export default async function ProjectDetailPage({ params }: CaseStudyProps) {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const projectIndex = projects.findIndex((p) => p.slug === slug);
+  const project = projects[projectIndex];
 
   if (!project) {
     notFound();
   }
 
+  const prevProject = projectIndex > 0 ? projects[projectIndex - 1] : projects[projects.length - 1];
+  const nextProject = projectIndex < projects.length - 1 ? projects[projectIndex + 1] : projects[0];
+
+  const whatsappMessage = encodeURIComponent(
+    `Hello Hafiz Muhammad Usman (TechUsar), I would like to download the free template and source code for "${project.title}" (Live: ${project.liveUrl}). Please share the repository files.`
+  );
+  const whatsappUrl = `https://wa.me/923318917330?text=${whatsappMessage}`;
+
   const creativeWorkSchema = {
     '@context': 'https://schema.org',
-    '@type': 'CreativeWork',
+    '@type': 'WebApplication',
     name: project.title,
-    headline: descriptiveTitles[project.slug] || project.title,
+    headline: project.title,
     description: project.description,
     image: project.cover,
+    url: `${SITE_URL}/projects/${project.slug}`,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'All',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      description: 'Free project template download available on WhatsApp inquiry',
+    },
     creator: {
       '@type': 'Person',
       name: 'Hafiz Muhammad Usman',
@@ -88,10 +99,26 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
       name: 'TechUsar',
       url: SITE_URL,
     },
-    url: `${SITE_URL}/projects/${project.slug}`,
   };
 
-  const otherProjects = projects.filter((p) => p.slug !== project.slug).slice(0, 2);
+  const projectFaqs = [
+    {
+      q: `Can I get the source code and download the free template for ${project.title}?`,
+      a: `Yes! TechUsar provides free template files and source code access for clients and developers. Simply click the "Download Free Template" button to contact Hafiz Muhammad Usman on WhatsApp directly for the repository ZIP or GitHub link.`,
+    },
+    {
+      q: `Which modern technologies power this web application?`,
+      a: `This project is built using ${project.technologies.join(', ')} with high-performance responsive styling, accessible semantic markup, and optimized Core Web Vitals.`,
+    },
+    {
+      q: `Can TechUsar customize this template or build a custom web app for my business?`,
+      a: `Yes. TechUsar specializes in bespoke full-stack web applications, business automation, and UI/UX design. You can commission a customized solution tailored specifically to your company requirements.`,
+    },
+  ];
+
+  const otherProjects = projects
+    .filter((p) => p.slug !== project.slug)
+    .slice(0, 3);
 
   return (
     <article className="w-full py-8 sm:py-12 bg-white dark:bg-[#050508]">
@@ -101,6 +128,7 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Breadcrumb Navigation */}
         <Breadcrumbs
           items={[
             { label: 'Projects', href: '/projects' },
@@ -111,13 +139,18 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
         {/* Hero Meta & Title */}
         <header className="space-y-6">
           <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
-            <span className="px-2.5 py-1 rounded-md bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+            {project.projectNumber && (
+              <span className="px-2.5 py-1 rounded-md bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-bold">
+                #{project.projectNumber}
+              </span>
+            )}
+            <span className="px-2.5 py-1 rounded-md bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-500/20 font-medium">
               {project.category.toUpperCase()}
             </span>
             <span className="text-neutral-400 dark:text-neutral-600">•</span>
             <span className="text-neutral-600 dark:text-neutral-400">Client: {project.client}</span>
             <span className="text-neutral-400 dark:text-neutral-600">•</span>
-            <span className="text-neutral-600 dark:text-neutral-400">Year: {project.year}</span>
+            <span className="text-neutral-600 dark:text-neutral-400">Release: {project.year}</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-neutral-950 dark:text-white leading-[1.15]">
@@ -128,7 +161,7 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
             {project.shortDescription}
           </p>
 
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="flex flex-wrap items-center gap-3 pt-2">
             {project.liveUrl && (
               <a
                 href={project.liveUrl}
@@ -136,35 +169,30 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors shadow-xs"
               >
-                <span>Launch Live System</span>
+                <span>Launch Live Web App</span>
                 <ExternalLink className="w-4 h-4" />
               </a>
             )}
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-xl text-sm font-medium border border-neutral-200 dark:border-neutral-800 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors"
-              >
-                <Github className="w-4 h-4" />
-                <span>View Source Code</span>
-              </a>
-            )}
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition-colors shadow-xs"
+            >
+              <MessageCircle className="w-4 h-4" />
+              <span>Download Free Template (WhatsApp)</span>
+            </a>
           </div>
         </header>
 
-        {/* Featured Cover Display */}
-        <div className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
-          <Image
-            src={project.cover}
-            alt={`${project.title} interface showcase`}
-            fill
-            priority
-            className="object-cover"
-            referrerPolicy="no-referrer"
+        {/* Live Interactive Viewer / Preview Container */}
+        <section className="space-y-3">
+          <ProjectLiveViewer
+            title={project.title}
+            liveUrl={project.liveUrl}
+            coverImage={project.cover}
           />
-        </div>
+        </section>
 
         {/* Project Metrics Callout */}
         {project.metrics && project.metrics.length > 0 && (
@@ -182,13 +210,13 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
           </section>
         )}
 
-        {/* Deep Dive Narrative */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 pt-6">
+        {/* Deep Dive Narrative & Specs */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 pt-4">
           {/* Main Editorial Case Study */}
           <div className="lg:col-span-2 space-y-10">
             <section className="space-y-3">
               <h2 className="text-2xl font-bold tracking-tight text-neutral-950 dark:text-white">
-                Project Overview &amp; Background
+                Project Overview &amp; Architecture
               </h2>
               <p className="text-base text-neutral-700 dark:text-neutral-300 leading-relaxed">
                 {project.description}
@@ -198,7 +226,7 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
             {project.challenge && (
               <section className="space-y-3">
                 <h2 className="text-2xl font-bold tracking-tight text-neutral-950 dark:text-white">
-                  The Technical Challenge
+                  The Technical Challenge &amp; Problem Scope
                 </h2>
                 <p className="text-base text-neutral-700 dark:text-neutral-300 leading-relaxed">
                   {project.challenge}
@@ -225,7 +253,7 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
             {project.developmentDetails && (
               <section className="space-y-3">
                 <h2 className="text-2xl font-bold tracking-tight text-neutral-950 dark:text-white">
-                  Full-Stack Engineering &amp; Architecture
+                  Full-Stack Implementation &amp; Performance
                 </h2>
                 <p className="text-base text-neutral-700 dark:text-neutral-300 leading-relaxed">
                   {project.developmentDetails}
@@ -234,10 +262,11 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
             )}
 
             {/* Key Features List */}
-            {project.keyFeatures && (
+            {project.keyFeatures && project.keyFeatures.length > 0 && (
               <section className="space-y-4">
-                <h2 className="text-2xl font-bold tracking-tight text-neutral-950 dark:text-white">
-                  Core Architectural Capabilities
+                <h2 className="text-2xl font-bold tracking-tight text-neutral-950 dark:text-white flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-blue-500" />
+                  <span>Key Features &amp; Functional Highlights</span>
                 </h2>
                 <div className="space-y-2.5">
                   {project.keyFeatures.map((feat, idx) => (
@@ -255,30 +284,28 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
               </section>
             )}
 
-            {/* Gallery Screenshots */}
-            {project.gallery && project.gallery.length > 1 && (
-              <section className="space-y-4">
-                <h2 className="text-2xl font-bold tracking-tight text-neutral-950 dark:text-white">
-                  Interface Screenshots &amp; Component Details
-                </h2>
-                <div className="grid grid-cols-1 gap-4">
-                  {project.gallery.slice(1).map((imgUrl, i) => (
-                    <div
-                      key={i}
-                      className="relative aspect-[16/10] rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900"
-                    >
-                      <Image
-                        src={imgUrl}
-                        alt={`${project.title} screenshot ${i + 2}`}
-                        fill
-                        className="object-cover"
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
+            {/* Project FAQs for SEO */}
+            <section className="space-y-4 pt-4 border-t border-neutral-200 dark:border-neutral-800">
+              <h2 className="text-2xl font-bold tracking-tight text-neutral-950 dark:text-white flex items-center gap-2">
+                <HelpCircle className="w-5 h-5 text-purple-500" />
+                <span>Frequently Asked Questions</span>
+              </h2>
+              <div className="space-y-3">
+                {projectFaqs.map((faq, idx) => (
+                  <div
+                    key={idx}
+                    className="p-5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 space-y-2"
+                  >
+                    <h3 className="font-semibold text-neutral-950 dark:text-white text-sm sm:text-base">
+                      {faq.q}
+                    </h3>
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                      {faq.a}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
 
           {/* Sticky Technical Sidebar */}
@@ -304,9 +331,18 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
                 </div>
 
                 <div>
-                  <div className="text-neutral-500">RESPONSIVE DESIGN</div>
-                  <div className="font-medium text-neutral-900 dark:text-white mt-0.5">
-                    100% Mobile, Tablet &amp; 4K Desktop Tested
+                  <div className="text-neutral-500">LIVE DEMO URL</div>
+                  <div className="font-medium text-blue-600 dark:text-blue-400 mt-0.5 truncate">
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                      {project.liveUrl}
+                    </a>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-neutral-500">FREE TEMPLATE</div>
+                  <div className="font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    Available via WhatsApp Request
                   </div>
                 </div>
               </div>
@@ -325,12 +361,21 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-neutral-200 dark:border-neutral-800">
+              <div className="pt-4 border-t border-neutral-200 dark:border-neutral-800 space-y-2">
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition-colors shadow-xs"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Download Free Template</span>
+                </a>
                 <Link
                   href="/contact"
                   className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
                 >
-                  <span>Commission Similar System</span>
+                  <span>Commission Custom Project</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -338,7 +383,7 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
 
             {/* Related Service Links */}
             <div className="p-5 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 space-y-3">
-              <div className="text-xs font-mono text-neutral-500">RELATED SERVICES</div>
+              <div className="text-xs font-mono text-neutral-500">ALL SERVICES</div>
               <ul className="space-y-2 text-xs font-medium">
                 <li>
                   <Link
@@ -351,19 +396,19 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
                 </li>
                 <li>
                   <Link
-                    href="/ui-ux-design"
+                    href="/tools"
                     className="text-blue-600 dark:text-blue-400 hover:underline flex items-center justify-between"
                   >
-                    <span>UI/UX Design Systems</span>
+                    <span>Developer &amp; Business Tools</span>
                     <ArrowRight className="w-3 h-3" />
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/web-design"
+                    href="/ui-ux-design"
                     className="text-blue-600 dark:text-blue-400 hover:underline flex items-center justify-between"
                   >
-                    <span>Bespoke Web Design</span>
+                    <span>UI/UX Design Systems</span>
                     <ArrowRight className="w-3 h-3" />
                   </Link>
                 </li>
@@ -372,29 +417,60 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
           </aside>
         </div>
 
-        {/* Other Projects Section */}
-        <section className="pt-10 border-t border-neutral-200 dark:border-neutral-800 space-y-6">
+        {/* Project Pagination (Previous / Next) */}
+        <div className="pt-8 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between gap-4">
+          <Link
+            href={`/projects/${prevProject.slug}`}
+            className="group flex items-center gap-3 p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-blue-500 transition-colors max-w-[45%]"
+          >
+            <ArrowLeft className="w-5 h-5 text-neutral-400 group-hover:text-blue-500 group-hover:-translate-x-1 transition-all" />
+            <div className="text-left truncate">
+              <div className="text-[11px] font-mono text-neutral-500">PREVIOUS PROJECT</div>
+              <div className="text-xs sm:text-sm font-bold text-neutral-950 dark:text-white truncate">
+                {prevProject.title}
+              </div>
+            </div>
+          </Link>
+
+          <Link
+            href={`/projects/${nextProject.slug}`}
+            className="group flex items-center justify-end gap-3 p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-blue-500 transition-colors max-w-[45%] text-right"
+          >
+            <div className="truncate">
+              <div className="text-[11px] font-mono text-neutral-500">NEXT PROJECT</div>
+              <div className="text-xs sm:text-sm font-bold text-neutral-950 dark:text-white truncate">
+                {nextProject.title}
+              </div>
+            </div>
+            <ArrowRight className="w-5 h-5 text-neutral-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" />
+          </Link>
+        </div>
+
+        {/* More Case Studies Grid */}
+        <section className="pt-6 space-y-6">
           <h2 className="text-2xl font-bold tracking-tight text-neutral-950 dark:text-white">
-            Explore More Case Studies
+            Explore More Web Development Projects
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {otherProjects.map((op) => (
               <Link
                 key={op.slug}
                 href={`/projects/${op.slug}`}
-                className="group p-5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-blue-500 dark:hover:border-blue-500 transition-colors flex flex-col justify-between"
+                className="group p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-blue-500 dark:hover:border-blue-500 transition-colors flex flex-col justify-between"
               >
                 <div className="space-y-2">
-                  <div className="text-xs font-mono text-neutral-500">{op.category}</div>
-                  <div className="font-bold text-lg text-neutral-950 dark:text-white group-hover:text-blue-600 transition-colors">
+                  <div className="text-xs font-mono text-blue-600 dark:text-blue-400 font-semibold">
+                    #{op.projectNumber || 'WEB'} • {op.category}
+                  </div>
+                  <div className="font-bold text-sm text-neutral-950 dark:text-white group-hover:text-blue-600 transition-colors line-clamp-1">
                     {op.title}
                   </div>
-                  <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2">
+                  <p className="text-xs text-neutral-600 dark:text-neutral-400 line-clamp-2">
                     {op.shortDescription}
                   </p>
                 </div>
                 <div className="pt-3 text-xs font-semibold text-blue-600 dark:text-blue-400 inline-flex items-center gap-1">
-                  <span>View Case Study</span>
+                  <span>Open Case Study</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>

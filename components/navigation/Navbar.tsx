@@ -23,6 +23,14 @@ import {
   User,
   Mail,
   MessageSquare,
+  FileJson,
+  Binary,
+  Box,
+  KeyRound,
+  Receipt,
+  Percent,
+  Calculator,
+  Clock,
 } from 'lucide-react';
 
 interface NavItem {
@@ -38,7 +46,10 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
+  const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false);
+  const [mobileToolsExpanded, setMobileToolsExpanded] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const toolsDropdownRef = useRef<HTMLDivElement>(null);
 
   // Close menus on route change
   const [prevPathname, setPrevPathname] = useState(pathname);
@@ -46,6 +57,7 @@ export function Navbar() {
     setPrevPathname(pathname);
     setMobileMenuOpen(false);
     setMoreDropdownOpen(false);
+    setToolsDropdownOpen(false);
   }
 
   // Scroll detection for subtle backdrop styling
@@ -81,24 +93,83 @@ export function Navbar() {
       if (e.key === 'Escape') {
         setMobileMenuOpen(false);
         setMoreDropdownOpen(false);
+        setToolsDropdownOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Outside click listener for the dropdown
+  // Outside click listener for the dropdowns
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setMoreDropdownOpen(false);
       }
+      if (toolsDropdownRef.current && !toolsDropdownRef.current.contains(e.target as Node)) {
+        setToolsDropdownOpen(false);
+      }
     };
-    if (moreDropdownOpen) {
+    if (moreDropdownOpen || toolsDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [moreDropdownOpen]);
+  }, [moreDropdownOpen, toolsDropdownOpen]);
+
+  // Individual tool items categorized
+  const developerTools = [
+    {
+      label: 'JSON Formatter',
+      href: '/tools/json-formatter',
+      description: 'Prettify, validate & minify JSON payloads',
+      icon: FileJson,
+    },
+    {
+      label: 'Base64 Codec',
+      href: '/tools/base64-codec',
+      description: 'Instant UTF-8 string encoding & decoding',
+      icon: Binary,
+    },
+    {
+      label: 'Box Shadow Generator',
+      href: '/tools/box-shadow-generator',
+      description: 'Visual multi-layer CSS elevation studio',
+      icon: Box,
+    },
+    {
+      label: 'UUID v4 Generator',
+      href: '/tools/uuid-generator',
+      description: 'Cryptographically random GUID generation',
+      icon: KeyRound,
+    },
+  ];
+
+  const businessTools = [
+    {
+      label: 'Invoice Generator',
+      href: '/tools/invoice-generator',
+      description: 'Professional client invoice generator with PDF export',
+      icon: Receipt,
+    },
+    {
+      label: 'Profit Margin Calculator',
+      href: '/tools/profit-margin-calculator',
+      description: 'Gross margin, markup & profit metrics',
+      icon: Percent,
+    },
+    {
+      label: 'EMI Loan Calculator',
+      href: '/tools/emi-loan-calculator',
+      description: 'Monthly installment & amortization analyzer',
+      icon: Calculator,
+    },
+    {
+      label: 'Hourly Rate Calculator',
+      href: '/tools/hourly-rate-calculator',
+      description: 'Freelance rate & billing target analyzer',
+      icon: Clock,
+    },
+  ];
 
   // Primary desktop navigation tabs
   const primaryLinks: NavItem[] = [
@@ -113,12 +184,6 @@ export function Navbar() {
       href: '/themes',
       description: 'Production-ready web templates & components',
       icon: ShoppingBag,
-    },
-    {
-      label: 'Tools',
-      href: '/tools',
-      description: 'Developer & accounting utilities suite',
-      icon: Wrench,
     },
     {
       label: 'CV & Resume',
@@ -168,7 +233,35 @@ export function Navbar() {
     },
   ];
 
-  const allDrawerLinks = [...primaryLinks, ...secondaryLinks];
+  const allDrawerLinks = [
+    {
+      label: 'Work',
+      href: '/work',
+      description: 'Selected client projects & open-source software',
+      icon: Layers,
+    },
+    {
+      label: 'Themes',
+      href: '/themes',
+      description: 'Production-ready web templates & components',
+      icon: ShoppingBag,
+    },
+    {
+      label: 'CV & Resume',
+      href: '/cv',
+      description: 'Interactive resume & multi-template PDF engine',
+      icon: FileText,
+    },
+    {
+      label: 'Services',
+      href: '/services',
+      description: 'Architectural consulting & full-stack development',
+      icon: Code2,
+    },
+    ...secondaryLinks,
+  ];
+
+  const isToolsActive = pathname.startsWith('/tools');
 
   const isMoreActive = secondaryLinks.some(
     (link) => pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href))
@@ -196,7 +289,143 @@ export function Navbar() {
             aria-label="Primary Navigation"
             className="hidden lg:flex items-center gap-0.5 xl:gap-1 p-1 rounded-full bg-neutral-100/80 dark:bg-neutral-900/80 border border-neutral-200/70 dark:border-neutral-800/70 backdrop-blur-md"
           >
-            {primaryLinks.map((link) => {
+            {/* Primary links (Work, Themes) */}
+            {primaryLinks.slice(0, 2).map((link) => {
+              const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  id={`nav-link-${link.label.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-150 whitespace-nowrap ${
+                    isActive
+                      ? 'bg-white dark:bg-neutral-800 text-neutral-950 dark:text-white shadow-xs font-semibold'
+                      : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white hover:bg-neutral-200/40 dark:hover:bg-neutral-800/40'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+
+            {/* Dedicated "Tools" Dropdown */}
+            <div className="relative" ref={toolsDropdownRef}>
+              <button
+                type="button"
+                id="nav-tools-dropdown-btn"
+                onClick={() => setToolsDropdownOpen(!toolsDropdownOpen)}
+                aria-expanded={toolsDropdownOpen}
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-150 flex items-center gap-1 whitespace-nowrap ${
+                  isToolsActive || toolsDropdownOpen
+                    ? 'bg-white dark:bg-neutral-800 text-neutral-950 dark:text-white shadow-xs font-semibold'
+                    : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white hover:bg-neutral-200/40 dark:hover:bg-neutral-800/40'
+                }`}
+              >
+                <Wrench className="w-3.5 h-3.5" />
+                <span>Tools</span>
+                <ChevronDown
+                  className={`w-3 h-3 transition-transform duration-200 ${toolsDropdownOpen ? 'rotate-180' : ''}`}
+                />
+              </button>
+
+              {/* Tools Mega Dropdown Panel */}
+              {toolsDropdownOpen && (
+                <div
+                  id="nav-tools-dropdown-panel"
+                  className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[520px] rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white/98 dark:bg-[#0a0a0f]/98 backdrop-blur-xl shadow-2xl shadow-black/15 dark:shadow-black/50 p-4 z-50 animate-in fade-in-50 zoom-in-95 duration-150"
+                >
+                  <div className="grid grid-cols-2 gap-4">
+                    {/* Developer Tools Column */}
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-1.5 px-2 text-[11px] font-mono font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+                        <Code2 className="w-3.5 h-3.5" />
+                        <span>Developer Suite</span>
+                      </div>
+                      <div className="space-y-1">
+                        {developerTools.map((tool) => {
+                          const Icon = tool.icon;
+                          const isActive = pathname === tool.href;
+                          return (
+                            <Link
+                              key={tool.href}
+                              href={tool.href}
+                              onClick={() => setToolsDropdownOpen(false)}
+                              className={`flex items-start gap-2.5 p-2 rounded-xl text-xs transition-colors ${
+                                isActive
+                                  ? 'bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 font-semibold'
+                                  : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:text-neutral-950 dark:hover:text-white'
+                              }`}
+                            >
+                              <div className="p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0">
+                                <Icon className="w-3.5 h-3.5" />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <span className="font-semibold text-neutral-950 dark:text-white block">{tool.label}</span>
+                                <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5">
+                                  {tool.description}
+                                </p>
+                              </div>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Business & Accounting Tools Column */}
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-1.5 px-2 text-[11px] font-mono font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                        <Calculator className="w-3.5 h-3.5" />
+                        <span>Finance &amp; Business</span>
+                      </div>
+                      <div className="space-y-1">
+                        {businessTools.map((tool) => {
+                          const Icon = tool.icon;
+                          const isActive = pathname === tool.href;
+                          return (
+                            <Link
+                              key={tool.href}
+                              href={tool.href}
+                              onClick={() => setToolsDropdownOpen(false)}
+                              className={`flex items-start gap-2.5 p-2 rounded-xl text-xs transition-colors ${
+                                isActive
+                                  ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 font-semibold'
+                                  : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:text-neutral-950 dark:hover:text-white'
+                              }`}
+                            >
+                              <div className="p-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0">
+                                <Icon className="w-3.5 h-3.5" />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <span className="font-semibold text-neutral-950 dark:text-white block">{tool.label}</span>
+                                <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5">
+                                  {tool.description}
+                                </p>
+                              </div>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Dropdown Footer */}
+                  <div className="mt-3 pt-3 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between text-xs">
+                    <span className="text-[11px] text-neutral-500 font-mono">100% Free &amp; Client-Side Secure</span>
+                    <Link
+                      href="/tools"
+                      onClick={() => setToolsDropdownOpen(false)}
+                      className="inline-flex items-center gap-1 font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      <span>Explore Tools Suite</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Remaining primary links (CV & Resume, Services) */}
+            {primaryLinks.slice(2).map((link) => {
               const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
               return (
                 <Link
@@ -396,6 +625,87 @@ export function Navbar() {
                   );
                 })}
               </div>
+            </div>
+
+            {/* Expandable Tools Mobile Section */}
+            <div className="p-3 rounded-2xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800 space-y-2.5">
+              <button
+                type="button"
+                onClick={() => setMobileToolsExpanded(!mobileToolsExpanded)}
+                className="w-full flex items-center justify-between text-xs font-bold text-neutral-950 dark:text-white"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400">
+                    <Wrench className="w-4 h-4" />
+                  </div>
+                  <span>Developer &amp; Business Tools (8)</span>
+                </div>
+                <ChevronDown
+                  className={`w-4 h-4 text-neutral-500 transition-transform duration-200 ${
+                    mobileToolsExpanded ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+
+              {mobileToolsExpanded && (
+                <div className="space-y-3 pt-1 border-t border-neutral-200/60 dark:border-neutral-800/60">
+                  {/* Dev tools */}
+                  <div>
+                    <div className="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-semibold uppercase tracking-wider mb-1 px-1">
+                      Developer Tools
+                    </div>
+                    <div className="grid grid-cols-2 gap-1">
+                      {developerTools.map((t) => (
+                        <Link
+                          key={t.href}
+                          href={t.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={`p-2 rounded-xl text-xs transition-colors flex items-center gap-1.5 ${
+                            pathname === t.href
+                              ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 font-bold'
+                              : 'bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 hover:text-blue-600'
+                          }`}
+                        >
+                          <t.icon className="w-3.5 h-3.5 text-neutral-500 shrink-0" />
+                          <span className="truncate text-[11px]">{t.label}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Finance tools */}
+                  <div>
+                    <div className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold uppercase tracking-wider mb-1 px-1">
+                      Finance &amp; Business Tools
+                    </div>
+                    <div className="grid grid-cols-2 gap-1">
+                      {businessTools.map((t) => (
+                        <Link
+                          key={t.href}
+                          href={t.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={`p-2 rounded-xl text-xs transition-colors flex items-center gap-1.5 ${
+                            pathname === t.href
+                              ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 font-bold'
+                              : 'bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 hover:text-emerald-600'
+                          }`}
+                        >
+                          <t.icon className="w-3.5 h-3.5 text-neutral-500 shrink-0" />
+                          <span className="truncate text-[11px]">{t.label}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Link
+                    href="/tools"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block text-center text-xs font-semibold text-blue-600 dark:text-blue-400 py-1 hover:underline"
+                  >
+                    View All Tools Overview →
+                  </Link>
+                </div>
+              )}
             </div>
 
             {/* Drawer Bottom Actions */}

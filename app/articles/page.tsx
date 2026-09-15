@@ -27,8 +27,40 @@ export const metadata: Metadata = {
 };
 
 export default function ArticlesPage() {
+  const articlesJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Articles & Design Engineering Essays — TechUsar',
+    description:
+      'Essays on Swiss typography, zero-drift design systems, and full-stack engineering.',
+    url: 'https://techusar.dev/articles',
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: articlesData.map((article, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'Article',
+          headline: article.title,
+          description: article.excerpt,
+          url: `https://techusar.dev/articles/${article.slug}`,
+          author: {
+            '@type': 'Person',
+            name: 'Hafiz Muhammad Usman',
+          },
+        },
+      })),
+    },
+  };
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-16">
+      {/* Schema.org Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articlesJsonLd) }}
+      />
+
       {/* Header */}
       <div className="space-y-4 max-w-2xl">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-purple-950/50 border border-blue-200 dark:border-purple-800/60 text-xs font-mono text-blue-600 dark:text-purple-400">

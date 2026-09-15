@@ -28,8 +28,50 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
+  const aboutJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    mainEntity: {
+      '@type': 'Person',
+      name: 'Hafiz Muhammad Usman',
+      alternateName: 'TechUsar',
+      jobTitle: 'Independent Graphic Designer & Full-Stack Software Engineer',
+      description:
+        'Hafiz Muhammad Usman is a dual-craft designer and full-stack software engineer based in Karachi, Pakistan, specializing in Next.js 15, TypeScript, custom AI bots, and brand identity design.',
+      url: 'https://techusar.dev/about',
+      sameAs: [
+        'https://github.com/techusar',
+        'https://linkedin.com/in/techusar',
+        'https://wa.me/923318917330',
+      ],
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Karachi',
+        addressRegion: 'Sindh',
+        addressCountry: 'PK',
+      },
+      knowsAbout: [
+        'Next.js 15',
+        'React',
+        'TypeScript',
+        'Tailwind CSS',
+        'Custom AI Agents',
+        'WhatsApp & Telegram Bot Automation',
+        'Graphic Design',
+        'Brand Identity',
+        'Accounting Systems',
+      ],
+    },
+  };
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-20">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
+      />
+
       {/* Bio / Hero Header */}
       <section className="space-y-6">
         <div className="inline-flex items-center gap-1.5 text-xs font-mono text-blue-600 dark:text-blue-400 uppercase tracking-widest">

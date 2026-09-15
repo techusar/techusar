@@ -28,8 +28,38 @@ export const metadata: Metadata = {
 };
 
 export default function WorkPage() {
+  const workJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Selected Work & Software Systems — TechUsar',
+    description:
+      'Case studies, production applications, and design token architectures engineered by Hafiz Muhammad Usman.',
+    url: 'https://techusar.dev/work',
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: projects.map((project, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'SoftwareApplication',
+          name: project.title,
+          description: project.description,
+          applicationCategory: 'BusinessApplication',
+          operatingSystem: 'All',
+          url: `https://techusar.dev/work/${project.slug}`,
+        },
+      })),
+    },
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-12">
+      {/* Schema.org Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(workJsonLd) }}
+      />
+
       {/* Header */}
       <div className="space-y-4 max-w-3xl">
         <div className="inline-flex items-center gap-1.5 text-xs font-mono text-blue-600 dark:text-blue-400 uppercase tracking-widest">

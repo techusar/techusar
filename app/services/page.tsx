@@ -14,6 +14,63 @@ export const metadata: Metadata = {
 };
 
 export default function ServicesPage() {
+  const servicesJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Web Development, Brand Identity & Custom AI Bot Development',
+    provider: {
+      '@type': 'Person',
+      name: 'Hafiz Muhammad Usman',
+      url: 'https://techusar.dev/about',
+    },
+    areaServed: {
+      '@type': 'Country',
+      name: 'Global',
+    },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Engineering & Creative Services',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Custom AI Agents & Automation Bots',
+            description:
+              'Custom WhatsApp bots, Telegram notification bots, 24/7 customer care chatbots, and automated web scrapers.',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Brand Identity & Vector Systems',
+            description:
+              'Vector logomark, monogram, wordmark, and comprehensive brand guidelines manual.',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Full-Stack Next.js 15 Applications',
+            description:
+              'Production-grade web software engineered with Next.js 15, TypeScript, Tailwind CSS, and scalable PostgreSQL database schemas.',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Financial & Accounting Software Engineering',
+            description:
+              'Double-entry ledgers, automated multi-tax invoice engines, and real-time inventory tracking software.',
+          },
+        },
+      ],
+    },
+  };
+
   const coreServices = [
     {
       icon: Bot,
@@ -142,6 +199,12 @@ export default function ServicesPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-20">
+      {/* Schema.org Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesJsonLd) }}
+      />
+
       {/* Header */}
       <div className="space-y-4 max-w-3xl">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-purple-950/50 border border-blue-200 dark:border-purple-800/60 text-xs font-mono text-blue-600 dark:text-purple-400">
