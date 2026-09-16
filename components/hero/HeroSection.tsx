@@ -25,8 +25,10 @@ import {
   Layers,
   ChevronRight,
 } from 'lucide-react';
+import { useSiteSettings } from '@/components/providers/SiteDataProvider';
 
 export function HeroSection() {
+  const { settings } = useSiteSettings();
   // Ultra-smooth, weighted spring physics for a luxury, cinematic feel
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -176,7 +178,7 @@ export function HeroSection() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                 </span>
-                <span>TECHUSAR / DESIGN × DEVELOPMENT</span>
+                <span>{settings.heroBadge || `${(settings.brandName || 'TECHUSAR').toUpperCase()} / DESIGN × DEVELOPMENT`}</span>
               </div>
             </motion.div>
 
@@ -198,7 +200,8 @@ export function HeroSection() {
               id="hero-description"
               className="text-base sm:text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-xl font-normal"
             >
-              Hafiz Muhammad Usman is a graphic designer and full-stack engineer bridging visual identity systems with modern Next.js 15, TypeScript, and distributed cloud applications.
+              {settings.heroSubtitle ||
+                `${settings.ownerName || 'Hafiz Muhammad Usman'} is a graphic designer and full-stack engineer bridging visual identity systems with modern Next.js 15, TypeScript, and distributed cloud applications.`}
             </motion.p>
 
             {/* 4. Action Callouts Group */}

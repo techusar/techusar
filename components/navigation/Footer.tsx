@@ -1,10 +1,21 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { Logo } from './Logo';
 import { Github, Linkedin, Instagram, Youtube, Mail, ArrowUpRight, Circle } from 'lucide-react';
+import { useSiteSettings } from '@/components/providers/SiteDataProvider';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { settings } = useSiteSettings();
+
+  const brandName = settings.brandName || 'TechUsar';
+  const email = settings.email || 'techusar17@gmail.com';
+  const displayPhone = settings.displayPhone || '0331-8917330';
+  const whatsappUrl = settings.whatsapp || 'https://wa.me/923318917330';
+  const githubUrl = settings.githubUrl || 'https://github.com/techusar';
+  const linkedinUrl = settings.linkedinUrl || 'https://linkedin.com';
 
   return (
     <footer
@@ -17,13 +28,14 @@ export function Footer() {
           <div className="md:col-span-5 space-y-4">
             <Logo />
             <p className="text-sm text-neutral-600 dark:text-neutral-400 max-w-sm leading-relaxed">
-              Where design meets development. Graphic designer and full-stack developer crafting refined digital products, design systems, and commercial web themes.
+              {settings.tagline ||
+                'Where design meets development. Graphic designer and full-stack developer crafting refined digital products, design systems, and commercial web themes.'}
             </p>
 
             {/* Availability Indicator */}
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/50 text-emerald-800 dark:text-emerald-300 text-xs">
               <Circle className="w-2 h-2 fill-emerald-500 text-emerald-500 animate-pulse" />
-              <span>Available for selected projects & consulting</span>
+              <span>{settings.heroBadge || 'Available for selected projects & consulting'}</span>
             </div>
           </div>
 
@@ -104,7 +116,7 @@ export function Footer() {
                 </li>
                 <li>
                   <Link href="/about" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                    About TechUsar
+                    About {brandName}
                   </Link>
                 </li>
                 <li>
@@ -128,7 +140,7 @@ export function Footer() {
             </h4>
             <div className="flex flex-col space-y-2 text-sm">
               <a
-                href="https://github.com/techusar"
+                href={githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors group"
@@ -138,7 +150,7 @@ export function Footer() {
                 <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
               </a>
               <a
-                href="https://linkedin.com/in/techusar"
+                href={linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors group"
@@ -148,43 +160,23 @@ export function Footer() {
                 <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
               </a>
               <a
-                href="https://instagram.com/techusar"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors group"
-              >
-                <Instagram className="w-4 h-4 text-neutral-600 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white" />
-                <span>Instagram</span>
-                <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </a>
-              <a
-                href="https://youtube.com/@techusar"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors group"
-              >
-                <Youtube className="w-4 h-4 text-neutral-600 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white" />
-                <span>YouTube</span>
-                <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </a>
-              <a
-                href="https://wa.me/923318917330?text=Assalam-o-Alaikum%20Usman!%20I%20visited%20TechUsar%20and%20want%20to%20inquire%20about%20a%20project."
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 data-track="footer_whatsapp"
                 className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 font-medium transition-colors group"
               >
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>WhatsApp: 0331-8917330</span>
+                <span>WhatsApp: {displayPhone}</span>
                 <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
               </a>
               <a
-                href="mailto:techusar17@gmail.com"
+                href={`mailto:${email}`}
                 data-track="footer_email"
                 className="inline-flex items-center gap-2 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors group"
               >
                 <Mail className="w-4 h-4 text-neutral-600 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white" />
-                <span>techusar17@gmail.com</span>
+                <span>{email}</span>
               </a>
             </div>
           </div>
@@ -192,7 +184,7 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-neutral-200 dark:border-neutral-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-600 dark:text-neutral-400">
-          <p>© {currentYear} TechUsar. All rights reserved.</p>
+          <p>© {currentYear} {brandName}. All rights reserved.</p>
           <div className="flex items-center gap-4 font-mono text-[11px]">
             <span>Type &ldquo;techusar&rdquo; anywhere for console</span>
             <span>•</span>

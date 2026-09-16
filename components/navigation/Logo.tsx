@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
+import { useSiteSettings } from '@/components/providers/SiteDataProvider';
 
 interface LogoProps {
   className?: string;
@@ -9,58 +10,16 @@ interface LogoProps {
 }
 
 export function Logo({ className = '', showWordmark = true }: LogoProps) {
-  // Initialize with saved logo from localStorage if available
-  const [customLogo, setCustomLogo] = useState<string | null>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        return localStorage.getItem('techusar_custom_logo');
-      } catch {
-        return null;
-      }
-    }
-    return null;
-  });
-
-  useEffect(() => {
-    let isMounted = true;
-
-    // Fetch from server settings to ensure sync across devices
-    fetch('/api/admin/settings')
-      .then((res) => res.json())
-      .then((data) => {
-        if (isMounted && data.settings?.logoUrl) {
-          setCustomLogo(data.settings.logoUrl);
-          try {
-            localStorage.setItem('techusar_custom_logo', data.settings.logoUrl);
-          } catch {
-            // Ignore storage errors
-          }
-        }
-      })
-      .catch(() => {});
-
-    const handleLogoUpdate = (e: Event) => {
-      const customEvent = e as CustomEvent<{ logoUrl: string }>;
-      if (customEvent.detail?.logoUrl) {
-        setCustomLogo(customEvent.detail.logoUrl);
-      } else if (customEvent.detail?.logoUrl === '') {
-        setCustomLogo(null);
-      }
-    };
-
-    window.addEventListener('techusar_logo_updated', handleLogoUpdate);
-    return () => {
-      isMounted = false;
-      window.removeEventListener('techusar_logo_updated', handleLogoUpdate);
-    };
-  }, []);
+  const { settings } = useSiteSettings();
+  const customLogo = settings.logoUrl || null;
+  const brandName = settings.brandName || 'TechUsar';
 
   return (
     <Link
       href="/"
       id="techusar-brand-logo"
       className={`group inline-flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg ${className}`}
-      aria-label="TechUsar Home"
+      aria-label={`${brandName} Home`}
     >
       {/* Brand Icon or Custom Logo */}
       <div className="relative flex items-center justify-center w-8 h-8 rounded-lg overflow-hidden bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 dark:from-blue-500 dark:via-indigo-500 dark:to-purple-600 text-white font-mono text-xs font-bold tracking-tighter shadow-xs transition-all duration-200 group-hover:scale-105 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] select-none shrink-0 border border-white/20 dark:border-white/10">
@@ -69,9 +28,8 @@ export function Logo({ className = '', showWordmark = true }: LogoProps) {
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={customLogo}
-            alt="TechUsar Logo"
+            alt={`${brandName} Logo`}
             className="w-full h-full object-contain p-0.5"
-            onError={() => setCustomLogo(null)}
           />
         ) : (
           // Geometric TU Monogram
@@ -112,17 +70,18 @@ export function Logo({ className = '', showWordmark = true }: LogoProps) {
         <div className="flex flex-col text-left shrink-0">
           <div className="flex items-center gap-1.5">
             <span className="font-bold tracking-tight text-sm sm:text-[15px] leading-tight text-neutral-950 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-              TechUsar
+              {brandName}
             </span>
             <span className="hidden md:inline-block px-1 py-0.2 rounded text-[9px] font-mono font-semibold bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 border border-neutral-200/80 dark:border-neutral-700/80">
               dev
             </span>
           </div>
           <span className="hidden sm:block text-[10px] tracking-wider font-mono text-neutral-500 dark:text-neutral-400">
-            Full-Stack &amp; Design
+            {settings.tagline ? settings.tagline.split('|')[0].trim() : 'Full-Stack & Design'}
           </span>
         </div>
       )}
     </Link>
   );
 }
+

@@ -35,12 +35,13 @@ import {
   Code,
 } from 'lucide-react';
 import { FormSubmission } from '@/app/api/submissions/route';
+import { SettingsManager } from './SettingsManager';
 import { MediaManager } from './MediaManager';
 import { WebProjectsManager } from './WebProjectsManager';
 import { ThemesManager } from './ThemesManager';
 import { DesignsManager } from './DesignsManager';
 import { BlogsManager } from './BlogsManager';
-import { ShoppingBag, Palette, BookOpen } from 'lucide-react';
+import { ShoppingBag, Palette, BookOpen, Sliders } from 'lucide-react';
 
 interface AnalyticsData {
   totalVisits: number;
@@ -68,7 +69,7 @@ export function AdminDashboard() {
 
   // Tab State
   const [activeTab, setActiveTab] = useState<
-    'overview' | 'submissions' | 'media' | 'webprojects' | 'themes' | 'designs' | 'blogs'
+    'overview' | 'settings' | 'submissions' | 'media' | 'webprojects' | 'themes' | 'designs' | 'blogs'
   >('overview');
   const [currentLogo, setCurrentLogo] = useState<string | null>(null);
 
@@ -434,6 +435,18 @@ export function AdminDashboard() {
         >
           <BarChart3 className="w-4 h-4" />
           <span>Analytics &amp; Traffic Overview</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('settings')}
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 shrink-0 whitespace-nowrap ${
+            activeTab === 'settings'
+              ? 'bg-blue-600 text-white shadow-xs'
+              : 'bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'
+          }`}
+        >
+          <Sliders className="w-4 h-4" />
+          <span>Site Settings, Logo &amp; Banners</span>
         </button>
 
         <button
@@ -1020,6 +1033,15 @@ export function AdminDashboard() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* TAB 2: SITE SETTINGS, BRANDING & LOGO */}
+      {activeTab === 'settings' && (
+        <SettingsManager
+          onSettingsSaved={() => {
+            fetchData();
+          }}
+        />
       )}
 
       {/* TAB 3: LOGO & MEDIA MANAGER */}

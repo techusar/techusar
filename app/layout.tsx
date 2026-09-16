@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import { SiteDataProvider } from '@/components/providers/SiteDataProvider';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
 import { EasterEggModal } from '@/components/ui/EasterEggModal';
@@ -228,12 +229,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body suppressHydrationWarning className="min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white bg-[#ffffff] dark:bg-[#050508] text-neutral-900 dark:text-neutral-100 transition-colors duration-200">
         <ThemeProvider>
-          <SiteTracker />
-          <Navbar />
-          <main className="flex-1 flex flex-col">{children}</main>
-          <Footer />
-          <EasterEggModal />
-          <FloatingWhatsApp />
+          <SiteDataProvider>
+            <SiteTracker />
+            <Navbar />
+            <main className="flex-1 flex flex-col">{children}</main>
+            <Footer />
+            <EasterEggModal />
+            <FloatingWhatsApp />
+          </SiteDataProvider>
         </ThemeProvider>
       </body>
     </html>

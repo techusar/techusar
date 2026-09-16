@@ -3,23 +3,26 @@
 import React, { useState } from 'react';
 import { MessageSquare, X, Send, Sparkles } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { useSiteSettings } from '@/components/providers/SiteDataProvider';
 
 export function FloatingWhatsApp() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [userMsg, setUserMsg] = useState('');
+  const { settings } = useSiteSettings();
 
   // Hide on admin portal
   if (pathname?.startsWith('/admin')) {
     return null;
   }
 
-  const phone = '923318917330';
-  const displayPhone = '0331-8917330';
+  const phone = settings.whatsappNumber || '923318917330';
+  const displayPhone = settings.displayPhone || '0331-8917330';
+  const ownerName = settings.ownerName || 'Hafiz Muhammad Usman';
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
-    const text = userMsg.trim() || 'Assalam-o-Alaikum Usman! I would like to discuss a project / custom bot.';
+    const text = userMsg.trim() || `Assalam-o-Alaikum ${ownerName.split(' ')[0]}! I would like to discuss a project / custom bot.`;
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
     setIsOpen(false);
