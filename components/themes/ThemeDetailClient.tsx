@@ -215,7 +215,7 @@ export function ThemeDetailClient({ theme }: ThemeDetailClientProps) {
                 <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
               </div>
               <span className="text-[10px] font-mono text-neutral-600 dark:text-neutral-400">
-                demo.techusar.dev/{theme.slug}
+                techusar.com/{theme.slug}
               </span>
               <button
                 onClick={() => setPreviewModalOpen(true)}

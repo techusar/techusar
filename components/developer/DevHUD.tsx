@@ -311,7 +311,7 @@ export function DevHUD() {
   };
 
   const copyProfileCurl = () => {
-    navigator.clipboard.writeText('curl -s https://techusar.dev/api/developer | jq .');
+    navigator.clipboard.writeText('curl -s https://techusar.com/api/developer | jq .');
     setCopiedApi(true);
     playClickSound();
     setTimeout(() => setCopiedApi(false), 2000);
@@ -619,7 +619,7 @@ export function DevHUD() {
                       </button>
                     </div>
                     <div className="p-3 rounded-lg bg-black border border-neutral-800 text-[11px] text-emerald-400 font-mono select-all">
-                      curl -s https://techusar.dev/api/developer | jq .
+                      curl -s https://techusar.com/api/developer | jq .
                     </div>
                   </div>
                 </div>

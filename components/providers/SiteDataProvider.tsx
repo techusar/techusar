@@ -6,7 +6,7 @@ import { projects as defaultProjects } from '@/data/projects';
 import { themes as defaultThemes } from '@/data/themes';
 import { designProjects as defaultDesigns } from '@/data/design-projects';
 import { getAllBlogPosts, BlogPost } from '@/lib/blog';
-
+import logo from '@/public/Landscap TechUsar 2.png';
 export interface SiteSettings {
   logoUrl: string;
   brandName: string;
@@ -32,7 +32,7 @@ export interface SiteSettings {
 }
 
 export const defaultSiteSettings: SiteSettings = {
-  logoUrl: '',
+  logoUrl: logo.src,
   brandName: 'TechUsar',
   tagline: 'Graphic Designer & Full-Stack Developer | Custom AI Agents & Bot Builder',
   ownerName: 'Hafiz Muhammad Usman',
@@ -48,7 +48,7 @@ export const defaultSiteSettings: SiteSettings = {
   email: 'techusar17@gmail.com',
   location: 'Kharadar Lyari, Karachi, Pakistan',
   bio: 'Hafiz-e-Quran, graphic designer with 5+ years experience and full-stack software engineer.',
-  githubUrl: 'https://github.com/TechUsar',
+  githubUrl: 'https://github.com/techusar',
   linkedinUrl: 'https://linkedin.com',
   behanceUrl: 'https://behance.net',
   dribbbleUrl: 'https://dribbble.com',

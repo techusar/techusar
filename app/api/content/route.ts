@@ -44,7 +44,7 @@ export async function GET() {
     email: 'techusar17@gmail.com',
     location: 'Kharadar Lyari, Karachi, Pakistan',
     bio: 'Hafiz-e-Quran, graphic designer with 5+ years experience and full-stack software engineer.',
-    githubUrl: 'https://github.com/TechUsar',
+    githubUrl: 'https://github.com/techusar',
     linkedinUrl: 'https://linkedin.com',
     behanceUrl: 'https://behance.net',
     dribbbleUrl: 'https://dribbble.com',

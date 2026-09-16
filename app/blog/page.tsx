@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'Graphic design guides',
   ],
   alternates: {
-    canonical: 'https://techusar.dev/blog',
+    canonical: 'https://techusar.com/blog',
   },
   openGraph: {
     title: 'Blog & Technical Articles — AI Bots, Web Dev & Design | TechUsar',
     description:
       'Explore tutorials, guides, and engineering notes on custom AI bots, full-stack systems, and design architecture.',
-    url: 'https://techusar.dev/blog',
+    url: 'https://techusar.com/blog',
     type: 'website',
     siteName: 'TechUsar',
   },
@@ -48,17 +48,17 @@ export default function BlogIndexPage() {
     name: 'TechUsar Blog & Engineering Articles',
     description:
       'Official technical blog and insights on AI Agent development, custom automation bots, Next.js engineering, and graphic design by Hafiz Muhammad Usman.',
-    url: 'https://techusar.dev/blog',
+    url: 'https://techusar.com/blog',
     author: {
       '@type': 'Person',
       name: 'Hafiz Muhammad Usman',
-      url: 'https://techusar.dev/about',
+      url: 'https://techusar.com/about',
     },
     blogPost: posts.map((post) => ({
       '@type': 'BlogPosting',
       headline: post.title,
       description: post.excerpt,
-      url: `https://techusar.dev/blog/${post.slug}`,
+      url: `https://techusar.com/blog/${post.slug}`,
       datePublished: '2026-03-01',
       author: {
         '@type': 'Person',

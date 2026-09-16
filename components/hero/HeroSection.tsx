@@ -324,7 +324,7 @@ export function HeroSection() {
                     {/* Clean SSL Domain Pill */}
                     <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-md bg-neutral-200/50 dark:bg-neutral-900/80 border border-neutral-200/80 dark:border-white/5 text-[11px] font-mono text-neutral-600 dark:text-neutral-400">
                       <Lock className="w-2.5 h-2.5 text-emerald-500" />
-                      <span>techusar.dev/system-core</span>
+                      <span>techusar.com/system-core</span>
                     </div>
                   </div>
 

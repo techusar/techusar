@@ -17,13 +17,13 @@ export const metadata: Metadata = {
     'TechUsar design showcase',
   ],
   alternates: {
-    canonical: 'https://techusar.dev/design',
+    canonical: 'https://techusar.com/design',
   },
   openGraph: {
     title: 'Graphic Design Showcase & Vector Systems — TechUsar',
     description:
       '5 years of graphic design excellence. Explore brand systems, vector marks, and typography craft by Hafiz Muhammad Usman.',
-    url: 'https://techusar.dev/design',
+    url: 'https://techusar.com/design',
   },
 };
 
@@ -34,7 +34,7 @@ export default function DesignPage() {
     name: 'Graphic Design Showcase & Vector Systems — TechUsar',
     description:
       'Visual identity, Swiss typography posters, brand guidelines, and vector design systems created by Hafiz Muhammad Usman.',
-    url: 'https://techusar.dev/design',
+    url: 'https://techusar.com/design',
     mainEntity: {
       '@type': 'ItemList',
       itemListElement: designProjects.map((design, index) => ({

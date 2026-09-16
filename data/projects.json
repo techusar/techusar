@@ -88,7 +88,7 @@
         "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1600&auto=format&fit=crop",
         "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=1600&auto=format&fit=crop"
       ],
-      "liveUrl": "https://strata.techusar.dev",
+      "liveUrl": "https://strata.techusar.com",
       "githubUrl": "https://github.com/techusar/strata-design-system",
       "featured": true,
       "status": "live",
@@ -160,7 +160,7 @@
         "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1600&auto=format&fit=crop",
         "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1600&auto=format&fit=crop"
       ],
-      "liveUrl": "https://synthetix.techusar.dev",
+      "liveUrl": "https://synthetix.techusar.com",
       "githubUrl": "https://github.com/techusar/synthetix-daw",
       "featured": false,
       "status": "live",
@@ -195,7 +195,7 @@
       "gallery": [
         "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=1600&auto=format&fit=crop"
       ],
-      "liveUrl": "https://nexuspos.techusar.dev",
+      "liveUrl": "https://nexuspos.techusar.com",
       "githubUrl": "https://github.com/techusar/nexus-pos",
       "featured": false,
       "status": "in_progress",

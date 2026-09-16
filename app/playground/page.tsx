@@ -15,13 +15,13 @@ export const metadata: Metadata = {
     'TechUsar design sandbox',
   ],
   alternates: {
-    canonical: 'https://techusar.dev/playground',
+    canonical: 'https://techusar.com/playground',
   },
   openGraph: {
     title: 'Design System Playground & Token Lab — TechUsar',
     description:
       'Interactive design token sandbox with real-time UI previews and CSS code export.',
-    url: 'https://techusar.dev/playground',
+    url: 'https://techusar.com/playground',
   },
 };
 

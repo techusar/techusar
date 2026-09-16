@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
           body.previewImage ||
           'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop',
       },
-      demoUrl: body.demoUrl || 'https://techusar.dev/themes',
+      demoUrl: body.demoUrl || 'https://techusar.com/themes',
       purchaseUrl: body.purchaseUrl || '',
       features: Array.isArray(body.features)
         ? body.features

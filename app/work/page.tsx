@@ -17,13 +17,13 @@ export const metadata: Metadata = {
     'Design systems portfolio',
   ],
   alternates: {
-    canonical: 'https://techusar.dev/work',
+    canonical: 'https://techusar.com/work',
   },
   openGraph: {
     title: 'Selected Work & Software Systems — TechUsar',
     description:
       'Case studies and software applications engineered with Next.js, TypeScript, and Tailwind CSS by Hafiz Muhammad Usman.',
-    url: 'https://techusar.dev/work',
+    url: 'https://techusar.com/work',
   },
 };
 
@@ -34,7 +34,7 @@ export default function WorkPage() {
     name: 'Selected Work & Software Systems — TechUsar',
     description:
       'Case studies, production applications, and design token architectures engineered by Hafiz Muhammad Usman.',
-    url: 'https://techusar.dev/work',
+    url: 'https://techusar.com/work',
     mainEntity: {
       '@type': 'ItemList',
       itemListElement: projects.map((project, index) => ({
@@ -46,7 +46,7 @@ export default function WorkPage() {
           description: project.description,
           applicationCategory: 'BusinessApplication',
           operatingSystem: 'All',
-          url: `https://techusar.dev/work/${project.slug}`,
+          url: `https://techusar.com/work/${project.slug}`,
         },
       })),
     },

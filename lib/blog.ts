@@ -66,24 +66,24 @@ export function generateBlogPostingSchema(post: BlogPost) {
     description: post.excerpt,
     datePublished: '2026-03-01T00:00:00+05:00',
     dateModified: '2026-03-11T00:00:00+05:00',
-    image: post.coverImage || 'https://techusar.dev/og-image.png',
+    image: post.coverImage || 'https://techusar.com/og-image.png',
     author: {
       '@type': 'Person',
       name: post.author.name,
       jobTitle: post.author.role,
-      url: 'https://techusar.dev/about',
+      url: 'https://techusar.com/about',
     },
     publisher: {
       '@type': 'Organization',
       name: 'TechUsar',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://techusar.dev/logo.png',
+        url: 'https://techusar.com/logo.png',
       },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://techusar.dev/blog/${post.slug}`,
+      '@id': `https://techusar.com/blog/${post.slug}`,
     },
     keywords: post.seoKeywords.join(', '),
   };

@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: CaseStudyProps): Promise<Meta
   const project = projects.find((p) => p.slug === slug);
   if (!project) return { title: 'Project Not Found — TechUsar' };
 
-  const projectUrl = `https://techusar.dev/work/${project.slug}`;
+  const projectUrl = `https://techusar.com/work/${project.slug}`;
 
   return {
     title: `${project.title} — Case Study by TechUsar`,

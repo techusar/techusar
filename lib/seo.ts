@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-export const SITE_URL = 'https://techusar.dev';
+export const SITE_URL = 'https://techusar.com';
 export const SITE_NAME = 'TechUsar';
 export const AUTHOR_NAME = 'Hafiz Muhammad Usman';
 export const BRAND_TAGLINE = 'Web Designer, Full-Stack Developer & Custom AI Bot Engineer';
@@ -12,7 +12,7 @@ export const BRAND_TAGLINE = 'Web Designer, Full-Stack Developer & Custom AI Bot
  * 1. Set SUBDOMAIN_TOOLS_ENABLED to true (or via NEXT_PUBLIC_TOOLS_SUBDOMAIN env var).
  * 2. Configure 301 redirects in next.config.ts from /tools/:slug to https://tools.techusar.com/:slug
  * 3. Update sitemap generator to index the respective domains.
- * Currently, all tools live natively under https://techusar.dev/tools/[slug] to build domain authority.
+ * Currently, all tools live natively under https://techusar.com/tools/[slug] to build domain authority.
  */
 export const SUBDOMAIN_TOOLS_ENABLED = process.env.NEXT_PUBLIC_TOOLS_SUBDOMAIN === 'true';
 export const TOOLS_BASE_URL = SUBDOMAIN_TOOLS_ENABLED

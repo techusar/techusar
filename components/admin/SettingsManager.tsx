@@ -627,7 +627,7 @@ export function SettingsManager({ onSettingsSaved }: SettingsManagerProps) {
               type="text"
               value={formData.githubUrl}
               onChange={(e) => handleChange('githubUrl', e.target.value)}
-              placeholder="https://github.com/TechUsar"
+              placeholder="https://github.com/techusar"
               className="w-full p-2.5 text-xs rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white font-mono"
             />
           </div>

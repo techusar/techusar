@@ -15,13 +15,13 @@ export const metadata: Metadata = {
     'TechUsar WhatsApp contact',
   ],
   alternates: {
-    canonical: 'https://techusar.dev/contact',
+    canonical: 'https://techusar.com/contact',
   },
   openGraph: {
     title: 'Contact & Hire Hafiz Muhammad Usman — TechUsar',
     description:
       'Available for custom AI agents, automated bots, full-stack software contracts, and design systems.',
-    url: 'https://techusar.dev/contact',
+    url: 'https://techusar.com/contact',
   },
 };
 

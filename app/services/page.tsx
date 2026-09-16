@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     'Commission bespoke brand identity, full-stack Next.js applications, and custom AI agents & automation bots (WhatsApp, Telegram, scrapers). Calculate investment and delivery timelines.',
   alternates: {
-    canonical: 'https://techusar.dev/services',
+    canonical: 'https://techusar.com/services',
   },
 };
 
@@ -21,7 +21,7 @@ export default function ServicesPage() {
     provider: {
       '@type': 'Person',
       name: 'Hafiz Muhammad Usman',
-      url: 'https://techusar.dev/about',
+      url: 'https://techusar.com/about',
     },
     areaServed: {
       '@type': 'Country',

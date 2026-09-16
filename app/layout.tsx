@@ -9,7 +9,7 @@ import { SiteTracker } from '@/components/analytics/SiteTracker';
 import { FloatingWhatsApp } from '@/components/navigation/FloatingWhatsApp';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://techusar.dev'),
+  metadataBase: new URL('https://techusar.com'),
   title: {
     default: 'TechUsar — Graphic Designer & Full-Stack Developer | Custom AI Agents & Bot Builder',
     template: '%s | TechUsar',
@@ -34,11 +34,11 @@ export const metadata: Metadata = {
     'Full stack engineer Karachi',
     'Muhammad Usman Lyari',
   ],
-  authors: [{ name: 'Hafiz Muhammad Usman', url: 'https://techusar.dev' }],
+  authors: [{ name: 'Hafiz Muhammad Usman', url: 'https://techusar.com' }],
   creator: 'Hafiz Muhammad Usman',
   publisher: 'TechUsar',
   alternates: {
-    canonical: 'https://techusar.dev',
+    canonical: 'https://techusar.com',
   },
   robots: {
     index: true,
@@ -56,12 +56,12 @@ export const metadata: Metadata = {
     description:
       'Official portfolio of Hafiz Muhammad Usman. Explore web themes, developer tools, CV builder, and commission custom AI agents and automation bots.',
     type: 'website',
-    url: 'https://techusar.dev',
+    url: 'https://techusar.com',
     siteName: 'TechUsar',
     locale: 'en_US',
     images: [
       {
-        url: 'https://techusar.dev/og-image.png',
+        url: 'https://techusar.com/og-image.png',
         width: 1200,
         height: 630,
         alt: 'TechUsar — Hafiz Muhammad Usman Digital Studio',
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     description:
       'Portfolio, web theme store, interactive CV builder, and custom AI agent & bot development studio by Hafiz Muhammad Usman.',
     creator: '@TechUsar',
-    images: ['https://techusar.dev/og-image.png'],
+    images: ['https://techusar.com/og-image.png'],
   },
 };
 
@@ -83,13 +83,13 @@ const masterSchemaGraph = {
   '@graph': [
     {
       '@type': 'Person',
-      '@id': 'https://techusar.dev/#person',
+      '@id': 'https://techusar.com/#person',
       name: 'Hafiz Muhammad Usman',
       alternateName: ['Muhammad Usman', 'Usman Attari', 'TechUsar'],
       jobTitle: 'Graphic Designer, Full-Stack Developer & AI Bot Engineer',
       description:
         'Self-driven developer and designer with 5 years in graphic design, 2 years in full-stack web development, and custom AI agent/bot engineering. Hafiz-e-Quran based in Kharadar Lyari, Karachi, Pakistan.',
-      url: 'https://techusar.dev',
+      url: 'https://techusar.com',
       email: 'techusar17@gmail.com',
       telephone: '+92-331-8917330',
       address: {
@@ -109,18 +109,18 @@ const masterSchemaGraph = {
         'TypeScript',
       ],
       sameAs: [
-        'https://github.com/TechUsar',
+        'https://github.com/techusar',
         'https://linkedin.com',
         'https://tech-tools-new.vercel.app',
       ],
     },
     {
       '@type': 'ProfessionalService',
-      '@id': 'https://techusar.dev/#business',
+      '@id': 'https://techusar.com/#business',
       name: 'TechUsar',
-      url: 'https://techusar.dev',
+      url: 'https://techusar.com',
       founder: {
-        '@id': 'https://techusar.dev/#person',
+        '@id': 'https://techusar.com/#person',
       },
       description:
         'Bespoke digital product development, graphic brand identity, custom AI agents, automated bots, and web themes.',
@@ -137,7 +137,7 @@ const masterSchemaGraph = {
             itemOffered: {
               '@type': 'Service',
               name: 'Web Design Services',
-              url: 'https://techusar.dev/web-design',
+              url: 'https://techusar.com/web-design',
               description:
                 'Bespoke, conversion-focused responsive website design, typography systems, and modern landing pages.',
             },
@@ -147,7 +147,7 @@ const masterSchemaGraph = {
             itemOffered: {
               '@type': 'Service',
               name: 'Web Development Services',
-              url: 'https://techusar.dev/web-development',
+              url: 'https://techusar.com/web-development',
               description:
                 'Production Next.js 15, React 19, and strict TypeScript software engineering with scalable databases.',
             },
@@ -157,7 +157,7 @@ const masterSchemaGraph = {
             itemOffered: {
               '@type': 'Service',
               name: 'Graphic Design & Brand Systems',
-              url: 'https://techusar.dev/graphic-design',
+              url: 'https://techusar.com/graphic-design',
               description:
                 '5+ years crafting vector logomarks, Swiss typography systems, brand guidelines, and visual assets.',
             },
@@ -167,7 +167,7 @@ const masterSchemaGraph = {
             itemOffered: {
               '@type': 'Service',
               name: 'UI/UX Design Services',
-              url: 'https://techusar.dev/ui-ux-design',
+              url: 'https://techusar.com/ui-ux-design',
               description:
                 'Enterprise dashboards, interactive Figma prototyping, WCAG compliance, and tokenized design systems.',
             },
@@ -177,7 +177,7 @@ const masterSchemaGraph = {
             itemOffered: {
               '@type': 'Service',
               name: 'Custom AI Chatbots & Bot Development',
-              url: 'https://techusar.dev/ai-bot-development',
+              url: 'https://techusar.com/ai-bot-development',
               description:
                 'Intelligent WhatsApp bots, Telegram notifiers, 24/7 AI customer support agents, and custom workflow automations.',
             },
@@ -187,7 +187,7 @@ const masterSchemaGraph = {
             itemOffered: {
               '@type': 'Service',
               name: 'Website Templates Marketplace',
-              url: 'https://techusar.dev/templates',
+              url: 'https://techusar.com/templates',
               description:
                 'Production-ready free and premium Next.js 15 website templates, SaaS starters, and minimal portfolios.',
             },
@@ -197,16 +197,16 @@ const masterSchemaGraph = {
     },
     {
       '@type': 'WebSite',
-      '@id': 'https://techusar.dev/#website',
-      url: 'https://techusar.dev',
+      '@id': 'https://techusar.com/#website',
+      url: 'https://techusar.com',
       name: 'TechUsar',
       publisher: {
-        '@id': 'https://techusar.dev/#business',
+        '@id': 'https://techusar.com/#business',
       },
       inLanguage: 'en-US',
       potentialAction: {
         '@type': 'SearchAction',
-        target: 'https://techusar.dev/blog?q={search_term_string}',
+        target: 'https://techusar.com/blog?q={search_term_string}',
         'query-input': 'required name=search_term_string',
       },
     },

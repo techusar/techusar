@@ -1,9 +1,9 @@
 {
-  "totalVisits": 1428,
-  "uniqueVisitors": 894,
-  "totalClicks": 3412,
+  "totalVisits": 1434,
+  "uniqueVisitors": 895,
+  "totalClicks": 3413,
   "pageViews": {
-    "/": 542,
+    "/": 548,
     "/contact": 198,
     "/ai-bot-development": 184,
     "/web-development": 146,
@@ -20,9 +20,18 @@
     "estimator_commission_click": 86,
     "tool_use_click": 380,
     "cv_download_click": 72,
-    "email_click": 65
+    "email_click": 65,
+    "theme_toggle_click": 1
   },
   "recentClicks": [
+    {
+      "id": "clk_1789570636346_zm7e",
+      "element": "theme_toggle_click",
+      "label": "Dark/Light Theme Toggle Click",
+      "page": "/",
+      "category": "preference",
+      "timestamp": "2026-09-16T14:57:16.347Z"
+    },
     {
       "id": "clk_01",
       "element": "whatsapp_float",
@@ -60,10 +69,41 @@
     }
   ],
   "dailyStats": {
-    "2026-09-08": { "visits": 180, "unique": 112, "clicks": 420, "formsFilled": 4 },
-    "2026-09-09": { "visits": 210, "unique": 138, "clicks": 510, "formsFilled": 7 },
-    "2026-09-10": { "visits": 245, "unique": 160, "clicks": 590, "formsFilled": 9 },
-    "2026-09-11": { "visits": 310, "unique": 194, "clicks": 740, "formsFilled": 11 },
-    "2026-09-12": { "visits": 483, "unique": 290, "clicks": 1152, "formsFilled": 17 }
+    "2026-09-08": {
+      "visits": 180,
+      "unique": 112,
+      "clicks": 420,
+      "formsFilled": 4
+    },
+    "2026-09-09": {
+      "visits": 210,
+      "unique": 138,
+      "clicks": 510,
+      "formsFilled": 7
+    },
+    "2026-09-10": {
+      "visits": 245,
+      "unique": 160,
+      "clicks": 590,
+      "formsFilled": 9
+    },
+    "2026-09-11": {
+      "visits": 310,
+      "unique": 194,
+      "clicks": 740,
+      "formsFilled": 11
+    },
+    "2026-09-12": {
+      "visits": 483,
+      "unique": 290,
+      "clicks": 1152,
+      "formsFilled": 17
+    },
+    "2026-09-16": {
+      "visits": 6,
+      "unique": 1,
+      "clicks": 1,
+      "formsFilled": 0
+    }
   }
 }
