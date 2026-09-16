@@ -77,7 +77,35 @@
     background-color: var(--bg-primary);
     color: var(--text-primary);
     font-family: var(--font-sans);
-    overflow-x: hidden;
+    overflow-x: clip;
+    width: 100%;
+    min-height: 100vh;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent text size adjustment after orientation changes in iOS */
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--font-sans);
+    overflow-x: clip;
+  }
+
+  /* Responsive Touch Target and Interactive Utilities */
+  button, a, input, select, textarea {
+    touch-action: manipulation;
+  }
+
+  /* Hide scrollbar for clean horizontal tab strips */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   /* All form elements, buttons and inputs strictly inherit the exact same font as the hero page */

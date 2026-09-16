@@ -58,12 +58,12 @@ export function ThemeLivePreviewModal({
       aria-label={`${theme.name} live preview`}
     >
       {/* Top Preview Control Bar */}
-      <div className="h-16 px-4 sm:px-6 border-b border-neutral-800 bg-neutral-950 flex items-center justify-between text-white shrink-0">
+      <div className="h-auto min-h-16 py-2.5 px-3 sm:px-6 border-b border-neutral-800 bg-neutral-950 flex flex-wrap items-center justify-between gap-2.5 text-white shrink-0">
         {/* Left: Theme info */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <div>
-            <h3 className="text-sm font-semibold tracking-tight">{theme.name}</h3>
-            <div className="flex items-center gap-2 text-[11px] text-neutral-400 font-mono">
+            <h3 className="text-xs sm:text-sm font-semibold tracking-tight line-clamp-1">{theme.name}</h3>
+            <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-neutral-400 font-mono">
               <span>{theme.category}</span>
               <span>•</span>
               <span className={theme.isFree ? 'text-emerald-400 font-bold' : 'text-blue-400 font-bold'}>
@@ -74,12 +74,12 @@ export function ThemeLivePreviewModal({
         </div>
 
         {/* Center: Device Switcher + Theme Mode Switcher */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4 order-3 sm:order-2">
           {/* Device toggle */}
           <div className="flex items-center p-0.5 rounded-lg border border-neutral-800 bg-neutral-900">
             <button
               onClick={() => setDevice('desktop')}
-              className={`px-2.5 py-1 rounded-md text-xs flex items-center gap-1.5 transition-colors ${
+              className={`px-2 py-1 rounded-md text-xs flex items-center gap-1.5 transition-colors ${
                 device === 'desktop'
                   ? 'bg-neutral-800 text-white font-medium'
                   : 'text-neutral-400 hover:text-white'
@@ -91,7 +91,7 @@ export function ThemeLivePreviewModal({
             </button>
             <button
               onClick={() => setDevice('tablet')}
-              className={`px-2.5 py-1 rounded-md text-xs flex items-center gap-1.5 transition-colors ${
+              className={`px-2 py-1 rounded-md text-xs flex items-center gap-1.5 transition-colors ${
                 device === 'tablet'
                   ? 'bg-neutral-800 text-white font-medium'
                   : 'text-neutral-400 hover:text-white'
@@ -103,7 +103,7 @@ export function ThemeLivePreviewModal({
             </button>
             <button
               onClick={() => setDevice('mobile')}
-              className={`px-2.5 py-1 rounded-md text-xs flex items-center gap-1.5 transition-colors ${
+              className={`px-2 py-1 rounded-md text-xs flex items-center gap-1.5 transition-colors ${
                 device === 'mobile'
                   ? 'bg-neutral-800 text-white font-medium'
                   : 'text-neutral-400 hover:text-white'
@@ -126,18 +126,18 @@ export function ThemeLivePreviewModal({
         </div>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 order-2 sm:order-3 ml-auto sm:ml-0">
           <button
             onClick={() => {
               onClose();
               onPurchase(theme);
             }}
-            className="px-4 py-1.5 rounded-lg text-xs font-semibold bg-white text-neutral-950 hover:bg-neutral-200 transition-colors shadow-sm flex items-center gap-1.5"
+            className="px-3 sm:px-4 py-1.5 rounded-lg text-xs font-semibold bg-white text-neutral-950 hover:bg-neutral-200 transition-colors shadow-sm flex items-center gap-1.5"
           >
             {theme.isFree ? (
               <>
                 <Download className="w-3.5 h-3.5" />
-                <span>Get Free Theme</span>
+                <span>Get Free</span>
               </>
             ) : (
               <>
@@ -149,7 +149,7 @@ export function ThemeLivePreviewModal({
 
           <button
             onClick={onClose}
-            className="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-900 transition-colors"
+            className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-900 transition-colors"
             aria-label="Close preview"
           >
             <X className="w-5 h-5" />
@@ -158,12 +158,12 @@ export function ThemeLivePreviewModal({
       </div>
 
       {/* Main Preview Canvas Frame */}
-      <div className="flex-1 overflow-auto p-4 sm:p-8 flex items-center justify-center bg-neutral-900/50">
+      <div className="flex-1 overflow-auto p-2 sm:p-8 flex items-center justify-center bg-neutral-900/50">
         <div
-          className={`transition-all duration-300 mx-auto rounded-xl border border-neutral-800 shadow-2xl overflow-hidden flex flex-col bg-white dark:bg-neutral-950 ${getFrameWidth()} ${
+          className={`transition-all duration-300 mx-auto rounded-xl border border-neutral-800 shadow-2xl overflow-hidden flex flex-col bg-white dark:bg-neutral-950 w-full ${getFrameWidth()} ${
             previewTheme === 'dark' ? 'dark' : ''
           }`}
-          style={{ minHeight: device === 'mobile' ? '680px' : '580px' }}
+          style={{ minHeight: device === 'mobile' ? '560px' : '520px' }}
         >
           {/* Simulated Browser Bar */}
           <div className="h-9 px-3 bg-neutral-100 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 flex items-center justify-between shrink-0">
@@ -172,7 +172,7 @@ export function ThemeLivePreviewModal({
               <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
               <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
             </div>
-            <div className="px-3 py-0.5 rounded-md bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 text-[10px] font-mono text-neutral-500 truncate max-w-[240px]">
+            <div className="px-3 py-0.5 rounded-md bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 text-[10px] font-mono text-neutral-500 truncate max-w-[160px] sm:max-w-[240px]">
               https://demo.techusar.dev/{theme.slug}
             </div>
             <div className="text-[10px] font-mono text-neutral-400 uppercase">

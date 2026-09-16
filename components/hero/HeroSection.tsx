@@ -279,7 +279,7 @@ export function HeroSection() {
               RIGHT COLUMN: LUXURY PRECISION CONSOLE SHOWCASE
               (Floating 3D Hardware-Accelerated Workstation, SVG Telemetry, Token Matrix)
              ========================================================================= */}
-          <div className="lg:col-span-6 relative [perspective:1400px]">
+          <div className="hidden lg:block lg:col-span-6 relative [perspective:1400px]">
             <motion.div
               id="hero-layered-showcase"
               style={{
@@ -610,9 +610,9 @@ export function HeroSection() {
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
                 whileHover={{ scale: 1.06, zIndex: 50 }}
-                className="absolute -top-4 -right-2 sm:-top-6 sm:-right-6 z-20 p-3 rounded-xl border border-neutral-200/90 dark:border-white/10 bg-white/95 dark:bg-[#0d1020]/95 backdrop-blur-xl shadow-xl transition-shadow hover:shadow-2xl flex items-center gap-3"
+                className="hidden sm:flex absolute -top-4 -right-2 sm:-top-6 sm:-right-6 z-20 p-2.5 sm:p-3 rounded-xl border border-neutral-200/90 dark:border-white/10 bg-white/95 dark:bg-[#0d1020]/95 backdrop-blur-xl shadow-xl transition-shadow hover:shadow-2xl items-center gap-2.5 sm:gap-3"
               >
-                <div className="relative w-9 h-9 flex items-center justify-center">
+                <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center">
                   <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                     <path
                       className="text-neutral-200 dark:text-neutral-800"
@@ -631,7 +631,7 @@ export function HeroSection() {
                       d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     />
                   </svg>
-                  <span className="absolute text-[11px] font-mono font-extrabold text-emerald-600 dark:text-emerald-400">
+                  <span className="absolute text-[10px] sm:text-[11px] font-mono font-extrabold text-emerald-600 dark:text-emerald-400">
                     100
                   </span>
                 </div>
@@ -653,9 +653,9 @@ export function HeroSection() {
                 animate={{ y: [0, 6, 0] }}
                 transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
                 whileHover={{ scale: 1.05, zIndex: 50 }}
-                className="absolute -bottom-5 -left-3 sm:-bottom-7 sm:-left-6 z-20 p-3 sm:p-3.5 rounded-xl border border-neutral-200/90 dark:border-white/10 bg-white/95 dark:bg-[#0d1020]/95 backdrop-blur-xl shadow-xl transition-shadow hover:shadow-2xl flex items-center gap-3"
+                className="hidden sm:flex absolute -bottom-5 -left-3 sm:-bottom-7 sm:-left-6 z-20 p-2.5 sm:p-3.5 rounded-xl border border-neutral-200/90 dark:border-white/10 bg-white/95 dark:bg-[#0d1020]/95 backdrop-blur-xl shadow-xl transition-shadow hover:shadow-2xl items-center gap-2.5 sm:gap-3"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-neutral-950 via-blue-950 to-blue-600 dark:from-blue-600 dark:to-sky-500 flex items-center justify-center text-white font-mono font-extrabold text-sm shadow-md border border-white/20">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-neutral-950 via-blue-950 to-blue-600 dark:from-blue-600 dark:to-sky-500 flex items-center justify-center text-white font-mono font-extrabold text-xs sm:text-sm shadow-md border border-white/20">
                   TU
                 </div>
                 <div>
@@ -675,7 +675,7 @@ export function HeroSection() {
                 style={{ x: floatSideX, y: floatSideY }}
                 animate={{ y: [0, -5, 0] }}
                 transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                className="absolute top-8 -left-3 sm:top-10 sm:-left-7 z-20 px-3 py-1.5 rounded-lg border border-neutral-200/90 dark:border-white/10 bg-white/95 dark:bg-[#0d1020]/95 backdrop-blur-xl shadow-md flex items-center gap-2"
+                className="hidden md:flex absolute top-8 -left-3 sm:top-10 sm:-left-7 z-20 px-3 py-1.5 rounded-lg border border-neutral-200/90 dark:border-white/10 bg-white/95 dark:bg-[#0d1020]/95 backdrop-blur-xl shadow-md items-center gap-2"
               >
                 <Terminal className="w-3 h-3 text-blue-500" />
                 <span className="text-[10px] font-mono font-medium text-neutral-800 dark:text-neutral-200">

@@ -423,10 +423,10 @@ export function AdminDashboard() {
       </div>
 
       {/* NAVIGATION TABS */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-neutral-200 dark:border-neutral-800 pb-3">
+      <div className="flex items-center gap-2 border-b border-neutral-200 dark:border-neutral-800 pb-3 overflow-x-auto no-scrollbar touch-pan-x -mx-4 px-4 sm:mx-0 sm:px-0">
         <button
           onClick={() => setActiveTab('overview')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 shrink-0 whitespace-nowrap ${
             activeTab === 'overview'
               ? 'bg-blue-600 text-white shadow-xs'
               : 'bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'
@@ -438,7 +438,7 @@ export function AdminDashboard() {
 
         <button
           onClick={() => setActiveTab('submissions')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 shrink-0 whitespace-nowrap ${
             activeTab === 'submissions'
               ? 'bg-blue-600 text-white shadow-xs'
               : 'bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'
@@ -450,7 +450,7 @@ export function AdminDashboard() {
 
         <button
           onClick={() => setActiveTab('media')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 shrink-0 whitespace-nowrap ${
             activeTab === 'media'
               ? 'bg-blue-600 text-white shadow-xs'
               : 'bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'
@@ -462,7 +462,7 @@ export function AdminDashboard() {
 
         <button
           onClick={() => setActiveTab('webprojects')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 shrink-0 whitespace-nowrap ${
             activeTab === 'webprojects'
               ? 'bg-blue-600 text-white shadow-xs'
               : 'bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'
@@ -474,7 +474,7 @@ export function AdminDashboard() {
 
         <button
           onClick={() => setActiveTab('themes')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 shrink-0 whitespace-nowrap ${
             activeTab === 'themes'
               ? 'bg-blue-600 text-white shadow-xs'
               : 'bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'
@@ -486,7 +486,7 @@ export function AdminDashboard() {
 
         <button
           onClick={() => setActiveTab('designs')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 shrink-0 whitespace-nowrap ${
             activeTab === 'designs'
               ? 'bg-blue-600 text-white shadow-xs'
               : 'bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'
@@ -498,7 +498,7 @@ export function AdminDashboard() {
 
         <button
           onClick={() => setActiveTab('blogs')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 shrink-0 whitespace-nowrap ${
             activeTab === 'blogs'
               ? 'bg-blue-600 text-white shadow-xs'
               : 'bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'

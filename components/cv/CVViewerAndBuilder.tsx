@@ -801,14 +801,22 @@ export function CVViewerAndBuilder() {
       )}
 
       {/* Render Active Template in Canvas */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400 no-print px-2 font-mono">
-          <span>Active Template: <strong className="text-neutral-900 dark:text-white uppercase">{activeTemplate}</strong></span>
-          <span>Tip: Click &quot;Download PDF&quot; above to save clean PDF directly</span>
+      <div className="space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-neutral-500 dark:text-neutral-400 no-print px-1 font-mono">
+          <span className="flex items-center gap-1.5">
+            <span>Active Template:</span>
+            <strong className="text-neutral-900 dark:text-white uppercase px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800">{activeTemplate}</strong>
+          </span>
+          <div className="flex items-center gap-2">
+            <span className="inline-block md:hidden text-[11px] text-blue-600 dark:text-purple-400 font-sans">
+              👉 Swipe horizontally to inspect full A4 page
+            </span>
+            <span className="hidden md:inline">Tip: Click &quot;Download PDF&quot; above to save clean PDF directly</span>
+          </div>
         </div>
 
-        <div className="overflow-x-auto pb-6">
-          <div id="cv-print-container" className="min-w-[800px] max-w-[850px] mx-auto transition-all duration-300">
+        <div className="w-full overflow-x-auto pb-6 rounded-2xl border border-neutral-200/60 dark:border-neutral-800/60 bg-neutral-100/40 dark:bg-neutral-950/40 p-2 sm:p-4 touch-pan-x">
+          <div id="cv-print-container" className="min-w-[780px] max-w-[850px] mx-auto transition-all duration-300 shadow-sm rounded-xl overflow-hidden">
             {activeTemplate === 'original' && <TemplateOriginalPdf data={cvData} />}
             {activeTemplate === 'obsidian' && <TemplateObsidianCyber data={cvData} />}
             {activeTemplate === 'swiss' && <TemplateSwissModern data={cvData} />}

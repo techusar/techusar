@@ -268,8 +268,8 @@ export function InvoiceGenerator() {
 
         {/* Line Items Table */}
         <div className="space-y-3">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs border-collapse">
+          <div className="w-full overflow-x-auto pb-1 -mx-1 px-1">
+            <table className="w-full min-w-[500px] text-left text-xs border-collapse">
               <thead>
                 <tr className="border-b-2 border-neutral-300 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 font-sans text-xs font-semibold">
                   <th className="py-2.5 px-2">Description</th>
