@@ -14,8 +14,7 @@ import { projects } from '@/data/projects';
 import { themes } from '@/data/themes';
 import { designProjects } from '@/data/design-projects';
 import { Theme, DesignProject, ThemeCategory } from '@/types';
-import { ArrowRight, Sparkles, Layers, ShoppingBag, Palette, Code2, Compass, CheckCircle2, Terminal, Wrench, FileText, Receipt, TrendingUp, Braces, Calculator, Bot, MessageSquare, BookOpen } from 'lucide-react';
-import { CodeVectorInspector } from '@/components/developer/CodeVectorInspector';
+import { ArrowRight, Sparkles, Layers, ShoppingBag, Palette, Code2, Compass, CheckCircle2, Terminal, Wrench, FileText, Receipt, TrendingUp, Braces, Calculator, Bot, MessageSquare, BookOpen, ExternalLink, Globe, Shield, Zap, Star } from 'lucide-react';
 import { getAllBlogPosts } from '@/lib/blog';
 
 export default function HomePage() {
@@ -161,22 +160,162 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* DEVELOPER SIGNATURE: Live Code & Vector Inspector */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-800/60 text-xs font-mono text-blue-600 dark:text-blue-400">
-            <Terminal className="w-3.5 h-3.5" />
-            <span>Developer Signature // Peek Under The Hood</span>
+      {/* TECHUSAR OFFICIAL PLATFORMS & ECOSYSTEM */}
+      <section id="ecosystem" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-800/60 text-xs font-mono font-semibold text-blue-700 dark:text-blue-300">
+            <Globe className="w-3.5 h-3.5" />
+            <span>TECHUSAR DIGITAL ECOSYSTEM</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950 dark:text-white">
-            Architecture & Vector Inspection
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-neutral-950 dark:text-white">
+            Official Platforms &amp; Software Hubs
           </h2>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
-            Switch between the live rendered UI, production TypeScript source, and mathematical Bézier vectors. Built with zero runtime fluff.
+          <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            TechUsar is an integrated digital ecosystem providing high-performance website templates, free online developer &amp; accountant utility tools, and custom AI automation systems.
           </p>
         </div>
 
-        <CodeVectorInspector />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Card 1: tools.techusar.com */}
+          <div className="p-8 sm:p-10 rounded-3xl border-2 border-blue-500/30 bg-gradient-to-br from-blue-50/70 via-white to-sky-50/40 dark:from-blue-950/40 dark:via-neutral-900/90 dark:to-neutral-950 space-y-6 flex flex-col justify-between hover:border-blue-500/60 transition-all shadow-md group">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-mono font-bold shadow-xs">
+                    <Wrench className="w-4 h-4" />
+                  </span>
+                  <div>
+                    <span className="text-[11px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider block">
+                      Free Utilities Platform
+                    </span>
+                    <span className="text-base font-bold text-neutral-950 dark:text-white">
+                      tools.techusar.com
+                    </span>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 text-xs font-mono font-semibold">
+                  100% Free
+                </span>
+              </div>
+
+              <h3 className="text-2xl font-bold tracking-tight text-neutral-950 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                TechUsar Tools Suite
+              </h3>
+
+              <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                A dedicated, client-side online tools portal built for accountants, web developers, freelancers, and small business owners. Instant computations with zero sign-up and zero tracking.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-neutral-800/80 border border-neutral-200/90 dark:border-neutral-700/80 flex items-center gap-2 text-xs">
+                  <Receipt className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
+                  <span className="font-semibold text-neutral-900 dark:text-white">PDF Invoice &amp; Tax Generator</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-neutral-800/80 border border-neutral-200/90 dark:border-neutral-700/80 flex items-center gap-2 text-xs">
+                  <TrendingUp className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                  <span className="font-semibold text-neutral-900 dark:text-white">Profit Margin &amp; Markup Calc</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-neutral-800/80 border border-neutral-200/90 dark:border-neutral-700/80 flex items-center gap-2 text-xs">
+                  <Braces className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0" />
+                  <span className="font-semibold text-neutral-900 dark:text-white">JSON Formatter &amp; Validator</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-neutral-800/80 border border-neutral-200/90 dark:border-neutral-700/80 flex items-center gap-2 text-xs">
+                  <Calculator className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                  <span className="font-semibold text-neutral-900 dark:text-white">Loan EMI &amp; Hourly Rates</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-neutral-200/70 dark:border-neutral-800/80 flex flex-wrap items-center gap-3">
+              <a
+                href="https://tools.techusar.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold font-mono tracking-wide transition-all shadow-md inline-flex items-center gap-2"
+              >
+                <span>VISIT TOOLS.TECHUSAR.COM</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+              <Link
+                href="/tools"
+                className="px-4 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 hover:border-blue-500 text-xs font-mono font-medium transition-all inline-flex items-center gap-1.5"
+              >
+                <span>Browse Embedded Tools</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Card 2: tamplates.techusar.com */}
+          <div className="p-8 sm:p-10 rounded-3xl border-2 border-emerald-500/30 bg-gradient-to-br from-emerald-50/70 via-white to-teal-50/40 dark:from-emerald-950/40 dark:via-neutral-900/90 dark:to-neutral-950 space-y-6 flex flex-col justify-between hover:border-emerald-500/60 transition-all shadow-md group">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-mono font-bold shadow-xs">
+                    <ShoppingBag className="w-4 h-4" />
+                  </span>
+                  <div>
+                    <span className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider block">
+                      Templates Marketplace
+                    </span>
+                    <span className="text-base font-bold text-neutral-950 dark:text-white">
+                      tamplates.techusar.com
+                    </span>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-full bg-blue-100 dark:bg-blue-950/70 text-blue-700 dark:text-blue-300 text-xs font-mono font-semibold">
+                  Next.js 15 Ready
+                </span>
+              </div>
+
+              <h3 className="text-2xl font-bold tracking-tight text-neutral-950 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                TechUsar Themes &amp; Starters
+              </h3>
+
+              <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                Production-grade website architectures and UI kits engineered with Next.js 15 App Router, TypeScript, and Tailwind CSS. Built to launch client sites, startups, SaaS portals, and personal portfolios at lightning speed.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-neutral-800/80 border border-neutral-200/90 dark:border-neutral-700/80 flex items-center gap-2 text-xs">
+                  <Layers className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                  <span className="font-semibold text-neutral-900 dark:text-white">SaaS &amp; Admin Dashboards</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-neutral-800/80 border border-neutral-200/90 dark:border-neutral-700/80 flex items-center gap-2 text-xs">
+                  <Zap className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                  <span className="font-semibold text-neutral-900 dark:text-white">High-Converting Landing Pages</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-neutral-800/80 border border-neutral-200/90 dark:border-neutral-700/80 flex items-center gap-2 text-xs">
+                  <Code2 className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
+                  <span className="font-semibold text-neutral-900 dark:text-white">Developer Portfolios &amp; CVs</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-neutral-800/80 border border-neutral-200/90 dark:border-neutral-700/80 flex items-center gap-2 text-xs">
+                  <Shield className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0" />
+                  <span className="font-semibold text-neutral-900 dark:text-white">Commercial License Included</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-neutral-200/70 dark:border-neutral-800/80 flex flex-wrap items-center gap-3">
+              <a
+                href="https://tamplates.techusar.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold font-mono tracking-wide transition-all shadow-md inline-flex items-center gap-2"
+              >
+                <span>VISIT TAMPLATES.TECHUSAR.COM</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+              <Link
+                href="/templates"
+                className="px-4 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 hover:border-emerald-500 text-xs font-mono font-medium transition-all inline-flex items-center gap-1.5"
+              >
+                <span>Browse All Templates</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* FEATURED: Resume Engine & Free Traffic Utilities Suite */}

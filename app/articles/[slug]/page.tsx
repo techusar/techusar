@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   const article = articlesData.find((a) => a.slug === slug);
   if (!article) return { title: 'Article Not Found — TechUsar' };
 
-  const articleUrl = `https://techusar.com/articles/${article.slug}`;
+  const articleUrl = `https://techusar.dev/articles/${article.slug}`;
 
   return {
     title: `${article.title} — TechUsar`,

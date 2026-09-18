@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Logo } from './Logo';
-import { Github, Linkedin, Instagram, Youtube, Mail, ArrowUpRight, Circle } from 'lucide-react';
+import { Github, Linkedin, Twitter, Mail, ArrowUpRight, Circle } from 'lucide-react';
 import { useSiteSettings } from '@/components/providers/SiteDataProvider';
 
 export function Footer() {
@@ -15,7 +15,8 @@ export function Footer() {
   const displayPhone = settings.displayPhone || '0331-8917330';
   const whatsappUrl = settings.whatsapp || 'https://wa.me/923318917330';
   const githubUrl = settings.githubUrl || 'https://github.com/techusar';
-  const linkedinUrl = settings.linkedinUrl || 'https://linkedin.com';
+  const linkedinUrl = settings.linkedinUrl || 'https://www.linkedin.com/in/hafiz-muhammad-usman-514888397/';
+  const twitterUrl = settings.twitterUrl || 'https://x.com/techusar';
 
   return (
     <footer
@@ -43,42 +44,49 @@ export function Footer() {
           <div className="md:col-span-4 grid grid-cols-2 gap-8">
             <div>
               <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-neutral-600 dark:text-neutral-400 mb-3">
-                Services &amp; Templates
+                Ecosystem &amp; Templates
               </h4>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link href="/web-design" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                    Web Design
+                  <a
+                    href="https://tamplates.techusar.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 hover:underline font-semibold"
+                  >
+                    <span>tamplates.techusar.com</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://tools.techusar.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline font-semibold"
+                  >
+                    <span>tools.techusar.com</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+                </li>
+                <li>
+                  <Link href="/templates" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
+                    Next.js Templates Hub
                   </Link>
                 </li>
                 <li>
-                  <Link href="/web-development" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                    Web Development
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/graphic-design" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                    Graphic Design
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/ui-ux-design" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                    UI/UX Design
+                  <Link href="/tools" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
+                    Free Developer &amp; Invoicing Tools
                   </Link>
                 </li>
                 <li>
                   <Link href="/ai-bot-development" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                    AI Bot Development
+                    AI Bot Development (WhatsApp/Telegram)
                   </Link>
                 </li>
                 <li>
-                  <Link href="/templates" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors font-medium">
-                    Website Templates
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/templates/free" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors text-xs text-emerald-600 dark:text-emerald-400">
-                    • Free Templates (MIT)
+                  <Link href="/graphic-design" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
+                    Graphic Design &amp; Branding
                   </Link>
                 </li>
               </ul>
@@ -86,47 +94,37 @@ export function Footer() {
 
             <div>
               <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-neutral-600 dark:text-neutral-400 mb-3">
-                Work &amp; Utilities
+                Portfolio &amp; Profile
               </h4>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link href="/projects" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                    Featured Projects
-                  </Link>
-                </li>
-                <li>
                   <Link href="/work" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                    Selected Work
+                    Selected Client Work
                   </Link>
                 </li>
                 <li>
-                  <Link href="/tools" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors font-medium">
-                    Free Tools Hub
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/playground" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                    Token Playground
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/blog" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                    Technical Blog
+                  <Link href="/cv" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors font-medium">
+                    Hafiz Usman CV &amp; Resume
                   </Link>
                 </li>
                 <li>
                   <Link href="/about" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                    About {brandName}
+                    About Hafiz Usman (5+ Yrs Exp)
                   </Link>
                 </li>
                 <li>
-                  <Link href="/cv" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                    CV &amp; Resume Builder
+                  <Link href="/services" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
+                    Services &amp; Architecture
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/blog" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
+                    Technical Blog &amp; Guides
                   </Link>
                 </li>
                 <li>
                   <Link href="/contact" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                    Contact &amp; Inquiry
+                    Contact &amp; Custom Inquiry
                   </Link>
                 </li>
               </ul>
@@ -140,6 +138,26 @@ export function Footer() {
             </h4>
             <div className="flex flex-col space-y-2 text-sm">
               <a
+                href={linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors group"
+              >
+                <Linkedin className="w-4 h-4 text-neutral-600 dark:text-neutral-400 group-hover:text-[#0A66C2] dark:group-hover:text-[#0A66C2]" />
+                <span>LinkedIn</span>
+                <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+              <a
+                href={twitterUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors group"
+              >
+                <Twitter className="w-4 h-4 text-neutral-600 dark:text-neutral-400 group-hover:text-sky-500 dark:group-hover:text-sky-400" />
+                <span>Twitter / X</span>
+                <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+              <a
                 href={githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -147,16 +165,6 @@ export function Footer() {
               >
                 <Github className="w-4 h-4 text-neutral-600 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white" />
                 <span>GitHub</span>
-                <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </a>
-              <a
-                href={linkedinUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors group"
-              >
-                <Linkedin className="w-4 h-4 text-neutral-600 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white" />
-                <span>LinkedIn</span>
                 <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
               </a>
               <a

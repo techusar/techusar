@@ -17,13 +17,13 @@ export const metadata: Metadata = {
     'Graphic designer Karachi',
   ],
   alternates: {
-    canonical: 'https://techusar.com/about',
+    canonical: 'https://techusar.dev/about',
   },
   openGraph: {
     title: 'About Hafiz Muhammad Usman — TechUsar',
     description:
       'Dual-craft designer and full-stack developer with 5 years in graphic design and 2 years in software engineering.',
-    url: 'https://techusar.com/about',
+    url: 'https://techusar.dev/about',
   },
 };
 
@@ -38,10 +38,11 @@ export default function AboutPage() {
       jobTitle: 'Independent Graphic Designer & Full-Stack Software Engineer',
       description:
         'Hafiz Muhammad Usman is a dual-craft designer and full-stack software engineer based in Karachi, Pakistan, specializing in Next.js 15, TypeScript, custom AI bots, and brand identity design.',
-      url: 'https://techusar.com/about',
+      url: 'https://techusar.dev/about',
       sameAs: [
+        'https://www.linkedin.com/in/hafiz-muhammad-usman-514888397/',
         'https://github.com/techusar',
-        'https://linkedin.com/in/techusar',
+        'https://x.com/techusar',
         'https://wa.me/923318917330',
       ],
       address: {

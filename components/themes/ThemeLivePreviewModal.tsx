@@ -173,7 +173,7 @@ export function ThemeLivePreviewModal({
               <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
             </div>
             <div className="px-3 py-0.5 rounded-md bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 text-[10px] font-mono text-neutral-500 truncate max-w-[160px] sm:max-w-[240px]">
-              https://techusar.com/{theme.slug}
+              https://demo.techusar.dev/{theme.slug}
             </div>
             <div className="text-[10px] font-mono text-neutral-400 uppercase">
               {device}

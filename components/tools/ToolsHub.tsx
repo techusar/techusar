@@ -130,6 +130,43 @@ export function ToolsHub() {
 
   return (
     <div className="space-y-8">
+      {/* Ecosystem Subdomain Announcement Card */}
+      <div className="p-4 sm:p-5 rounded-2xl border-2 border-blue-500/30 bg-linear-to-r from-blue-50/80 via-indigo-50/50 to-purple-50/40 dark:from-blue-950/40 dark:via-indigo-950/20 dark:to-purple-950/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs no-print">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full bg-blue-600 text-white text-[10px] font-mono font-bold tracking-wider uppercase">
+              Official Hub
+            </span>
+            <span className="text-xs font-mono font-bold text-neutral-900 dark:text-white">
+              tools.techusar.com
+            </span>
+          </div>
+          <p className="text-xs text-neutral-600 dark:text-neutral-400">
+            Dedicated free utilities engine for developers, accountants &amp; founders. Zero tracking, client-side execution.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <a
+            href="https://tools.techusar.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-xs inline-flex items-center gap-1.5"
+          >
+            <span>Open tools.techusar.com</span>
+            <Wrench className="w-3.5 h-3.5" />
+          </a>
+          <a
+            href="https://tamplates.techusar.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 hover:border-emerald-500 text-xs font-semibold transition-all inline-flex items-center gap-1.5"
+          >
+            <span>tamplates.techusar.com</span>
+          </a>
+        </div>
+      </div>
+
       {/* Category filter & search toolbar */}
       <div className="p-4 sm:p-6 rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white/70 dark:bg-neutral-900/60 backdrop-blur-md shadow-xs space-y-4 no-print">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">

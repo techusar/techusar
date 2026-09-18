@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { getDbMedia, saveDbMedia, deleteDbMedia, isDbConfigured } from '@/lib/db';
 
-const MEDIA_FILE = path.join(process.cwd(), 'data', 'uploaded-media.json');
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const UPLOADS_DIR = path.join(process.cwd(), 'public', 'uploads');
 
 export interface MediaItem {
@@ -15,36 +18,13 @@ export interface MediaItem {
   createdAt: string;
 }
 
-function getMediaRegistry(): MediaItem[] {
-  try {
-    if (fs.existsSync(MEDIA_FILE)) {
-      const content = fs.readFileSync(MEDIA_FILE, 'utf-8');
-      const parsed = JSON.parse(content);
-      return parsed.media || [];
-    }
-  } catch (err) {
-    console.error('Error reading media registry:', err);
-  }
-  return [];
-}
-
-function saveMediaRegistry(media: MediaItem[]) {
-  try {
-    const dir = path.dirname(MEDIA_FILE);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    fs.writeFileSync(MEDIA_FILE, JSON.stringify({ media }, null, 2), 'utf-8');
-    return true;
-  } catch (err) {
-    console.error('Error saving media registry:', err);
-    return false;
-  }
-}
-
 export async function GET() {
-  const media = getMediaRegistry();
-  return NextResponse.json({ success: true, media }, { status: 200 });
+  const media = await getDbMedia();
+  return NextResponse.json({
+    success: true,
+    source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+    media,
+  });
 }
 
 export async function POST(req: NextRequest) {
@@ -91,11 +71,13 @@ export async function POST(req: NextRequest) {
         createdAt: new Date().toISOString(),
       };
 
-      const existing = getMediaRegistry();
-      const updated = [newMedia, ...existing];
-      saveMediaRegistry(updated);
+      await saveDbMedia(newMedia);
 
-      return NextResponse.json({ success: true, media: newMedia }, { status: 201 });
+      return NextResponse.json({
+        success: true,
+        source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+        media: newMedia,
+      }, { status: 201 });
     }
 
     // Handle JSON payload (base64 data URL)
@@ -142,11 +124,13 @@ export async function POST(req: NextRequest) {
       createdAt: new Date().toISOString(),
     };
 
-    const existing = getMediaRegistry();
-    const updated = [newMedia, ...existing];
-    saveMediaRegistry(updated);
+    await saveDbMedia(newMedia);
 
-    return NextResponse.json({ success: true, media: newMedia }, { status: 201 });
+    return NextResponse.json({
+      success: true,
+      source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+      media: newMedia,
+    }, { status: 201 });
   } catch (err) {
     console.error('Error handling upload:', err);
     return NextResponse.json({ error: 'Failed to process file upload' }, { status: 500 });
@@ -162,7 +146,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'Missing media ID' }, { status: 400 });
     }
 
-    const existing = getMediaRegistry();
+    const existing = await getDbMedia();
     const itemToDelete = existing.find((m) => m.id === id);
 
     if (!itemToDelete) {
@@ -179,10 +163,13 @@ export async function DELETE(req: NextRequest) {
       }
     }
 
-    const filtered = existing.filter((m) => m.id !== id);
-    saveMediaRegistry(filtered);
+    await deleteDbMedia(id);
 
-    return NextResponse.json({ success: true, deletedId: id }, { status: 200 });
+    return NextResponse.json({
+      success: true,
+      source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+      deletedId: id,
+    }, { status: 200 });
   } catch (err) {
     console.error('Error deleting media:', err);
     return NextResponse.json({ error: 'Failed to delete media' }, { status: 500 });

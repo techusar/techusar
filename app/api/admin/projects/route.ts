@@ -1,46 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
 import { Project } from '@/types';
+import { getDbProjects, saveDbProject, deleteDbProject, isDbConfigured } from '@/lib/db';
 
-const PROJECTS_FILE = path.join(process.cwd(), 'data', 'projects.json');
-
-function getProjects(): Project[] {
-  try {
-    if (fs.existsSync(PROJECTS_FILE)) {
-      const content = fs.readFileSync(PROJECTS_FILE, 'utf-8');
-      const parsed = JSON.parse(content);
-      return parsed.projects || [];
-    }
-  } catch (err) {
-    console.error('Error reading projects.json:', err);
-  }
-  return [];
-}
-
-function saveProjects(projects: Project[]) {
-  try {
-    const dir = path.dirname(PROJECTS_FILE);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    fs.writeFileSync(PROJECTS_FILE, JSON.stringify({ projects }, null, 2), 'utf-8');
-    return true;
-  } catch (err) {
-    console.error('Error saving projects.json:', err);
-    return false;
-  }
-}
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function GET() {
-  const projects = getProjects();
-  return NextResponse.json({ success: true, projects }, { status: 200 });
+  const projects = await getDbProjects();
+  return NextResponse.json({
+    success: true,
+    source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+    projects,
+  });
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const existing = getProjects();
 
     if (!body.title) {
       return NextResponse.json({ error: 'Title is required' }, { status: 400 });
@@ -54,8 +30,6 @@ export async function POST(req: NextRequest) {
         .replace(/(^-|-$)/g, '');
 
     const id = body.id || slug;
-
-    const existingIndex = existing.findIndex((p) => p.id === id || p.slug === slug);
 
     const projectData: Project = {
       id,
@@ -96,20 +70,16 @@ export async function POST(req: NextRequest) {
       ],
     };
 
-    let updatedProjects: Project[];
-    if (existingIndex >= 0) {
-      updatedProjects = [...existing];
-      updatedProjects[existingIndex] = { ...existing[existingIndex], ...projectData };
-    } else {
-      updatedProjects = [projectData, ...existing];
-    }
-
-    const saved = saveProjects(updatedProjects);
+    const saved = await saveDbProject(projectData);
     if (!saved) {
-      return NextResponse.json({ error: 'Failed to write projects to disk' }, { status: 500 });
+      return NextResponse.json({ error: 'Failed to write project to database' }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, project: projectData }, { status: 201 });
+    return NextResponse.json({
+      success: true,
+      source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+      project: projectData,
+    }, { status: 201 });
   } catch (err) {
     console.error('Error saving project:', err);
     return NextResponse.json({ error: 'Failed to save project' }, { status: 500 });
@@ -125,15 +95,16 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'Missing project ID' }, { status: 400 });
     }
 
-    const existing = getProjects();
-    const filtered = existing.filter((p) => p.id !== id && p.slug !== id);
-
-    if (filtered.length === existing.length) {
-      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+    const deleted = await deleteDbProject(id);
+    if (!deleted) {
+      return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 });
     }
 
-    saveProjects(filtered);
-    return NextResponse.json({ success: true, deletedId: id }, { status: 200 });
+    return NextResponse.json({
+      success: true,
+      source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+      deletedId: id,
+    }, { status: 200 });
   } catch (err) {
     console.error('Error deleting project:', err);
     return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 });

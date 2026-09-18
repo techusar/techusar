@@ -16,13 +16,13 @@ export const metadata: Metadata = {
     'Web architecture essays',
   ],
   alternates: {
-    canonical: 'https://techusar.com/articles',
+    canonical: 'https://techusar.dev/articles',
   },
   openGraph: {
     title: 'Articles & Design Engineering Essays — TechUsar',
     description:
       'Essays on the intersection of Swiss graphic discipline and modern software engineering.',
-    url: 'https://techusar.com/articles',
+    url: 'https://techusar.dev/articles',
   },
 };
 
@@ -33,7 +33,7 @@ export default function ArticlesPage() {
     name: 'Articles & Design Engineering Essays — TechUsar',
     description:
       'Essays on Swiss typography, zero-drift design systems, and full-stack engineering.',
-    url: 'https://techusar.com/articles',
+    url: 'https://techusar.dev/articles',
     mainEntity: {
       '@type': 'ItemList',
       itemListElement: articlesData.map((article, index) => ({
@@ -43,7 +43,7 @@ export default function ArticlesPage() {
           '@type': 'Article',
           headline: article.title,
           description: article.excerpt,
-          url: `https://techusar.com/articles/${article.slug}`,
+          url: `https://techusar.dev/articles/${article.slug}`,
           author: {
             '@type': 'Person',
             name: 'Hafiz Muhammad Usman',

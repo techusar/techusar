@@ -24,6 +24,9 @@ import {
   Lock,
   Layers,
   ChevronRight,
+  Linkedin,
+  Github,
+  Twitter,
 } from 'lucide-react';
 import { useSiteSettings } from '@/components/providers/SiteDataProvider';
 
@@ -254,6 +257,40 @@ export function HeroSection() {
                 <Download className="w-3.5 h-3.5" />
                 <span>CV</span>
               </Link>
+
+              {/* Social Channels Quick Links */}
+              <div className="flex items-center gap-1.5 pl-0 sm:pl-2 sm:border-l border-neutral-200 dark:border-neutral-800">
+                <a
+                  href={settings.linkedinUrl || "https://www.linkedin.com/in/hafiz-muhammad-usman-514888397/"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 min-w-[40px] rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 hover:border-blue-500/50 bg-white/80 dark:bg-neutral-900/80 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 hover:text-[#0A66C2] transition-colors flex items-center justify-center"
+                  title="LinkedIn Profile: Hafiz Muhammad Usman"
+                  aria-label="LinkedIn Profile"
+                >
+                  <Linkedin className="w-4 h-4" />
+                </a>
+                <a
+                  href={settings.twitterUrl || "https://x.com/techusar"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 min-w-[40px] rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 hover:border-sky-500/50 bg-white/80 dark:bg-neutral-900/80 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 hover:text-sky-500 transition-colors flex items-center justify-center"
+                  title="Twitter / X Profile: @techusar"
+                  aria-label="Twitter / X Profile"
+                >
+                  <Twitter className="w-4 h-4" />
+                </a>
+                <a
+                  href={settings.githubUrl || "https://github.com/techusar"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 min-w-[40px] rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 hover:border-neutral-500/50 bg-white/80 dark:bg-neutral-900/80 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors flex items-center justify-center"
+                  title="GitHub Profile: @techusar"
+                  aria-label="GitHub Profile"
+                >
+                  <Github className="w-4 h-4" />
+                </a>
+              </div>
             </motion.div>
 
             {/* 5. Discipline & Architecture Metadata Ticker */}
@@ -324,7 +361,7 @@ export function HeroSection() {
                     {/* Clean SSL Domain Pill */}
                     <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-md bg-neutral-200/50 dark:bg-neutral-900/80 border border-neutral-200/80 dark:border-white/5 text-[11px] font-mono text-neutral-600 dark:text-neutral-400">
                       <Lock className="w-2.5 h-2.5 text-emerald-500" />
-                      <span>techusar.com/system-core</span>
+                      <span>techusar.dev/system-core</span>
                     </div>
                   </div>
 

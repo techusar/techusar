@@ -15,13 +15,13 @@ export const metadata: Metadata = {
     'TechUsar WhatsApp contact',
   ],
   alternates: {
-    canonical: 'https://techusar.com/contact',
+    canonical: 'https://techusar.dev/contact',
   },
   openGraph: {
     title: 'Contact & Hire Hafiz Muhammad Usman — TechUsar',
     description:
       'Available for custom AI agents, automated bots, full-stack software contracts, and design systems.',
-    url: 'https://techusar.com/contact',
+    url: 'https://techusar.dev/contact',
   },
 };
 
@@ -136,42 +136,54 @@ export default function ContactPage() {
             </div>
             <div className="grid grid-cols-2 gap-2">
               <a
-                href="https://github.com"
+                href="https://www.linkedin.com/in/hafiz-muhammad-usman-514888397/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs text-neutral-700 dark:text-neutral-300 transition-colors"
+                className="flex items-center justify-between p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-blue-500/50 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs font-semibold text-neutral-800 dark:text-neutral-200 transition-colors"
               >
-                <span>GitHub</span>
+                <div className="flex items-center gap-1.5">
+                  <Linkedin className="w-3.5 h-3.5 text-[#0A66C2]" />
+                  <span>LinkedIn</span>
+                </div>
                 <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400" />
               </a>
 
               <a
-                href="https://twitter.com"
+                href="https://x.com/techusar"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs text-neutral-700 dark:text-neutral-300 transition-colors"
+                className="flex items-center justify-between p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-sky-500/50 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs font-semibold text-neutral-800 dark:text-neutral-200 transition-colors"
               >
-                <span>X / Twitter</span>
+                <div className="flex items-center gap-1.5">
+                  <Twitter className="w-3.5 h-3.5 text-sky-500" />
+                  <span>X / Twitter</span>
+                </div>
                 <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400" />
               </a>
 
               <a
-                href="https://linkedin.com"
+                href="https://github.com/techusar"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs text-neutral-700 dark:text-neutral-300 transition-colors"
+                className="flex items-center justify-between p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-neutral-500/50 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs font-semibold text-neutral-800 dark:text-neutral-200 transition-colors"
               >
-                <span>LinkedIn</span>
+                <div className="flex items-center gap-1.5">
+                  <Github className="w-3.5 h-3.5 text-neutral-700 dark:text-neutral-300" />
+                  <span>GitHub</span>
+                </div>
                 <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400" />
               </a>
 
               <a
-                href="https://dribbble.com"
+                href="https://wa.me/923318917330"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs text-neutral-700 dark:text-neutral-300 transition-colors"
+                className="flex items-center justify-between p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-emerald-500/50 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs font-semibold text-emerald-600 dark:text-emerald-400 transition-colors"
               >
-                <span>Dribbble</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <span>WhatsApp</span>
+                </div>
                 <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400" />
               </a>
             </div>

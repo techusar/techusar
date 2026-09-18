@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
+import {
+  getDbSubmissions,
+  saveDbSubmission,
+  deleteDbSubmission,
+  isDbConfigured,
+} from '@/lib/db';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export interface FormSubmission {
   id: string;
@@ -19,22 +26,7 @@ export interface FormSubmission {
   whatsappUrl?: string;
 }
 
-const SUBMISSIONS_FILE = path.join(process.cwd(), 'data', 'submissions.json');
-const ANALYTICS_FILE = path.join(process.cwd(), 'data', 'analytics.json');
 const ADMIN_PHONE = '923318917330';
-
-async function readSubmissions(): Promise<FormSubmission[]> {
-  try {
-    const data = await fs.readFile(SUBMISSIONS_FILE, 'utf-8');
-    return JSON.parse(data);
-  } catch {
-    return [];
-  }
-}
-
-async function writeSubmissions(submissions: FormSubmission[]): Promise<void> {
-  await fs.writeFile(SUBMISSIONS_FILE, JSON.stringify(submissions, null, 2), 'utf-8');
-}
 
 // Generate encoded WhatsApp link for instant client-side or admin dispatch
 function buildWhatsAppUrl(submission: Partial<FormSubmission>): string {
@@ -65,46 +57,8 @@ function buildWhatsAppUrl(submission: Partial<FormSubmission>): string {
   return `https://wa.me/${ADMIN_PHONE}?text=${encoded}`;
 }
 
-// Update analytics when a form is submitted
-async function incrementFormsCount(sourcePage?: string, projectType?: string) {
-  try {
-    const raw = await fs.readFile(ANALYTICS_FILE, 'utf-8');
-    const analytics = JSON.parse(raw);
-    const today = new Date().toISOString().split('T')[0];
-
-    analytics.totalClicks = (analytics.totalClicks || 0) + 1;
-    analytics.clicksByTarget = analytics.clicksByTarget || {};
-    analytics.clicksByTarget['contact_form_submit'] = (analytics.clicksByTarget['contact_form_submit'] || 0) + 1;
-
-    analytics.dailyStats = analytics.dailyStats || {};
-    if (!analytics.dailyStats[today]) {
-      analytics.dailyStats[today] = { visits: 1, unique: 1, clicks: 1, formsFilled: 1 };
-    } else {
-      analytics.dailyStats[today].formsFilled = (analytics.dailyStats[today].formsFilled || 0) + 1;
-      analytics.dailyStats[today].clicks = (analytics.dailyStats[today].clicks || 0) + 1;
-    }
-
-    analytics.recentClicks = analytics.recentClicks || [];
-    analytics.recentClicks.unshift({
-      id: `clk_${Date.now()}`,
-      element: 'form_submission',
-      label: `Form submitted: ${projectType || 'General Inquiry'}`,
-      page: sourcePage || '/contact',
-      timestamp: new Date().toISOString(),
-    });
-
-    if (analytics.recentClicks.length > 100) {
-      analytics.recentClicks = analytics.recentClicks.slice(0, 100);
-    }
-
-    await fs.writeFile(ANALYTICS_FILE, JSON.stringify(analytics, null, 2), 'utf-8');
-  } catch {
-    // Non-blocking
-  }
-}
-
 export async function GET() {
-  const submissions = await readSubmissions();
+  const submissions = await getDbSubmissions();
 
   // Compute breakdown of "kon kya chahta he" (user demands analysis)
   const demandsBreakdown: Record<string, number> = {};
@@ -125,13 +79,14 @@ export async function GET() {
       budgetBreakdown[s.budget] = (budgetBreakdown[s.budget] || 0) + 1;
     }
 
-    if (s.status && statusCounts[s.status] !== undefined) {
-      statusCounts[s.status]++;
+    if (s.status && statusCounts[s.status as keyof typeof statusCounts] !== undefined) {
+      statusCounts[s.status as keyof typeof statusCounts]++;
     }
   });
 
   return NextResponse.json({
     success: true,
+    source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
     total: submissions.length,
     statusCounts,
     demandsBreakdown,
@@ -149,7 +104,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Name and Email are required' }, { status: 400 });
     }
 
-    const submissions = await readSubmissions();
     const id = `sub_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     const createdAt = new Date().toISOString();
 
@@ -179,12 +133,11 @@ export async function POST(req: NextRequest) {
       whatsappUrl,
     };
 
-    submissions.unshift(newSubmission);
-    await writeSubmissions(submissions);
-    await incrementFormsCount(sourcePage, projectType);
+    await saveDbSubmission(newSubmission);
 
     return NextResponse.json({
       success: true,
+      source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
       submission: newSubmission,
       whatsappUrl,
       message: 'Inquiry saved successfully in database and prepared for WhatsApp.',
@@ -202,17 +155,24 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'ID is required' }, { status: 400 });
     }
 
-    const submissions = await readSubmissions();
-    const index = submissions.findIndex((s) => s.id === id);
-    if (index === -1) {
+    const submissions = await getDbSubmissions();
+    const target = submissions.find((s) => s.id === id);
+    if (!target) {
       return NextResponse.json({ success: false, error: 'Submission not found' }, { status: 404 });
     }
 
-    if (status) submissions[index].status = status;
-    if (notes !== undefined) submissions[index].notes = notes;
+    const updated = {
+      ...target,
+      ...(status ? { status } : {}),
+      ...(notes !== undefined ? { notes } : {}),
+    };
 
-    await writeSubmissions(submissions);
-    return NextResponse.json({ success: true, submission: submissions[index] });
+    await saveDbSubmission(updated);
+    return NextResponse.json({
+      success: true,
+      source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+      submission: updated,
+    });
   } catch {
     return NextResponse.json({ success: false, error: 'Failed to update submission' }, { status: 500 });
   }
@@ -226,11 +186,14 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'ID is required' }, { status: 400 });
     }
 
-    const submissions = await readSubmissions();
-    const filtered = submissions.filter((s) => s.id !== id);
-    await writeSubmissions(filtered);
+    await deleteDbSubmission(id);
+    const remaining = await getDbSubmissions();
 
-    return NextResponse.json({ success: true, remaining: filtered.length });
+    return NextResponse.json({
+      success: true,
+      source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+      remaining: remaining.length,
+    });
   } catch {
     return NextResponse.json({ success: false, error: 'Failed to delete submission' }, { status: 500 });
   }

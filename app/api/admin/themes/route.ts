@@ -1,49 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
 import { Theme } from '@/types';
-import { themes as defaultThemes } from '@/data/themes';
+import { getDbThemes, saveDbTheme, deleteDbTheme, isDbConfigured } from '@/lib/db';
 
-const THEMES_FILE = path.join(process.cwd(), 'data', 'themes.json');
-
-function getStoredThemes(): Theme[] {
-  try {
-    if (fs.existsSync(THEMES_FILE)) {
-      const content = fs.readFileSync(THEMES_FILE, 'utf-8');
-      const parsed = JSON.parse(content);
-      if (Array.isArray(parsed.themes) && parsed.themes.length > 0) {
-        return parsed.themes;
-      }
-    }
-  } catch (err) {
-    console.error('Error reading themes.json:', err);
-  }
-  return defaultThemes;
-}
-
-function saveThemes(themes: Theme[]) {
-  try {
-    const dir = path.dirname(THEMES_FILE);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    fs.writeFileSync(THEMES_FILE, JSON.stringify({ themes }, null, 2), 'utf-8');
-    return true;
-  } catch (err) {
-    console.error('Error saving themes.json:', err);
-    return false;
-  }
-}
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function GET() {
-  const themes = getStoredThemes();
-  return NextResponse.json({ success: true, themes }, { status: 200 });
+  const themes = await getDbThemes();
+  return NextResponse.json({
+    success: true,
+    source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+    themes,
+  });
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const existing = getStoredThemes();
 
     if (!body.name) {
       return NextResponse.json({ error: 'Name is required' }, { status: 400 });
@@ -57,7 +30,6 @@ export async function POST(req: NextRequest) {
         .replace(/(^-|-$)/g, '');
 
     const id = body.id || slug;
-    const existingIndex = existing.findIndex((t) => t.id === id || t.slug === slug);
 
     const themeData: Theme = {
       id,
@@ -92,7 +64,7 @@ export async function POST(req: NextRequest) {
           body.previewImage ||
           'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop',
       },
-      demoUrl: body.demoUrl || 'https://techusar.com/themes',
+      demoUrl: body.demoUrl || 'https://techusar.dev/themes',
       purchaseUrl: body.purchaseUrl || '',
       features: Array.isArray(body.features)
         ? body.features
@@ -121,20 +93,16 @@ export async function POST(req: NextRequest) {
       },
     };
 
-    let updatedThemes: Theme[];
-    if (existingIndex >= 0) {
-      updatedThemes = [...existing];
-      updatedThemes[existingIndex] = themeData;
-    } else {
-      updatedThemes = [themeData, ...existing];
-    }
-
-    const saved = saveThemes(updatedThemes);
+    const saved = await saveDbTheme(themeData);
     if (!saved) {
-      return NextResponse.json({ error: 'Failed to write themes data' }, { status: 500 });
+      return NextResponse.json({ error: 'Failed to write theme to database' }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, theme: themeData }, { status: 200 });
+    return NextResponse.json({
+      success: true,
+      source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+      theme: themeData,
+    }, { status: 200 });
   } catch (err) {
     console.error('Error updating theme:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
@@ -150,19 +118,16 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 });
     }
 
-    const existing = getStoredThemes();
-    const filtered = existing.filter((t) => t.id !== id && t.slug !== id);
-
-    if (filtered.length === existing.length) {
-      return NextResponse.json({ error: 'Theme not found' }, { status: 404 });
+    const deleted = await deleteDbTheme(id);
+    if (!deleted) {
+      return NextResponse.json({ error: 'Failed to delete theme' }, { status: 500 });
     }
 
-    const saved = saveThemes(filtered);
-    if (!saved) {
-      return NextResponse.json({ error: 'Failed to write themes data' }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, message: 'Theme deleted' }, { status: 200 });
+    return NextResponse.json({
+      success: true,
+      source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+      message: 'Theme deleted',
+    }, { status: 200 });
   } catch (err) {
     console.error('Error deleting theme:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

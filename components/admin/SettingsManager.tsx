@@ -627,7 +627,7 @@ export function SettingsManager({ onSettingsSaved }: SettingsManagerProps) {
               type="text"
               value={formData.githubUrl}
               onChange={(e) => handleChange('githubUrl', e.target.value)}
-              placeholder="https://github.com/techusar"
+              placeholder="https://github.com/TechUsar"
               className="w-full p-2.5 text-xs rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white font-mono"
             />
           </div>
@@ -640,7 +640,20 @@ export function SettingsManager({ onSettingsSaved }: SettingsManagerProps) {
               type="text"
               value={formData.linkedinUrl}
               onChange={(e) => handleChange('linkedinUrl', e.target.value)}
-              placeholder="https://linkedin.com"
+              placeholder="https://www.linkedin.com/in/hafiz-muhammad-usman-514888397/"
+              className="w-full p-2.5 text-xs rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white font-mono"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-neutral-700 dark:text-neutral-300 mb-1">
+              Twitter / X Profile Link
+            </label>
+            <input
+              type="text"
+              value={formData.twitterUrl || ''}
+              onChange={(e) => handleChange('twitterUrl', e.target.value)}
+              placeholder="https://x.com/techusar"
               className="w-full p-2.5 text-xs rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white font-mono"
             />
           </div>

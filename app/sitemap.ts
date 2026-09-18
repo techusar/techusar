@@ -6,7 +6,7 @@ import { designProjects } from '@/data/design-projects';
 import { articlesData } from '@/data/articles';
 import { toolsData } from '@/data/tools-data';
 
-const BASE_URL = 'https://techusar.com';
+const BASE_URL = 'https://techusar.dev';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const currentDate = new Date().toISOString();

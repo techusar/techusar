@@ -15,13 +15,13 @@ export const metadata: Metadata = {
     'Full stack developer CV',
   ],
   alternates: {
-    canonical: 'https://techusar.com/cv',
+    canonical: 'https://techusar.dev/cv',
   },
   openGraph: {
     title: 'Hafiz Muhammad Usman — CV & Free Interactive Resume Builder | TechUsar',
     description:
       'Verified Curriculum Vitae and multi-template vector PDF resume generator engine.',
-    url: 'https://techusar.com/cv',
+    url: 'https://techusar.dev/cv',
     type: 'profile',
   },
 };
@@ -37,7 +37,7 @@ export default function CVPage() {
       jobTitle: 'Graphic Designer & Full-Stack Web Developer',
       description:
         'Dual-craft digital product designer and full-stack software engineer with 5 years in graphic design and production TypeScript / Next.js engineering.',
-      url: 'https://techusar.com/cv',
+      url: 'https://techusar.dev/cv',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Karachi',

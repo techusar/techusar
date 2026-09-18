@@ -10,11 +10,16 @@ interface ThemeSwitcherProps {
 }
 
 export function ThemeSwitcher({ className = '', forceFull = false }: ThemeSwitcherProps) {
-  const { theme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
+
+  const isDark = resolvedTheme === 'dark' || theme === 'dark';
 
   const toggleTheme = () => {
-    if (theme === 'dark') setTheme('light');
-    else setTheme('dark');
+    if (isDark) {
+      setTheme('light');
+    } else {
+      setTheme('dark');
+    }
   };
 
   if (forceFull) {
@@ -88,10 +93,10 @@ export function ThemeSwitcher({ className = '', forceFull = false }: ThemeSwitch
       id="theme-quick-toggle"
       onClick={toggleTheme}
       className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full flex items-center justify-center text-neutral-600 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white bg-neutral-100/80 dark:bg-neutral-900/80 hover:bg-neutral-200/80 dark:hover:bg-neutral-800/80 border border-neutral-200/80 dark:border-neutral-800/80 transition-all duration-150 active:scale-95 shrink-0 ${className}`}
-      title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
+      title={isDark ? 'Switch to Light mode' : 'Switch to Dark mode'}
       aria-label="Toggle theme"
     >
-      {theme === 'dark' ? (
+      {isDark ? (
         <Sun className="w-4 h-4 text-amber-400 transition-transform duration-200 hover:rotate-45" />
       ) : (
         <Moon className="w-4 h-4 text-neutral-700 transition-transform duration-200 hover:-rotate-12" />

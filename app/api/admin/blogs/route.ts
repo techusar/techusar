@@ -1,48 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
 import { BlogPost } from '@/lib/blog';
+import { getDbBlogs, saveDbBlog, deleteDbBlog, isDbConfigured } from '@/lib/db';
 
-const BLOGS_FILE = path.join(process.cwd(), 'data', 'blog-posts.json');
-
-function getStoredBlogs(): BlogPost[] {
-  try {
-    if (fs.existsSync(BLOGS_FILE)) {
-      const content = fs.readFileSync(BLOGS_FILE, 'utf-8');
-      const parsed = JSON.parse(content);
-      if (Array.isArray(parsed)) {
-        return parsed;
-      }
-    }
-  } catch (err) {
-    console.error('Error reading blog-posts.json:', err);
-  }
-  return [];
-}
-
-function saveBlogs(posts: BlogPost[]) {
-  try {
-    const dir = path.dirname(BLOGS_FILE);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    fs.writeFileSync(BLOGS_FILE, JSON.stringify(posts, null, 2), 'utf-8');
-    return true;
-  } catch (err) {
-    console.error('Error saving blog-posts.json:', err);
-    return false;
-  }
-}
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function GET() {
-  const posts = getStoredBlogs();
-  return NextResponse.json({ success: true, posts }, { status: 200 });
+  const posts = await getDbBlogs();
+  return NextResponse.json({
+    success: true,
+    source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+    posts,
+  });
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const existing = getStoredBlogs();
 
     if (!body.title) {
       return NextResponse.json({ error: 'Title is required' }, { status: 400 });
@@ -56,7 +30,6 @@ export async function POST(req: NextRequest) {
         .replace(/(^-|-$)/g, '');
 
     const id = body.id || `post-${Date.now()}`;
-    const existingIndex = existing.findIndex((p) => p.id === id || p.slug === slug);
 
     const postData: BlogPost = {
       id,
@@ -98,20 +71,16 @@ export async function POST(req: NextRequest) {
           ],
     };
 
-    let updatedPosts: BlogPost[];
-    if (existingIndex >= 0) {
-      updatedPosts = [...existing];
-      updatedPosts[existingIndex] = postData;
-    } else {
-      updatedPosts = [postData, ...existing];
-    }
-
-    const saved = saveBlogs(updatedPosts);
+    const saved = await saveDbBlog(postData);
     if (!saved) {
-      return NextResponse.json({ error: 'Failed to write blog posts data' }, { status: 500 });
+      return NextResponse.json({ error: 'Failed to write blog post to database' }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, post: postData }, { status: 200 });
+    return NextResponse.json({
+      success: true,
+      source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+      post: postData,
+    }, { status: 200 });
   } catch (err) {
     console.error('Error updating blog post:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
@@ -127,19 +96,16 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 });
     }
 
-    const existing = getStoredBlogs();
-    const filtered = existing.filter((p) => p.id !== id && p.slug !== id);
-
-    if (filtered.length === existing.length) {
-      return NextResponse.json({ error: 'Blog post not found' }, { status: 404 });
+    const deleted = await deleteDbBlog(id);
+    if (!deleted) {
+      return NextResponse.json({ error: 'Failed to delete blog post' }, { status: 500 });
     }
 
-    const saved = saveBlogs(filtered);
-    if (!saved) {
-      return NextResponse.json({ error: 'Failed to write blog posts data' }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, message: 'Blog post deleted' }, { status: 200 });
+    return NextResponse.json({
+      success: true,
+      source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+      message: 'Blog post deleted',
+    }, { status: 200 });
   } catch (err) {
     console.error('Error deleting blog post:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

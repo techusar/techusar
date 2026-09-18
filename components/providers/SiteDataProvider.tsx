@@ -6,7 +6,8 @@ import { projects as defaultProjects } from '@/data/projects';
 import { themes as defaultThemes } from '@/data/themes';
 import { designProjects as defaultDesigns } from '@/data/design-projects';
 import { getAllBlogPosts, BlogPost } from '@/lib/blog';
-import logo from '@/public/Landscap TechUsar 2.png';
+import defaultSiteSettingsData from '@/data/site-settings.json';
+
 export interface SiteSettings {
   logoUrl: string;
   brandName: string;
@@ -26,32 +27,34 @@ export interface SiteSettings {
   bio: string;
   githubUrl: string;
   linkedinUrl: string;
+  twitterUrl?: string;
   behanceUrl: string;
   dribbbleUrl: string;
   updatedAt?: string;
 }
 
 export const defaultSiteSettings: SiteSettings = {
-  logoUrl: logo.src,
-  brandName: 'TechUsar',
-  tagline: 'Graphic Designer & Full-Stack Developer | Custom AI Agents & Bot Builder',
-  ownerName: 'Hafiz Muhammad Usman',
-  heroTitle: 'Hafiz Muhammad Usman',
-  heroSubtitle: 'Senior Graphic Designer (5+ Years) & Full-Stack Next.js Developer (2+ Years). Crafting high-converting web apps, digital brand identities, custom AI bots, and accounting tools.',
-  heroBadge: 'Available for Custom AI Agents & Web Projects',
-  heroAvatarUrl: '',
-  bannerUrl: '',
-  phone: '+92 331 8917330',
-  displayPhone: '0331-8917330',
-  whatsapp: 'https://wa.me/923318917330',
-  whatsappNumber: '923318917330',
-  email: 'techusar17@gmail.com',
-  location: 'Kharadar Lyari, Karachi, Pakistan',
-  bio: 'Hafiz-e-Quran, graphic designer with 5+ years experience and full-stack software engineer.',
-  githubUrl: 'https://github.com/techusar',
-  linkedinUrl: 'https://linkedin.com',
-  behanceUrl: 'https://behance.net',
-  dribbbleUrl: 'https://dribbble.com',
+  logoUrl: defaultSiteSettingsData.logoUrl || '',
+  brandName: defaultSiteSettingsData.brandName || 'TechUsar',
+  tagline: defaultSiteSettingsData.tagline || 'Graphic Designer & Full-Stack Developer | Custom AI Agents & Bot Builder',
+  ownerName: defaultSiteSettingsData.ownerName || 'Hafiz Muhammad Usman',
+  heroTitle: defaultSiteSettingsData.heroTitle || 'Hafiz Muhammad Usman',
+  heroSubtitle: defaultSiteSettingsData.heroSubtitle || 'Senior Graphic Designer (5+ Years) & Full-Stack Next.js Developer (2+ Years). Crafting high-converting web apps, digital brand identities, custom AI bots, and accounting tools.',
+  heroBadge: defaultSiteSettingsData.heroBadge || 'Available for Custom AI Agents & Web Projects',
+  heroAvatarUrl: defaultSiteSettingsData.heroAvatarUrl || '',
+  bannerUrl: defaultSiteSettingsData.bannerUrl || '',
+  phone: defaultSiteSettingsData.phone || '+92 331 8917330',
+  displayPhone: defaultSiteSettingsData.displayPhone || '0331-8917330',
+  whatsapp: defaultSiteSettingsData.whatsapp || 'https://wa.me/923318917330',
+  whatsappNumber: defaultSiteSettingsData.whatsappNumber || '923318917330',
+  email: defaultSiteSettingsData.email || 'techusar17@gmail.com',
+  location: defaultSiteSettingsData.location || 'Kharadar Lyari, Karachi, Pakistan',
+  bio: defaultSiteSettingsData.bio || 'Hafiz-e-Quran, graphic designer with 5+ years experience and full-stack software engineer.',
+  githubUrl: defaultSiteSettingsData.githubUrl || 'https://github.com/techusar',
+  linkedinUrl: defaultSiteSettingsData.linkedinUrl || 'https://www.linkedin.com/in/hafiz-muhammad-usman-514888397/',
+  twitterUrl: defaultSiteSettingsData.twitterUrl || 'https://x.com/techusar',
+  behanceUrl: defaultSiteSettingsData.behanceUrl || 'https://behance.net',
+  dribbbleUrl: defaultSiteSettingsData.dribbbleUrl || 'https://dribbble.com',
 };
 
 interface SiteDataContextType {

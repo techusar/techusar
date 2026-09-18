@@ -1,49 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
 import { DesignProject } from '@/types';
-import { designProjects as defaultDesigns } from '@/data/design-projects';
+import { getDbDesigns, saveDbDesign, deleteDbDesign, isDbConfigured } from '@/lib/db';
 
-const DESIGNS_FILE = path.join(process.cwd(), 'data', 'design-projects.json');
-
-function getStoredDesigns(): DesignProject[] {
-  try {
-    if (fs.existsSync(DESIGNS_FILE)) {
-      const content = fs.readFileSync(DESIGNS_FILE, 'utf-8');
-      const parsed = JSON.parse(content);
-      if (Array.isArray(parsed.designProjects) && parsed.designProjects.length > 0) {
-        return parsed.designProjects;
-      }
-    }
-  } catch (err) {
-    console.error('Error reading design-projects.json:', err);
-  }
-  return defaultDesigns;
-}
-
-function saveDesigns(designProjects: DesignProject[]) {
-  try {
-    const dir = path.dirname(DESIGNS_FILE);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    fs.writeFileSync(DESIGNS_FILE, JSON.stringify({ designProjects }, null, 2), 'utf-8');
-    return true;
-  } catch (err) {
-    console.error('Error saving design-projects.json:', err);
-    return false;
-  }
-}
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function GET() {
-  const designs = getStoredDesigns();
-  return NextResponse.json({ success: true, designs }, { status: 200 });
+  const designs = await getDbDesigns();
+  return NextResponse.json({
+    success: true,
+    source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+    designs,
+  });
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const existing = getStoredDesigns();
 
     if (!body.title) {
       return NextResponse.json({ error: 'Title is required' }, { status: 400 });
@@ -57,7 +30,6 @@ export async function POST(req: NextRequest) {
         .replace(/(^-|-$)/g, '');
 
     const id = body.id || slug;
-    const existingIndex = existing.findIndex((d) => d.id === id || d.slug === slug);
 
     const designData: DesignProject = {
       id,
@@ -106,20 +78,16 @@ export async function POST(req: NextRequest) {
         : ['Custom bespoke vector icon set', '100% scalable vector artwork'],
     };
 
-    let updatedDesigns: DesignProject[];
-    if (existingIndex >= 0) {
-      updatedDesigns = [...existing];
-      updatedDesigns[existingIndex] = designData;
-    } else {
-      updatedDesigns = [designData, ...existing];
-    }
-
-    const saved = saveDesigns(updatedDesigns);
+    const saved = await saveDbDesign(designData);
     if (!saved) {
-      return NextResponse.json({ error: 'Failed to write design projects data' }, { status: 500 });
+      return NextResponse.json({ error: 'Failed to write design project to database' }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, design: designData }, { status: 200 });
+    return NextResponse.json({
+      success: true,
+      source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+      design: designData,
+    }, { status: 200 });
   } catch (err) {
     console.error('Error updating design project:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
@@ -135,19 +103,16 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 });
     }
 
-    const existing = getStoredDesigns();
-    const filtered = existing.filter((d) => d.id !== id && d.slug !== id);
-
-    if (filtered.length === existing.length) {
-      return NextResponse.json({ error: 'Design project not found' }, { status: 404 });
+    const deleted = await deleteDbDesign(id);
+    if (!deleted) {
+      return NextResponse.json({ error: 'Failed to delete design project' }, { status: 500 });
     }
 
-    const saved = saveDesigns(filtered);
-    if (!saved) {
-      return NextResponse.json({ error: 'Failed to write design projects data' }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, message: 'Design project deleted' }, { status: 200 });
+    return NextResponse.json({
+      success: true,
+      source: isDbConfigured() ? 'neon_postgresql' : 'json_fallback',
+      message: 'Design project deleted',
+    }, { status: 200 });
   } catch (err) {
     console.error('Error deleting design project:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

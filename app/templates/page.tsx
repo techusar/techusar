@@ -59,6 +59,43 @@ export default function TemplatesHubPage() {
 
       <Breadcrumbs items={[{ label: 'Templates', href: '/templates' }]} />
 
+      {/* Ecosystem Subdomain Announcement Card */}
+      <div className="p-4 sm:p-5 rounded-2xl border-2 border-emerald-500/30 bg-gradient-to-r from-emerald-50/80 via-teal-50/50 to-blue-50/40 dark:from-emerald-950/40 dark:via-teal-950/20 dark:to-blue-950/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-mono font-bold tracking-wider uppercase">
+              Official Hub
+            </span>
+            <span className="text-xs font-mono font-bold text-neutral-900 dark:text-white">
+              tamplates.techusar.com
+            </span>
+          </div>
+          <p className="text-xs text-neutral-600 dark:text-neutral-400">
+            Official production-ready Next.js 15 and Tailwind CSS starters, themes &amp; component kits.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <a
+            href="https://tamplates.techusar.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-xs inline-flex items-center gap-1.5"
+          >
+            <span>Open tamplates.techusar.com</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </a>
+          <a
+            href="https://tools.techusar.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 hover:border-blue-500 text-xs font-semibold transition-all inline-flex items-center gap-1.5"
+          >
+            <span>tools.techusar.com</span>
+          </a>
+        </div>
+      </div>
+
       {/* Header */}
       <div className="space-y-4 max-w-4xl">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono border border-emerald-500/20 bg-emerald-50/50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400">

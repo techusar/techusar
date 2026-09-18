@@ -199,52 +199,70 @@ export function Navbar() {
     },
   ];
 
-  // Secondary navigation links
+  // Secondary navigation links (No playground or toy stuff - strictly real client & portfolio work)
   const secondaryLinks: NavItem[] = [
     {
-      label: 'Playground',
-      href: '/playground',
-      description: 'Interactive HTML5 canvas & generative vector sandbox',
+      label: 'AI Bots & Agents',
+      href: '/ai-bot-development',
+      description: 'WhatsApp, Telegram & 24/7 custom AI customer bots',
       icon: Sparkles,
     },
     {
-      label: 'Design',
+      label: 'Graphic Design',
       href: '/design',
-      description: 'Graphic design showcase, branding & visual systems',
+      description: 'Brand identity, logos, vector art & marketing graphics',
       icon: Palette,
     },
     {
-      label: 'Blog',
+      label: 'Web Development',
+      href: '/web-development',
+      description: 'Next.js 15, full-stack web applications & portals',
+      icon: Code2,
+    },
+    {
+      label: 'UI/UX Design',
+      href: '/ui-ux-design',
+      description: 'Figma wireframes, design systems & responsive layouts',
+      icon: Layers,
+    },
+    {
+      label: 'Blog & Guides',
       href: '/blog',
       description: 'Technical articles, custom AI bot guides & tutorials',
       icon: BookOpen,
     },
     {
-      label: 'Articles',
-      href: '/articles',
-      description: 'Technical deep-dives, design patterns & engineering notes',
-      icon: BookOpen,
-    },
-    {
-      label: 'About',
+      label: 'About Hafiz Usman',
       href: '/about',
-      description: 'Full stack biography, credentials & technical stack',
+      description: 'Hafiz-e-Quran, 5+ yrs design & 2+ yrs full-stack engineer',
       icon: User,
     },
   ];
 
   const allDrawerLinks = [
     {
-      label: 'Work',
+      label: 'Work & Projects',
       href: '/work',
-      description: 'Selected client projects & open-source software',
+      description: 'Selected client projects & production web systems',
       icon: Layers,
     },
     {
-      label: 'Themes',
-      href: '/themes',
+      label: 'Website Templates (tamplates.techusar.com)',
+      href: 'https://tamplates.techusar.com',
       description: 'Production-ready web templates & components',
       icon: ShoppingBag,
+    },
+    {
+      label: 'Free Tools (tools.techusar.com)',
+      href: 'https://tools.techusar.com',
+      description: 'Developer & accounting utilities suite',
+      icon: Wrench,
+    },
+    {
+      label: 'AI Bots & Agents',
+      href: '/ai-bot-development',
+      description: 'WhatsApp bots & custom AI automations',
+      icon: Sparkles,
     },
     {
       label: 'CV & Resume',
@@ -258,7 +276,24 @@ export function Navbar() {
       description: 'Architectural consulting & full-stack development',
       icon: Code2,
     },
-    ...secondaryLinks,
+    {
+      label: 'Graphic Design',
+      href: '/design',
+      description: 'Branding, logos & visual design showcase',
+      icon: Palette,
+    },
+    {
+      label: 'About Usman',
+      href: '/about',
+      description: 'Biography, credentials & technical stack',
+      icon: User,
+    },
+    {
+      label: 'Contact & Hire',
+      href: '/contact',
+      description: 'Direct inquiry & fast WhatsApp consultation',
+      icon: Mail,
+    },
   ];
 
   const isToolsActive = pathname.startsWith('/tools');
@@ -409,16 +444,27 @@ export function Navbar() {
                   </div>
 
                   {/* Dropdown Footer */}
-                  <div className="mt-3 pt-3 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between text-xs">
-                    <span className="text-[11px] text-neutral-500 font-mono">100% Free &amp; Client-Side Secure</span>
-                    <Link
-                      href="/tools"
-                      onClick={() => setToolsDropdownOpen(false)}
-                      className="inline-flex items-center gap-1 font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+                  <div className="mt-3 pt-3 border-t border-neutral-100 dark:border-neutral-800 flex flex-wrap items-center justify-between gap-2 text-xs">
+                    <a
+                      href="https://tools.techusar.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 font-mono font-semibold text-[11px] hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-colors"
                     >
-                      <span>Explore Tools Suite</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </Link>
+                      <span>tools.techusar.com</span>
+                      <ArrowUpRight className="w-3 h-3" />
+                    </a>
+                    <div className="flex items-center gap-2">
+                      <a
+                        href="https://tamplates.techusar.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 hover:underline inline-flex items-center gap-1"
+                      >
+                        <span>tamplates.techusar.com</span>
+                        <ArrowUpRight className="w-3 h-3" />
+                      </a>
+                    </div>
                   </div>
                 </div>
               )}

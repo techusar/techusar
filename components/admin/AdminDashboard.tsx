@@ -33,6 +33,11 @@ import {
   Lock,
   Image as ImageIcon,
   Code,
+  Database,
+  ShoppingBag,
+  Palette,
+  BookOpen,
+  Sliders,
 } from 'lucide-react';
 import { FormSubmission } from '@/app/api/submissions/route';
 import { SettingsManager } from './SettingsManager';
@@ -41,7 +46,7 @@ import { WebProjectsManager } from './WebProjectsManager';
 import { ThemesManager } from './ThemesManager';
 import { DesignsManager } from './DesignsManager';
 import { BlogsManager } from './BlogsManager';
-import { ShoppingBag, Palette, BookOpen, Sliders } from 'lucide-react';
+import { DatabaseManager } from './DatabaseManager';
 
 interface AnalyticsData {
   totalVisits: number;
@@ -69,7 +74,7 @@ export function AdminDashboard() {
 
   // Tab State
   const [activeTab, setActiveTab] = useState<
-    'overview' | 'settings' | 'submissions' | 'media' | 'webprojects' | 'themes' | 'designs' | 'blogs'
+    'overview' | 'database' | 'settings' | 'submissions' | 'media' | 'webprojects' | 'themes' | 'designs' | 'blogs'
   >('overview');
   const [currentLogo, setCurrentLogo] = useState<string | null>(null);
 
@@ -519,6 +524,18 @@ export function AdminDashboard() {
         >
           <BookOpen className="w-4 h-4" />
           <span>Blogs &amp; Articles</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('database')}
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all flex items-center gap-2 shrink-0 whitespace-nowrap ${
+            activeTab === 'database'
+              ? 'bg-emerald-600 text-white shadow-xs'
+              : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/50 hover:bg-emerald-100'
+          }`}
+        >
+          <Database className="w-4 h-4" />
+          <span>Neon Database &amp; SQL</span>
         </button>
       </div>
 
@@ -1068,6 +1085,9 @@ export function AdminDashboard() {
 
       {/* TAB 7: BLOGS & EDITORIAL GUIDES */}
       {activeTab === 'blogs' && <BlogsManager />}
+
+      {/* TAB 8: NEON POSTGRESQL DATABASE & SQL */}
+      {activeTab === 'database' && <DatabaseManager />}
 
       {/* MANUAL LEAD MODAL */}
       {manualModalOpen && (

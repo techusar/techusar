@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
-  const postUrl = `https://techusar.com/blog/${post.slug}`;
+  const postUrl = `https://techusar.dev/blog/${post.slug}`;
 
   return {
     title: `${post.title} — TechUsar`,
@@ -82,7 +82,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   const relatedPosts = getRelatedBlogPosts(post.slug, post.category);
   const jsonLd = generateBlogPostingSchema(post);
-  const currentUrl = `https://techusar.com/blog/${post.slug}`;
+  const currentUrl = `https://techusar.dev/blog/${post.slug}`;
 
   return (
     <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-12">

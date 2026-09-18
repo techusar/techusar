@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: ThemePageProps): Promise<Meta
     };
   }
 
-  const themeUrl = `https://techusar.com/themes/${theme.slug}`;
+  const themeUrl = `https://techusar.dev/themes/${theme.slug}`;
 
   return {
     title: `${theme.name} — Next.js Theme & Template | TechUsar`,

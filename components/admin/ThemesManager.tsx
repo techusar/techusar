@@ -50,7 +50,7 @@ export function ThemesManager() {
       'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop',
     mobileScreenshot:
       'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop',
-    demoUrl: 'https://nexus.techusar.com',
+    demoUrl: 'https://nexus.techusar.dev',
     purchaseUrl: '',
     featuresText: 'Engineered with Next.js 15 App Router\nInteractive tiered pricing matrix\nDark & Light mode support',
     sectionsText: 'Hero with live preview\nBento grid features\nPricing table\nFAQ accordion',
@@ -119,7 +119,7 @@ export function ThemesManager() {
         'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop',
       mobileScreenshot:
         'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop',
-      demoUrl: 'https://nexus.techusar.com',
+      demoUrl: 'https://nexus.techusar.dev',
       purchaseUrl: '',
       featuresText: 'Engineered with Next.js 15 App Router\nInteractive tiered pricing matrix\nDark & Light mode support',
       sectionsText: 'Hero with live preview\nBento grid features\nPricing table\nFAQ accordion',

@@ -14,12 +14,12 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Default to dark as requested for the Obsidian / Blue / Purple developer identity
-  const [theme, setThemeState] = useState<ThemeMode>('dark');
-  const [systemIsDark, setSystemIsDark] = useState(true);
+  // Default to light theme as requested
+  const [theme, setThemeState] = useState<ThemeMode>('light');
+  const [systemIsDark, setSystemIsDark] = useState(false);
 
   useEffect(() => {
-    // Read from localStorage on mount
+    // Read from localStorage on mount if set by user
     const saved = localStorage.getItem('techusar-theme') as ThemeMode | null;
     if (saved && (saved === 'light' || saved === 'dark' || saved === 'system' || saved === 'matrix')) {
       queueMicrotask(() => setThemeState(saved));

@@ -17,13 +17,13 @@ export const metadata: Metadata = {
     'TechUsar themes',
   ],
   alternates: {
-    canonical: 'https://techusar.com/themes',
+    canonical: 'https://techusar.dev/themes',
   },
   openGraph: {
     title: 'Commercial Themes & Next.js Website Templates — TechUsar',
     description:
       'Engineered for speed, SEO, and visual precision. Production-ready web themes with instant preview.',
-    url: 'https://techusar.com/themes',
+    url: 'https://techusar.dev/themes',
   },
 };
 
