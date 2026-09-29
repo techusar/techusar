@@ -15,6 +15,7 @@ export interface MediaItem {
   size: number;
   type: string; // 'logo' | 'screenshot' | 'general'
   title?: string;
+  data_url?: string;
   createdAt: string;
 }
 
@@ -59,7 +60,15 @@ export async function POST(req: NextRequest) {
       const filename = `${mediaType}_${timestamp}_${safeBase}${ext}`;
       const filePath = path.join(UPLOADS_DIR, filename);
 
-      fs.writeFileSync(filePath, buffer);
+      try {
+        fs.writeFileSync(filePath, buffer);
+      } catch (fsErr) {
+        console.warn('[Media Upload] Could not write to disk (read-only or serverless), storing in database:', fsErr);
+      }
+
+      const mimeType = file.type || (ext === '.svg' ? 'image/svg+xml' : ext === '.jpg' ? 'image/jpeg' : 'image/png');
+      const base64Data = buffer.toString('base64');
+      const dataUrl = `data:${mimeType};base64,${base64Data}`;
 
       const newMedia: MediaItem = {
         id: `media-${timestamp}`,
@@ -68,6 +77,7 @@ export async function POST(req: NextRequest) {
         size: buffer.length,
         type: mediaType,
         title: customTitle || file.name,
+        data_url: dataUrl,
         createdAt: new Date().toISOString(),
       };
 
@@ -112,7 +122,11 @@ export async function POST(req: NextRequest) {
     const filename = `${type}_${timestamp}_${safeBase}${ext}`;
     const filePath = path.join(UPLOADS_DIR, filename);
 
-    fs.writeFileSync(filePath, buffer);
+    try {
+      fs.writeFileSync(filePath, buffer);
+    } catch (fsErr) {
+      console.warn('[Media Upload] Could not write to disk (read-only or serverless), storing in database:', fsErr);
+    }
 
     const newMedia: MediaItem = {
       id: `media-${timestamp}`,
@@ -121,6 +135,7 @@ export async function POST(req: NextRequest) {
       size: buffer.length,
       type,
       title: title || rawName || filename,
+      data_url: dataUrl,
       createdAt: new Date().toISOString(),
     };
 

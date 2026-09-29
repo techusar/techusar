@@ -5,8 +5,9 @@ import { projects } from '@/data/projects';
 import { designProjects } from '@/data/design-projects';
 import { articlesData } from '@/data/articles';
 import { toolsData } from '@/data/tools-data';
+import { SITE_URL } from '@/lib/seo';
 
-const BASE_URL = 'https://techusar.dev';
+const BASE_URL = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const currentDate = new Date().toISOString();
@@ -96,12 +97,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/cv`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.85,
     },
     {
       url: `${BASE_URL}/themes`,

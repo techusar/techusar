@@ -11,8 +11,8 @@ export function JsonFormatter() {
   "stack": ["React", "Next.js", "Node.js", "PHP", ".NET", "Adobe"],
   "stats": {
     "yearsDesigning": 5,
-    "yearsWebDev": 2,
-    "hafizQuran": true
+    "yearsWebDev": 4,
+    "fullStack": true
   }
 }`);
   const [output, setOutput] = useState('');

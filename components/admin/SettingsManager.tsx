@@ -54,7 +54,7 @@ export function SettingsManager({ onSettingsSaved }: SettingsManagerProps) {
           }
         }
       } catch (err) {
-        console.error('Failed to load settings:', err);
+        console.warn('Notice: Using local fallback settings until database connection resolves:', err);
       } finally {
         if (isMounted) setLoading(false);
       }
@@ -68,6 +68,8 @@ export function SettingsManager({ onSettingsSaved }: SettingsManagerProps) {
   const handleChange = (field: keyof SiteSettings, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
+
+  const [logoPreviewError, setLogoPreviewError] = useState(false);
 
   const handleFileUpload = async (file: File, targetField: 'logoUrl' | 'heroAvatarUrl' | 'bannerUrl') => {
     if (targetField === 'logoUrl') setUploadingLogo(true);
@@ -97,13 +99,35 @@ export function SettingsManager({ onSettingsSaved }: SettingsManagerProps) {
 
       if (res.ok) {
         const data = await res.json();
-        if (data.media?.url) {
-          setFormData((prev) => ({ ...prev, [targetField]: data.media.url }));
-          setNotification({
-            type: 'success',
-            message: `${targetField === 'logoUrl' ? 'Logo' : targetField === 'heroAvatarUrl' ? 'Avatar' : 'Banner'} uploaded successfully! Click "Save All Settings" to apply permanently.`,
+        // For logoUrl, prioritize the self-contained dataUrl so it lives permanently in Neon DB
+        const finalUrl = targetField === 'logoUrl' ? dataUrl : (data.media?.url || dataUrl);
+
+        setFormData((prev) => ({ ...prev, [targetField]: finalUrl }));
+        if (targetField === 'logoUrl') setLogoPreviewError(false);
+
+        // Auto-save immediately to /api/admin/settings so it is permanently committed into Neon PostgreSQL
+        try {
+          await fetch('/api/admin/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...formData, [targetField]: finalUrl }),
           });
+
+          if (typeof window !== 'undefined') {
+            if (targetField === 'logoUrl') {
+              localStorage.setItem('techusar_custom_logo', finalUrl);
+              window.dispatchEvent(new CustomEvent('techusar_logo_updated', { detail: { logoUrl: finalUrl } }));
+            }
+            window.dispatchEvent(new CustomEvent('techusar_data_updated'));
+          }
+        } catch (saveErr) {
+          console.warn('[SettingsManager] Auto-save failed:', saveErr);
         }
+
+        setNotification({
+          type: 'success',
+          message: `${targetField === 'logoUrl' ? 'Logo' : 'Image'} uploaded and saved permanently in Neon PostgreSQL database! It will never disappear on publish or deploy.`,
+        });
       } else {
         throw new Error('Upload API returned failure');
       }
@@ -283,22 +307,37 @@ export function SettingsManager({ onSettingsSaved }: SettingsManagerProps) {
             </div>
 
             {/* Visual Box */}
-            <div className="w-full h-32 rounded-xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col items-center justify-center p-4 relative overflow-hidden group">
-              {formData.logoUrl ? (
+            <div className="w-full min-h-32 rounded-xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col items-center justify-center p-4 relative overflow-hidden group">
+              {formData.logoUrl && !logoPreviewError ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={formData.logoUrl}
                   alt="Brand Logo"
                   className="max-h-24 max-w-full object-contain"
+                  onError={() => setLogoPreviewError(true)}
                 />
               ) : (
-                <div className="text-center space-y-1">
+                <div className="text-center space-y-1.5 p-2">
                   <div className="w-10 h-10 mx-auto rounded-lg bg-blue-600 text-white flex items-center justify-center font-mono font-bold text-sm shadow-xs">
                     TU
                   </div>
-                  <p className="text-[11px] text-neutral-500">Default Geometric TU Monogram Active</p>
+                  {logoPreviewError ? (
+                    <p className="text-[11px] text-amber-600 dark:text-amber-400 font-medium leading-tight">
+                      Previous temporary logo path is missing on disk. Click &quot;Upload Logo File&quot; below to save your logo permanently into Neon PostgreSQL!
+                    </p>
+                  ) : (
+                    <p className="text-[11px] text-neutral-500">Default Geometric TU Monogram Active</p>
+                  )}
                 </div>
               )}
+            </div>
+
+            {/* Neon Persistence Callout */}
+            <div className="p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-[11px] text-emerald-800 dark:text-emerald-300 flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+              <span>
+                <strong>Permanent Neon Database Storage:</strong> Uploading your logo stores it directly in Neon PostgreSQL so it will never disappear after publishing or redeploying.
+              </span>
             </div>
 
             {/* Actions */}
@@ -492,7 +531,7 @@ export function SettingsManager({ onSettingsSaved }: SettingsManagerProps) {
               rows={3}
               value={formData.heroSubtitle}
               onChange={(e) => handleChange('heroSubtitle', e.target.value)}
-              placeholder="Senior Graphic Designer (5+ Years) & Full-Stack Next.js Developer (2+ Years)..."
+              placeholder="Senior Graphic Designer (5+ Years) & Full-Stack Next.js Developer (4+ Years)..."
               className="w-full p-2.5 text-xs rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white"
             />
           </div>

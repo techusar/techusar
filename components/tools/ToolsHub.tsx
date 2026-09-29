@@ -135,7 +135,7 @@ export function ToolsHub() {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full bg-blue-600 text-white text-[10px] font-mono font-bold tracking-wider uppercase">
-              Official Hub
+              Official Platform
             </span>
             <span className="text-xs font-mono font-bold text-neutral-900 dark:text-white">
               tools.techusar.com
@@ -157,12 +157,12 @@ export function ToolsHub() {
             <Wrench className="w-3.5 h-3.5" />
           </a>
           <a
-            href="https://tamplates.techusar.com"
+            href="https://templates.techusar.com"
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 hover:border-emerald-500 text-xs font-semibold transition-all inline-flex items-center gap-1.5"
           >
-            <span>tamplates.techusar.com</span>
+            <span>templates.techusar.com</span>
           </a>
         </div>
       </div>

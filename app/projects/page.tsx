@@ -1,10 +1,14 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { projects } from '@/data/projects';
+import { getDbProjects } from '@/lib/db';
+import { projects as fallbackProjects } from '@/data/projects';
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
 import { constructMetadata, SITE_URL } from '@/lib/seo';
 import { ProjectsExplorer } from '@/components/projects/ProjectsExplorer';
 import { Layers, Sparkles } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export const metadata: Metadata = constructMetadata({
   title: '50+ Web Development Projects & Live Demos | Free Templates | TechUsar',
@@ -23,7 +27,10 @@ export const metadata: Metadata = constructMetadata({
   ],
 });
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const dbProjects = await getDbProjects();
+  const projects = dbProjects && dbProjects.length > 0 ? dbProjects : fallbackProjects;
+
   const collectionSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',

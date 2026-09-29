@@ -3,9 +3,13 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ThemesClient } from '@/components/themes/ThemesClient';
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
-import { themes } from '@/data/themes';
+import { getDbThemes } from '@/lib/db';
+import { themes as fallbackThemes } from '@/data/themes';
 import { constructMetadata, SITE_URL } from '@/lib/seo';
 import { ShoppingBag, Sparkles, Tag, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export const metadata: Metadata = constructMetadata({
   title: 'Website Templates & Production-Ready Next.js Starters | TechUsar',
@@ -24,7 +28,10 @@ export const metadata: Metadata = constructMetadata({
   ],
 });
 
-export default function TemplatesHubPage() {
+export default async function TemplatesHubPage() {
+  const dbThemes = await getDbThemes();
+  const themes = dbThemes && dbThemes.length > 0 ? dbThemes : fallbackThemes;
+
   const collectionSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
@@ -67,7 +74,7 @@ export default function TemplatesHubPage() {
               Official Hub
             </span>
             <span className="text-xs font-mono font-bold text-neutral-900 dark:text-white">
-              tamplates.techusar.com
+              templates.techusar.com
             </span>
           </div>
           <p className="text-xs text-neutral-600 dark:text-neutral-400">
@@ -77,12 +84,12 @@ export default function TemplatesHubPage() {
 
         <div className="flex flex-wrap items-center gap-2 shrink-0">
           <a
-            href="https://tamplates.techusar.com"
+            href="https://templates.techusar.com"
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-xs inline-flex items-center gap-1.5"
           >
-            <span>Open tamplates.techusar.com</span>
+            <span>Open templates.techusar.com</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </a>
           <a

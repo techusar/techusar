@@ -73,6 +73,15 @@ export interface Project {
   designDirection: string;
   developmentDetails: string;
   metrics: { label: string; value: string }[];
+  projectStats?: {
+    teamSize?: string;
+    codeCoverage?: string;
+    completionTime?: string;
+    lighthouseScore?: string;
+    sprintVelocity?: string;
+    architectureType?: string;
+    testSuiteCount?: string;
+  };
   keyFeatures: string[];
   testimonial?: {
     quote: string;

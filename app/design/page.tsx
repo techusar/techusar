@@ -1,8 +1,12 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { DesignClient } from '@/components/design/DesignClient';
-import { designProjects } from '@/data/design-projects';
+import { getDbDesigns } from '@/lib/db';
+import { designProjects as fallbackDesigns } from '@/data/design-projects';
 import { Palette } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: 'Graphic Design Showcase & Vector Systems — TechUsar',
@@ -17,17 +21,20 @@ export const metadata: Metadata = {
     'TechUsar design showcase',
   ],
   alternates: {
-    canonical: 'https://techusar.dev/design',
+    canonical: 'https://www.techusar.com/design',
   },
   openGraph: {
     title: 'Graphic Design Showcase & Vector Systems — TechUsar',
     description:
       '5 years of graphic design excellence. Explore brand systems, vector marks, and typography craft by Hafiz Muhammad Usman.',
-    url: 'https://techusar.dev/design',
+    url: 'https://www.techusar.com/design',
   },
 };
 
-export default function DesignPage() {
+export default async function DesignPage() {
+  const dbDesigns = await getDbDesigns();
+  const designProjects = dbDesigns && dbDesigns.length > 0 ? dbDesigns : fallbackDesigns;
+
   const designJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',

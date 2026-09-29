@@ -125,17 +125,25 @@ async function runSchemaInit(sql: NonNullable<ReturnType<typeof getSqlClient>>):
     },
     {
       name: 'media_uploads',
-      query: () => sql`
-        CREATE TABLE IF NOT EXISTS media_uploads (
-          id TEXT PRIMARY KEY,
-          filename TEXT NOT NULL,
-          url TEXT NOT NULL,
-          size INT DEFAULT 0,
-          type TEXT DEFAULT 'general',
-          title TEXT,
-          created_at TIMESTAMPTZ DEFAULT NOW()
-        );
-      `,
+      query: async () => {
+        await sql`
+          CREATE TABLE IF NOT EXISTS media_uploads (
+            id TEXT PRIMARY KEY,
+            filename TEXT NOT NULL,
+            url TEXT NOT NULL,
+            size INT DEFAULT 0,
+            type TEXT DEFAULT 'general',
+            title TEXT,
+            data_url TEXT,
+            created_at TIMESTAMPTZ DEFAULT NOW()
+          );
+        `;
+        try {
+          await sql`ALTER TABLE media_uploads ADD COLUMN IF NOT EXISTS data_url TEXT`;
+        } catch {
+          // Column already exists or table freshly created
+        }
+      },
     },
     {
       name: 'submissions',
@@ -225,7 +233,7 @@ async function autoSeedIfEmpty(sql: NonNullable<ReturnType<typeof getSqlClient>>
           tagline: 'Graphic Designer & Full-Stack Developer | Custom AI Agents & Bot Builder',
           ownerName: 'Hafiz Muhammad Usman',
           heroTitle: 'Hafiz Muhammad Usman',
-          heroSubtitle: 'Senior Graphic Designer (5+ Years) & Full-Stack Next.js Developer (2+ Years). Crafting high-converting web apps, digital brand identities, custom AI bots, and accounting tools.',
+          heroSubtitle: 'Senior Graphic Designer (5+ Years) & Full-Stack Next.js Developer (4+ Years). Crafting high-converting web apps, digital brand identities, custom AI bots, and accounting tools.',
           heroBadge: 'Available for Custom AI Agents & Web Projects',
           heroAvatarUrl: '',
           bannerUrl: '',
@@ -235,7 +243,7 @@ async function autoSeedIfEmpty(sql: NonNullable<ReturnType<typeof getSqlClient>>
           whatsappNumber: '923318917330',
           email: 'techusar17@gmail.com',
           location: 'Kharadar Lyari, Karachi, Pakistan',
-          bio: 'Hafiz-e-Quran, graphic designer with 5+ years experience and full-stack software engineer.',
+          bio: 'Graphic designer with 5+ years experience and full-stack software engineer (4+ years).',
           githubUrl: 'https://github.com/TechUsar',
           linkedinUrl: 'https://linkedin.com',
           behanceUrl: 'https://behance.net',
@@ -339,7 +347,7 @@ export async function getDbSiteSettings(): Promise<Record<string, unknown>> {
     tagline: 'Graphic Designer & Full-Stack Developer | Custom AI Agents & Bot Builder',
     ownerName: 'Hafiz Muhammad Usman',
     heroTitle: 'Hafiz Muhammad Usman',
-    heroSubtitle: 'Senior Graphic Designer (5+ Years) & Full-Stack Next.js Developer (2+ Years). Crafting high-converting web apps, digital brand identities, custom AI bots, and accounting tools.',
+    heroSubtitle: 'Senior Graphic Designer (5+ Years) & Full-Stack Next.js Developer (4+ Years). Crafting high-converting web apps, digital brand identities, custom AI bots, and accounting tools.',
     heroBadge: 'Available for Custom AI Agents & Web Projects',
     heroAvatarUrl: '',
     bannerUrl: '',
@@ -349,7 +357,7 @@ export async function getDbSiteSettings(): Promise<Record<string, unknown>> {
     whatsappNumber: '923318917330',
     email: 'techusar17@gmail.com',
     location: 'Kharadar Lyari, Karachi, Pakistan',
-    bio: 'Hafiz-e-Quran, graphic designer with 5+ years experience and full-stack software engineer.',
+    bio: 'Graphic designer with 5+ years experience and full-stack software engineer (4+ years).',
     githubUrl: 'https://github.com/techusar',
     linkedinUrl: 'https://www.linkedin.com/in/hafiz-muhammad-usman-514888397/',
     twitterUrl: 'https://x.com/techusar',
@@ -666,6 +674,7 @@ export interface MediaItem {
   size: number;
   type: string;
   title?: string;
+  data_url?: string;
   createdAt: string;
 }
 
@@ -676,7 +685,7 @@ export async function getDbMedia(): Promise<MediaItem[]> {
 
   try {
     await initDbSchema();
-    const rows = await sql`SELECT id, filename, url, size, type, title, created_at FROM media_uploads ORDER BY created_at DESC`;
+    const rows = await sql`SELECT id, filename, url, size, type, title, data_url, created_at FROM media_uploads ORDER BY created_at DESC`;
     if (rows.length > 0) {
       return rows.map((r) => ({
         id: r.id as string,
@@ -685,6 +694,7 @@ export async function getDbMedia(): Promise<MediaItem[]> {
         size: Number(r.size) || 0,
         type: (r.type as string) || 'general',
         title: (r.title as string) || '',
+        data_url: (r.data_url as string) || undefined,
         createdAt: r.created_at ? new Date(r.created_at as string).toISOString() : new Date().toISOString(),
       }));
     }
@@ -692,6 +702,35 @@ export async function getDbMedia(): Promise<MediaItem[]> {
     console.error('[Neon DB] getDbMedia error:', err);
   }
   return fallback;
+}
+
+export async function getDbMediaByFilename(filename: string): Promise<MediaItem | null> {
+  const sql = getSqlClient();
+  if (!sql) {
+    const fallback = readJson<{ media?: MediaItem[] }>('uploaded-media.json', { media: [] }).media || [];
+    return fallback.find((m) => m.filename === filename || m.url.includes(filename)) || null;
+  }
+
+  try {
+    await initDbSchema();
+    const rows = await sql`SELECT id, filename, url, size, type, title, data_url, created_at FROM media_uploads WHERE filename = ${filename} OR url LIKE ${'%' + filename} LIMIT 1`;
+    if (rows.length > 0) {
+      const r = rows[0];
+      return {
+        id: r.id as string,
+        filename: r.filename as string,
+        url: r.url as string,
+        size: Number(r.size) || 0,
+        type: (r.type as string) || 'general',
+        title: (r.title as string) || '',
+        data_url: (r.data_url as string) || undefined,
+        createdAt: r.created_at ? new Date(r.created_at as string).toISOString() : new Date().toISOString(),
+      };
+    }
+  } catch (err) {
+    console.error('[Neon DB] getDbMediaByFilename error:', err);
+  }
+  return null;
 }
 
 export async function saveDbMedia(item: MediaItem): Promise<boolean> {
@@ -705,14 +744,15 @@ export async function saveDbMedia(item: MediaItem): Promise<boolean> {
   try {
     await initDbSchema();
     await sql`
-      INSERT INTO media_uploads (id, filename, url, size, type, title, created_at)
-      VALUES (${item.id}, ${item.filename}, ${item.url}, ${item.size || 0}, ${item.type || 'general'}, ${item.title || ''}, NOW())
+      INSERT INTO media_uploads (id, filename, url, size, type, title, data_url, created_at)
+      VALUES (${item.id}, ${item.filename}, ${item.url}, ${item.size || 0}, ${item.type || 'general'}, ${item.title || ''}, ${item.data_url || null}, NOW())
       ON CONFLICT (id) DO UPDATE SET
         filename = ${item.filename},
         url = ${item.url},
         size = ${item.size || 0},
         type = ${item.type || 'general'},
-        title = ${item.title || ''}
+        title = ${item.title || ''},
+        data_url = COALESCE(${item.data_url || null}, media_uploads.data_url)
     `;
     return true;
   } catch (err) {

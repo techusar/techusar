@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-export const SITE_URL = 'https://techusar.dev';
+export const SITE_URL = 'https://www.techusar.com';
 export const SITE_NAME = 'TechUsar';
 export const AUTHOR_NAME = 'Hafiz Muhammad Usman';
 export const BRAND_TAGLINE = 'Web Designer, Full-Stack Developer & Custom AI Bot Engineer';
@@ -132,5 +132,36 @@ export function generateFAQSchema(faqs: { q: string; a: string }[]) {
         text: faq.a,
       },
     })),
+  };
+}
+
+export function generateServiceSchema(service: {
+  title?: string;
+  name?: string;
+  description: string;
+  slug?: string;
+  url?: string;
+  serviceType?: string;
+  category?: string;
+}) {
+  const serviceName = service.name || service.title || 'TechUsar Service';
+  const serviceUrl = service.url
+    ? service.url.startsWith('http')
+      ? service.url
+      : `${SITE_URL}${service.url.startsWith('/') ? '' : '/'}${service.url}`
+    : `${SITE_URL}/services/${service.slug || ''}`;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: serviceName,
+    description: service.description,
+    provider: {
+      '@type': 'Organization',
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    url: serviceUrl,
+    serviceType: service.serviceType || service.category || 'Software Engineering & Design',
   };
 }

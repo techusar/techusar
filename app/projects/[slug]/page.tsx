@@ -6,6 +6,7 @@ import { projects } from '@/data/projects';
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
 import { constructMetadata, SITE_URL } from '@/lib/seo';
 import { ProjectLiveViewer } from '@/components/projects/ProjectLiveViewer';
+import { ProjectStatsSection } from '@/components/projects/ProjectStatsSection';
 import {
   ExternalLink,
   Github,
@@ -193,6 +194,9 @@ export default async function ProjectDetailPage({ params }: CaseStudyProps) {
             coverImage={project.cover}
           />
         </section>
+
+        {/* Project Stats Section */}
+        <ProjectStatsSection project={project} />
 
         {/* Project Metrics Callout */}
         {project.metrics && project.metrics.length > 0 && (

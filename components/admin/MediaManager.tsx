@@ -119,7 +119,9 @@ export function MediaManager({ currentLogo, onLogoUpdated }: MediaManagerProps) 
 
         if (res.ok) {
           const result = await res.json();
-          if (result.media?.url) {
+          if (type === 'logo') {
+            lastUploadedUrl = result.media?.data_url || dataUrl || result.media?.url;
+          } else if (result.media?.url) {
             lastUploadedUrl = result.media.url;
           }
         }
@@ -129,7 +131,7 @@ export function MediaManager({ currentLogo, onLogoUpdated }: MediaManagerProps) 
 
       if (type === 'logo' && lastUploadedUrl) {
         await applyLogo(lastUploadedUrl);
-        setUploadSuccess('Logo uploaded and applied to website successfully!');
+        setUploadSuccess('Logo uploaded and permanently saved into Neon PostgreSQL database! Applied to entire website.');
       } else {
         setUploadSuccess(`${files.length} screenshot(s) uploaded successfully!`);
       }

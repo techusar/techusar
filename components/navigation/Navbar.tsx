@@ -234,7 +234,7 @@ export function Navbar() {
     {
       label: 'About Hafiz Usman',
       href: '/about',
-      description: 'Hafiz-e-Quran, 5+ yrs design & 2+ yrs full-stack engineer',
+      description: '5+ yrs vector design & 4+ yrs full-stack engineer',
       icon: User,
     },
   ];
@@ -247,8 +247,8 @@ export function Navbar() {
       icon: Layers,
     },
     {
-      label: 'Website Templates (tamplates.techusar.com)',
-      href: 'https://tamplates.techusar.com',
+      label: 'Website Templates (templates.techusar.com)',
+      href: 'https://templates.techusar.com',
       description: 'Production-ready web templates & components',
       icon: ShoppingBag,
     },
@@ -456,12 +456,12 @@ export function Navbar() {
                     </a>
                     <div className="flex items-center gap-2">
                       <a
-                        href="https://tamplates.techusar.com"
+                        href="https://templates.techusar.com"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 hover:underline inline-flex items-center gap-1"
                       >
-                        <span>tamplates.techusar.com</span>
+                        <span>templates.techusar.com</span>
                         <ArrowUpRight className="w-3 h-3" />
                       </a>
                     </div>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { projects } from '@/data/projects';
+import { ProjectStatsSection } from '@/components/projects/ProjectStatsSection';
 import { ArrowLeft, ExternalLink, Github, CheckCircle2, ArrowRight, ShieldCheck, Cpu } from 'lucide-react';
 import type { Metadata } from 'next';
 
@@ -155,6 +156,9 @@ export default async function ProjectCaseStudyPage({ params }: CaseStudyProps) {
           <div className="text-sm font-semibold text-neutral-900 dark:text-white mt-1">Production Active</div>
         </div>
       </div>
+
+      {/* Project Stats Section */}
+      <ProjectStatsSection project={project} />
 
       {/* Key Metrics / Impact */}
       {project.metrics && project.metrics.length > 0 && (

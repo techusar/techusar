@@ -1,8 +1,14 @@
 import blogPostsData from '@/data/blog-posts.json';
+import { SITE_URL } from '@/lib/seo';
 
 export interface BlogSection {
   heading: string;
+  subheading?: string;
   paragraphs: string[];
+  codeSnippet?: {
+    language: string;
+    code: string;
+  };
 }
 
 export interface BlogAuthor {
@@ -15,8 +21,11 @@ export interface BlogPost {
   id: string;
   slug: string;
   title: string;
+  seoTitle?: string;
   excerpt: string;
   category: string;
+  cluster?: string;
+  primaryKeyword?: string;
   date: string;
   readTime: string;
   author: BlogAuthor;
@@ -25,6 +34,9 @@ export interface BlogPost {
   coverImage?: string;
   seoKeywords: string[];
   sections: BlogSection[];
+  faqs?: { q: string; a: string }[];
+  relatedServices?: { title: string; href: string }[];
+  relatedProjects?: { title: string; href: string }[];
 }
 
 // In-memory typed store loaded from data/blog-posts.json
@@ -66,24 +78,24 @@ export function generateBlogPostingSchema(post: BlogPost) {
     description: post.excerpt,
     datePublished: '2026-03-01T00:00:00+05:00',
     dateModified: '2026-03-11T00:00:00+05:00',
-    image: post.coverImage || 'https://techusar.dev/og-image.png',
+    image: post.coverImage || `${SITE_URL}/og-image.png`,
     author: {
       '@type': 'Person',
       name: post.author.name,
       jobTitle: post.author.role,
-      url: 'https://techusar.dev/about',
+      url: `${SITE_URL}/about`,
     },
     publisher: {
       '@type': 'Organization',
       name: 'TechUsar',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://techusar.dev/logo.png',
+        url: `${SITE_URL}/logo.png`,
       },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://techusar.dev/blog/${post.slug}`,
+      '@id': `${SITE_URL}/blog/${post.slug}`,
     },
     keywords: post.seoKeywords.join(', '),
   };

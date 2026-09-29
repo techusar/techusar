@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
+import { SITE_URL } from '@/lib/seo';
 
 export default function robots(): MetadataRoute.Robots {
-  const BASE_URL = 'https://techusar.dev';
+  const BASE_URL = SITE_URL;
 
   return {
     rules: [

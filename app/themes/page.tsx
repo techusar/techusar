@@ -1,8 +1,12 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { ThemesClient } from '@/components/themes/ThemesClient';
-import { themes } from '@/data/themes';
+import { getDbThemes } from '@/lib/db';
+import { themes as fallbackThemes } from '@/data/themes';
 import { ShoppingBag } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: 'Commercial Themes & Next.js Website Templates — TechUsar',
@@ -17,17 +21,20 @@ export const metadata: Metadata = {
     'TechUsar themes',
   ],
   alternates: {
-    canonical: 'https://techusar.dev/themes',
+    canonical: 'https://www.techusar.com/themes',
   },
   openGraph: {
     title: 'Commercial Themes & Next.js Website Templates — TechUsar',
     description:
       'Engineered for speed, SEO, and visual precision. Production-ready web themes with instant preview.',
-    url: 'https://techusar.dev/themes',
+    url: 'https://www.techusar.com/themes',
   },
 };
 
-export default function ThemesPage() {
+export default async function ThemesPage() {
+  const dbThemes = await getDbThemes();
+  const themes = dbThemes && dbThemes.length > 0 ? dbThemes : fallbackThemes;
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-12">
       {/* Header */}

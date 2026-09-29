@@ -45,7 +45,7 @@ export const usmanCVData: CVData = {
   location: 'Kharadar lyari, Karachi',
   website: 'tech-tools-new.vercel.app',
   profile:
-    'Self-driven developer and designer with 5 years in graphic designing, 2 years in web development, and 1 year in backend development — despite being only 18. Independently built full-scale software including an Accounting + Inventory Management System and a mondaytools.com-style project tools website. Comfortable using AI tools and prompting to speed up development. Also a Hafiz-e-Quran.',
+    'Self-driven developer and designer with 5 years in graphic designing, 4 years in web development, and backend development — despite being only 18. Independently built full-scale software including an Accounting + Inventory Management System and a mondaytools.com-style project tools website. Comfortable using AI tools and prompting to speed up development.',
   skills: [
     'Graphic Designing',
     'Web Development',
@@ -117,12 +117,6 @@ export const usmanCVData: CVData = {
       id: 'edu-2',
       degree: 'Matriculation — Bio Science',
       period: '2025',
-      status: 'Completed',
-    },
-    {
-      id: 'edu-3',
-      degree: 'Hafiz-e-Quran (Islamic Religious Education)',
-      period: '',
       status: 'Completed',
     },
   ],

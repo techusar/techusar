@@ -136,7 +136,7 @@
       {
         "heading": "Design as Information Architecture, Not Decorative Glitz",
         "paragraphs": [
-          "Over my 5 years in graphic designing and 2 years in web development, the single biggest lesson I learned is that graphic design is not about decorating a canvas; it is about establishing ruthless visual hierarchy.",
+          "Over my 5 years in graphic designing and 4 years in web development, the single biggest lesson I learned is that graphic design is not about decorating a canvas; it is about establishing ruthless visual hierarchy.",
           "When Josef Müller-Brockmann codified the grid system in Switzerland, he demonstrated that typography must serve comprehension first. The font size, line height, baseline cadence, and negative space are mathematical decisions."
         ]
       },
@@ -194,7 +194,7 @@
     "id": "post-5",
     "slug": "from-lyari-karachi-to-building-fullstack-products",
     "title": "Self-Taught Developer from Kharadar Lyari, Karachi: Building Real Software at 18",
-    "excerpt": "The personal journey of Hafiz Muhammad Usman — balancing Islamic studies as a Hafiz-e-Quran with 5 years of graphic design, backend .NET, React, and modern AI tooling.",
+    "excerpt": "The personal journey of Hafiz Muhammad Usman — balancing continuous studies with 5 years of graphic design, 4 years of web development, backend .NET, React, and modern AI tooling.",
     "category": "Personal Journey",
     "date": "February 15, 2026",
     "readTime": "6 min read",
@@ -203,7 +203,7 @@
       "role": "Founder, Full-Stack Developer & AI Bot Engineer",
       "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=Usman"
     },
-    "tags": ["Biography", "Lyari Tech", "Karachi Developers", "Youth In Tech", "Hafiz-e-Quran"],
+    "tags": ["Biography", "Lyari Tech", "Karachi Developers", "Youth In Tech", "Full-Stack Dev"],
     "featured": false,
     "coverImage": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop",
     "seoKeywords": [
@@ -215,16 +215,16 @@
     ],
     "sections": [
       {
-        "heading": "Discipline Rooted in Memorization & Code",
+        "heading": "Discipline Rooted in Focus & Code",
         "paragraphs": [
           "Growing up in Kharadar Lyari, Karachi, the perception of our neighborhood was often defined by external headlines rather than the immense creative and intellectual talent blooming in our streets.",
-          "Completing Hifz-e-Quran taught me mental stamina, pattern recognition, and unshakeable discipline. When you memorize over 6,000 verses with perfect pronunciation and order, debugging a complex full-stack codebase or mastering design principles becomes an extension of that same rigorous focus."
+          "Developing deep personal focus taught me mental stamina, pattern recognition, and unshakeable discipline. Debugging a complex full-stack codebase or mastering design principles becomes an extension of that same rigorous focus."
         ]
       },
       {
         "heading": "Continuous Learning & AI Acceleration",
         "paragraphs": [
-          "By the age of 18, I had accumulated 5 years of commercial graphic design experience, built enterprise accounting software, and launched multiple SaaS prototypes. By embracing modern AI prompting and tools, I accelerate development cycles 5x without cutting corners on software quality.",
+          "By the age of 18, I had accumulated 5 years of commercial graphic design experience, 4 years of web development, built enterprise accounting software, and launched multiple SaaS prototypes. By embracing modern AI prompting and tools, I accelerate development cycles 5x without cutting corners on software quality.",
           "My message to every aspiring young developer in Pakistan: your geographical origin does not constrain your global impact. Code with discipline, deliver with honesty, and the world will take notice."
         ]
       }

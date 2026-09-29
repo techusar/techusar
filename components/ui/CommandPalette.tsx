@@ -31,21 +31,23 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
 
   // Static site pages
   const staticPages = [
-    { title: 'Home', subtitle: 'Overview & interactive showcase', href: '/', icon: Layout, category: 'Pages' },
-    { title: 'Free Tools Hub', subtitle: 'Productivity suite for accountants & developers', href: '/tools', icon: Code, category: 'Free Tools' },
-    { title: 'Invoice & Receipt Generator', subtitle: 'Calculate taxes, generate PDF invoices', href: '/tools', icon: FileText, category: 'Free Tools' },
-    { title: 'Profit Margin & Markup Calculator', subtitle: 'Gross margin, markup % and net profit', href: '/tools', icon: Sparkles, category: 'Free Tools' },
-    { title: 'Loan EMI Calculator', subtitle: 'Monthly payments and compound interest schedule', href: '/tools', icon: Sparkles, category: 'Free Tools' },
-    { title: 'JSON Formatter & Validator', subtitle: 'Prettify, minify, and validate JSON payloads', href: '/tools', icon: Code, category: 'Free Tools' },
-    { title: 'CV & Resume Builder', subtitle: '6 templates including exact original PDF + free builder', href: '/cv', icon: FileText, category: 'Resume Studio' },
-    { title: 'Selected Work', subtitle: 'Case studies & full-stack applications', href: '/work', icon: Layers, category: 'Pages' },
-    { title: 'Theme Marketplace', subtitle: 'Templates for Next.js, SaaS, and portfolios', href: '/themes', icon: Layout, category: 'Pages' },
-    { title: 'Graphic Design', subtitle: 'Brand identities, posters & visual systems', href: '/design', icon: Palette, category: 'Pages' },
-    { title: 'Services & Estimator', subtitle: 'Scope calculation, turnaround & rates', href: '/services', icon: Code, category: 'Pages' },
-    { title: 'Design Token Playground', subtitle: 'Interactive Blue, Purple & Obsidian Sandbox', href: '/playground', icon: Sparkles, category: 'Pages' },
-    { title: 'Articles & Essays', subtitle: 'Swiss typography, tokens & edge engineering', href: '/articles', icon: FileText, category: 'Pages' },
+    { title: 'Home', subtitle: 'TechUsar Main Ecosystem', href: '/', icon: Layout, category: 'Pages' },
+    { title: 'TechTools (tools.techusar.com)', subtitle: 'Live developer & accounting utilities suite', href: 'https://tools.techusar.com', icon: Code, category: 'Ecosystem' },
+    { title: 'Templates (templates.techusar.com)', subtitle: 'Production Next.js 15 & Tailwind templates', href: 'https://templates.techusar.com', icon: Layout, category: 'Ecosystem' },
+    { title: 'Portfolio (portfolio.techusar.com)', subtitle: 'Dedicated enterprise showcase subdomain', href: 'https://portfolio.techusar.com', icon: Layers, category: 'Ecosystem' },
+    { title: 'Free Tools Overview', subtitle: 'Productivity suite for accountants & developers', href: '/tools', icon: Code, category: 'TechTools' },
+    { title: 'Invoice & Receipt Generator', subtitle: 'Calculate taxes, generate PDF invoices', href: '/tools', icon: FileText, category: 'TechTools' },
+    { title: 'Profit Margin & Markup Calculator', subtitle: 'Gross margin, markup % and net profit', href: '/tools', icon: Sparkles, category: 'TechTools' },
+    { title: 'Loan EMI Calculator', subtitle: 'Monthly payments and compound interest schedule', href: '/tools', icon: Sparkles, category: 'TechTools' },
+    { title: 'JSON Formatter & Validator', subtitle: 'Prettify, minify, and validate JSON payloads', href: '/tools', icon: Code, category: 'TechTools' },
+    { title: 'AI Bot Development', subtitle: 'WhatsApp, Telegram & custom AI customer support agents', href: '/ai-bot-development', icon: Sparkles, category: 'Services' },
+    { title: 'Services & Architecture', subtitle: 'Full-stack development, brand identity & AI bots', href: '/services', icon: Code, category: 'Services' },
+    { title: 'Graphic Design', subtitle: 'Brand identities, vector systems & logo design', href: '/graphic-design', icon: Palette, category: 'Services' },
+    { title: 'Web Development', subtitle: 'Next.js 15, PostgreSQL & TypeScript platforms', href: '/web-development', icon: Code, category: 'Services' },
+    { title: 'UI/UX Design', subtitle: 'Figma wireframes, design systems & responsive UX', href: '/ui-ux-design', icon: Layout, category: 'Services' },
+    { title: 'Technical Blog', subtitle: 'Engineering articles, bot guides & tutorials', href: '/blog', icon: FileText, category: 'Pages' },
     { title: 'About TechUsar', subtitle: 'Background, dual-discipline philosophy & skills', href: '/about', icon: User, category: 'Pages' },
-    { title: 'Contact', subtitle: 'Start a conversation for project availability', href: '/contact', icon: Mail, category: 'Pages' },
+    { title: 'Contact & Hire', subtitle: 'Start a conversation for project availability', href: '/contact', icon: Mail, category: 'Pages' },
   ];
 
   const projectResults = projects.map((p) => ({

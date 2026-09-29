@@ -101,30 +101,38 @@ export function AdminDashboard() {
   const fetchData = React.useCallback(async () => {
     setRefreshing(true);
     try {
-      const [subRes, anaRes, setRes] = await Promise.all([
+      const results = await Promise.allSettled([
         fetch('/api/submissions', { cache: 'no-store' }),
         fetch('/api/analytics', { cache: 'no-store' }),
         fetch('/api/admin/settings', { cache: 'no-store' }),
       ]);
 
-      if (subRes.ok) {
-        const subData = await subRes.json();
-        setSubmissions(subData.submissions || []);
+      const [subResult, anaResult, setResult] = results;
+
+      if (subResult.status === 'fulfilled' && subResult.value.ok) {
+        try {
+          const subData = await subResult.value.json();
+          setSubmissions(subData.submissions || []);
+        } catch {}
       }
 
-      if (anaRes.ok) {
-        const anaData = await anaRes.json();
-        setAnalytics(anaData.analytics || null);
+      if (anaResult.status === 'fulfilled' && anaResult.value.ok) {
+        try {
+          const anaData = await anaResult.value.json();
+          setAnalytics(anaData.analytics || null);
+        } catch {}
       }
 
-      if (setRes.ok) {
-        const setData = await setRes.json();
-        if (setData.settings?.logoUrl) {
-          setCurrentLogo(setData.settings.logoUrl);
-        }
+      if (setResult.status === 'fulfilled' && setResult.value.ok) {
+        try {
+          const setData = await setResult.value.json();
+          if (setData.settings?.logoUrl) {
+            setCurrentLogo(setData.settings.logoUrl);
+          }
+        } catch {}
       }
     } catch (err) {
-      console.error('Failed to load dashboard data:', err);
+      console.warn('Dashboard data fetch notice:', err);
     } finally {
       setLoading(false);
       setRefreshing(false);

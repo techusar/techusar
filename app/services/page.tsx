@@ -1,27 +1,56 @@
 import React from 'react';
 import { ProjectEstimator } from '@/components/services/ProjectEstimator';
-import { Layers, Palette, Code2, Sparkles, CheckCircle2, ShieldCheck, ArrowRight, Clock, HelpCircle, Terminal, Bot, MessageSquare } from 'lucide-react';
+import {
+  Layers,
+  Palette,
+  Code2,
+  Sparkles,
+  CheckCircle2,
+  ShieldCheck,
+  ArrowRight,
+  Clock,
+  HelpCircle,
+  Terminal,
+  Bot,
+  MessageSquare,
+  Zap,
+  Compass,
+  ArrowUpRight,
+} from 'lucide-react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { servicesData } from '@/data/services-data';
+import { constructMetadata, SITE_URL } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Services & Custom AI Bot Development — TechUsar',
+export const metadata: Metadata = constructMetadata({
+  title: 'Engineering, Design & Custom AI Bot Services — TechUsar',
   description:
-    'Commission bespoke brand identity, full-stack Next.js applications, and custom AI agents & automation bots (WhatsApp, Telegram, scrapers). Calculate investment and delivery timelines.',
-  alternates: {
-    canonical: 'https://techusar.dev/services',
-  },
-};
+    'Explore the 8 core services offered by Hafiz Muhammad Usman (TechUsar): Full-Stack Development, Next.js 15, AI Automation, WhatsApp Bots, Graphic Design, Brand Identity, UI/UX, and Custom Business Software.',
+  path: '/services',
+  keywords: [
+    'TechUsar services',
+    'Full-Stack Web Development',
+    'Next.js 15 Development',
+    'AI Automation Karachi',
+    'WhatsApp Bot Development Pakistan',
+    'Graphic Design Lyari',
+    'Brand Identity Design',
+    'UI UX Design Figma',
+    'Custom Business Software',
+    'Accounting Software Pakistan',
+  ],
+});
 
 export default function ServicesPage() {
   const servicesJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    serviceType: 'Web Development, Brand Identity & Custom AI Bot Development',
+    name: 'TechUsar Engineering & Creative Services',
+    serviceType: 'Graphic Design, Full-Stack Web Development, Custom AI Bots & Business Software',
     provider: {
       '@type': 'Person',
       name: 'Hafiz Muhammad Usman',
-      url: 'https://techusar.dev/about',
+      url: `${SITE_URL}/about`,
     },
     areaServed: {
       '@type': 'Country',
@@ -29,152 +58,44 @@ export default function ServicesPage() {
     },
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Engineering & Creative Services',
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Custom AI Agents & Automation Bots',
-            description:
-              'Custom WhatsApp bots, Telegram notification bots, 24/7 customer care chatbots, and automated web scrapers.',
-          },
+      name: 'TechUsar Comprehensive Services Catalog',
+      itemListElement: servicesData.map((s) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: s.title,
+          description: s.metaDescription,
+          url: `${SITE_URL}/services/${s.slug}`,
         },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Brand Identity & Vector Systems',
-            description:
-              'Vector logomark, monogram, wordmark, and comprehensive brand guidelines manual.',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Full-Stack Next.js 15 Applications',
-            description:
-              'Production-grade web software engineered with Next.js 15, TypeScript, Tailwind CSS, and scalable PostgreSQL database schemas.',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Financial & Accounting Software Engineering',
-            description:
-              'Double-entry ledgers, automated multi-tax invoice engines, and real-time inventory tracking software.',
-          },
-        },
-      ],
+      })),
     },
   };
-
-  const coreServices = [
-    {
-      icon: Bot,
-      tag: 'AI & AUTOMATION BOT STUDIO',
-      color: 'emerald',
-      title: 'Custom AI Agents & Automation Bots',
-      description:
-        'Hum chote mote intelligent bots aur custom AI agents banate hain! Tailored WhatsApp bots, Telegram notifiers, 24/7 customer care chatbots, and automated web scrapers.',
-      deliverables: [
-        'Custom WhatsApp & Telegram Automation Bots',
-        '24/7 AI Customer Support Chatbots (OpenAI / Gemini / Claude)',
-        'E-commerce order alerts & instant status bots',
-        'Intelligent web scrapers & automated lead generation agents',
-        'Small & lightweight utility bots for repetitive daily tasks',
-        'Complete setup, hosting assistance & zero-hassle deployment',
-      ],
-      turnaround: '3 to 7 days',
-    },
-    {
-      icon: Palette,
-      tag: 'CREATIVE DIRECTION',
-      color: 'purple',
-      title: 'Brand Identity & Vector Systems',
-      description:
-        'Crafting distinctive brand marks, typography guidelines, and design tokens that communicate credibility and technical confidence.',
-      deliverables: [
-        'Vector Logomark, Monogram & Wordmark suite',
-        'Typography hierarchy & pairing specifications',
-        'Comprehensive brand guidelines manual (PDF & Web)',
-        'Color palette with WCAG AAA contrast ratios',
-        'Social assets, packaging dies, and pitch deck decks',
-      ],
-      turnaround: '2 to 3 weeks',
-    },
-    {
-      icon: Code2,
-      tag: 'ENGINEERING',
-      color: 'blue',
-      title: 'Full-Stack Next.js 15 Applications',
-      description:
-        'Production-grade web software engineered with Next.js 15, TypeScript, Tailwind CSS, PostgreSQL, and scalable API gateways.',
-      deliverables: [
-        'App Router architecture with React Server Components',
-        'Strict end-to-end TypeScript type coverage',
-        'Optimized database schemas & migration pipelines',
-        'Authentication, permissions & role-based access',
-        'Edge deployment with sub-100ms global TTFB',
-      ],
-      turnaround: '3 to 6 weeks',
-    },
-    {
-      icon: Layers,
-      tag: 'SYSTEMS ARCHITECTURE',
-      color: 'indigo',
-      title: 'Multi-Brand Figma Design Systems',
-      description:
-        'Enterprise-grade component libraries bridging Figma auto-layout and React code tokens with automated synchronization.',
-      deliverables: [
-        'Token taxonomy (colors, spacing, typography, radii)',
-        'Accessible primitives built on Radix UI conventions',
-        'Dark mode & Light mode contrast-tested tokens',
-        'Interactive Figma components with variants',
-        'Living Storybook & developer documentation',
-      ],
-      turnaround: '2 to 4 weeks',
-    },
-    {
-      icon: Terminal,
-      tag: 'MARKETPLACE & SAAS',
-      color: 'black',
-      title: 'Bespoke Themes & Marketing Engines',
-      description:
-        'High-converting landing pages, documentation portals, and template engines engineered to turn visitors into long-term users.',
-      deliverables: [
-        'Conversion-optimized layout and visual rhythm',
-        'Fluid spring micro-interactions & scroll triggers',
-        'SEO metadata architecture & OpenGraph cards',
-        'Clean, modular code ready for client CMS integration',
-        'Comprehensive documentation & video walkthrough',
-      ],
-      turnaround: '2 to 3 weeks',
-    },
-  ];
 
   const processSteps = [
     {
       num: '01',
-      title: 'Blueprint & Architecture',
-      desc: 'We map requirements, define technical scope, identify user personas, and establish the technical stack.',
+      title: 'Blueprint & Architecture Specification',
+      desc: 'We map requirements, define technical scope, identify user personas, and establish the technical and database stack.',
     },
     {
       num: '02',
-      title: 'Vector & Token Design',
-      desc: 'Visual exploration begins in Figma and Illustrator. Typography, color tokens, and layout geometry take shape.',
+      title: 'Vector Geometry & Token Systems',
+      desc: 'Visual exploration in Figma and Illustrator. Typography, color tokens, and layout geometry take shape.',
     },
     {
       num: '03',
-      title: 'Full-Stack Build',
+      title: 'Full-Stack & Backend Build',
       desc: 'Translating designs into clean TypeScript, Next.js components, database models, and resilient backend endpoints.',
     },
     {
       num: '04',
-      title: 'Polish, Test & Deploy',
-      desc: 'Performance audits, cross-browser validation, accessibility checks, and zero-downtime production deployment.',
+      title: 'Performance Optimization & QA',
+      desc: 'Core Web Vitals auditing, cross-browser validation, accessibility checks, and zero-downtime production deployment.',
+    },
+    {
+      num: '05',
+      title: 'Handoff & Ongoing Support',
+      desc: 'Complete source code transfer, video walkthroughs, and 30-day post-launch stabilization support.',
     },
   ];
 
@@ -192,6 +113,10 @@ export default function ServicesPage() {
       a: 'Absolutely. I frequently act as an embedded principal designer/engineer, leading sprint design handoffs, writing pull requests, and establishing design system tokens for engineering squads.',
     },
     {
+      q: 'Can I commission small lightweight bots and single-task automations?',
+      a: 'Yes! Hum chote mote intelligent bots aur custom AI agents banate hain — tailored WhatsApp bots, Telegram notifiers, customer care chatbots, and automated web scrapers with rapid turnaround.',
+    },
+    {
       q: 'What happens after the project launches?',
       a: 'All projects include complimentary 30-day warranty support for bug fixes and launch stabilization. Ongoing retainers and maintenance SLAs are also available.',
     },
@@ -207,122 +132,145 @@ export default function ServicesPage() {
 
       {/* Header */}
       <div className="space-y-4 max-w-3xl">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-purple-950/50 border border-blue-200 dark:border-purple-800/60 text-xs font-mono text-blue-600 dark:text-purple-400">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800/60 text-xs font-mono text-blue-600 dark:text-blue-400">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Disciplined Creative & Technical Execution</span>
+          <span>Disciplined Creative &amp; Technical Execution</span>
         </div>
 
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-950 dark:text-white leading-[1.1]">
           Services designed for{' '}
-          <span className="gradient-text-blue-purple">
+          <span className="text-blue-600 dark:text-blue-400">
             venture speed and visual precision.
           </span>
         </h1>
 
         <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
-          From establishing an iconic brand identity to architecting full-scale TypeScript web applications, I provide an integrated single-practitioner workflow with zero handoff friction.
+          From establishing an iconic brand identity to architecting full-scale TypeScript web applications and custom WhatsApp automation bots, I provide an integrated single-practitioner workflow with zero handoff friction.
         </p>
       </div>
 
-      {/* Core Services Grid */}
+      {/* 8 Core Services Grid */}
       <section className="space-y-8">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold tracking-tight text-neutral-950 dark:text-white">
-            Core Engagement Offerings
-          </h2>
-          <span className="text-xs font-mono text-neutral-500">4 CORE PRACTICES</span>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-neutral-200/80 dark:border-neutral-800/80">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-950 dark:text-white">
+              The 8 Core Specialized Practices
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
+              Each discipline is backed by real production case studies and deep architectural expertise.
+            </p>
+          </div>
+          <span className="text-xs font-mono text-neutral-500 bg-neutral-100 dark:bg-neutral-800 px-2.5 py-1 rounded-full shrink-0">
+            8 DEDICATED DOMAINS
+          </span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {coreServices.map((service, idx) => {
-            const Icon = service.icon;
-            return (
-              <div
-                key={idx}
-                className="p-8 rounded-3xl border border-neutral-200/90 dark:border-neutral-800/90 bg-white dark:bg-neutral-900/60 shadow-xs hover:border-blue-500/40 dark:hover:border-purple-500/40 transition-all duration-300 space-y-6 flex flex-col justify-between"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/60 dark:to-purple-950/60 border border-blue-200/60 dark:border-purple-800/60 flex items-center justify-center text-blue-600 dark:text-purple-400">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 uppercase tracking-wider">
-                      {service.tag}
-                    </span>
-                  </div>
-
-                  <div>
-                    <h3 className="text-xl font-bold text-neutral-950 dark:text-white">
-                      {service.title}
-                    </h3>
-                    <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1 leading-relaxed">
-                      {service.description}
-                    </p>
-                  </div>
-
-                  <div className="pt-2 space-y-2 border-t border-neutral-100 dark:border-neutral-800">
-                    <div className="text-xs font-mono text-neutral-500 uppercase tracking-wider">
-                      Key Deliverables:
-                    </div>
-                    <ul className="space-y-1.5 text-xs text-neutral-700 dark:text-neutral-300">
-                      {service.deliverables.map((item, dIdx) => (
-                        <li key={dIdx} className="flex items-center gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-blue-500 dark:text-purple-400 shrink-0" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+          {servicesData.map((service, idx) => (
+            <div
+              key={service.id}
+              className="p-8 rounded-3xl border border-neutral-200/90 dark:border-neutral-800/90 bg-white dark:bg-neutral-900/60 shadow-xs hover:border-blue-500/40 dark:hover:border-blue-500/40 transition-all duration-300 space-y-6 flex flex-col justify-between group"
+            >
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 uppercase tracking-wider">
+                    {service.shortTitle}
+                  </span>
+                  <span className="text-xs font-mono text-neutral-400">
+                    0{idx + 1}
+                  </span>
                 </div>
 
-                <div className="pt-4 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between text-xs font-mono text-neutral-500">
-                  <div className="flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-neutral-400" />
-                    <span>Typical cadence: {service.turnaround}</span>
-                  </div>
-                  <Link
-                    href="/contact"
-                    className="text-blue-600 dark:text-purple-400 font-semibold inline-flex items-center gap-1 hover:underline"
-                  >
-                    <span>Inquire</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </Link>
+                <div className="space-y-2">
+                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-950 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    <Link href={`/services/${service.slug}`}>
+                      {service.title}
+                    </Link>
+                  </h3>
+                  <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                    {service.tagline}
+                  </p>
+                </div>
+
+                <div className="space-y-2 pt-2 border-t border-neutral-100 dark:border-neutral-800">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-500 font-semibold block">
+                    Core Focus &amp; Deliverables:
+                  </span>
+                  <ul className="space-y-1.5">
+                    {service.featuresDeliverables[0]?.items.slice(0, 3).map((item, itemIdx) => (
+                      <li key={itemIdx} className="flex items-start gap-2 text-xs text-neutral-700 dark:text-neutral-300">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
-            );
-          })}
+
+              <div className="pt-4 border-t border-neutral-200/80 dark:border-neutral-800/80 flex items-center justify-between">
+                <Link
+                  href={`/services/${service.slug}`}
+                  className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                >
+                  <span>Explore Full Service Guide</span>
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                </Link>
+                <a
+                  href={`https://wa.me/923318917330?text=${encodeURIComponent(`Assalam-o-Alaikum Usman! I want to discuss your ${service.title}.`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-mono text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
+                >
+                  <span>Quick WhatsApp</span>
+                  <ArrowUpRight className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Interactive Estimator Section */}
+      {/* Interactive Project Estimator */}
       <section className="space-y-6 pt-4">
-        <ProjectEstimator />
-      </section>
-
-      {/* Four Step Working Process */}
-      <section className="space-y-8 pt-8 border-t border-neutral-200 dark:border-neutral-800">
-        <div className="space-y-2 max-w-xl">
-          <span className="text-xs font-mono text-blue-600 dark:text-purple-400 uppercase tracking-widest">
-            PROCESS & METHODOLOGY
-          </span>
+        <div className="space-y-2 max-w-2xl">
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-emerald-600 dark:text-emerald-400 uppercase tracking-widest font-semibold">
+            <Clock className="w-4 h-4" />
+            <span>Interactive Calculator</span>
+          </div>
           <h2 className="text-3xl font-bold tracking-tight text-neutral-950 dark:text-white">
-            How we bring ideas to life
+            Project Scope &amp; Timeline Estimator
           </h2>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
-            A battle-tested 4-phase delivery system ensuring zero surprises and transparent milestones.
+          <p className="text-neutral-600 dark:text-neutral-400 text-sm sm:text-base leading-relaxed">
+            Select your required disciplines to generate an estimated production timeline and baseline investment range.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {processSteps.map((step) => (
+        <ProjectEstimator />
+      </section>
+
+      {/* Process Section */}
+      <section className="space-y-8">
+        <div className="space-y-2">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-950 dark:text-white">
+            How Engagements Run
+          </h2>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400 max-w-xl">
+            A transparent, predictable process with explicit milestones and continuous communication.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          {processSteps.map((step, idx) => (
             <div
-              key={step.num}
-              className="p-6 rounded-2xl border border-neutral-200/90 dark:border-neutral-800/90 bg-neutral-50/50 dark:bg-neutral-900/30 space-y-3"
+              key={idx}
+              className="p-6 rounded-2xl border border-neutral-200/90 dark:border-neutral-800/90 bg-neutral-50/50 dark:bg-neutral-900/50 space-y-3"
             >
-              <div className="text-2xl font-extrabold font-mono text-blue-600 dark:text-purple-400">
+              <span className="text-2xl font-mono font-bold text-neutral-400 dark:text-neutral-500">
                 {step.num}
-              </div>
-              <h3 className="text-base font-bold text-neutral-900 dark:text-white">{step.title}</h3>
+              </span>
+              <h3 className="text-sm font-bold text-neutral-950 dark:text-white">
+                {step.title}
+              </h3>
               <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
                 {step.desc}
               </p>
@@ -332,42 +280,59 @@ export default function ServicesPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="space-y-8 pt-8 border-t border-neutral-200 dark:border-neutral-800">
-        <div className="flex items-center gap-2 text-xs font-mono text-neutral-500 uppercase tracking-widest">
-          <HelpCircle className="w-4 h-4 text-blue-500 dark:text-purple-400" />
-          <span>FREQUENTLY ASKED QUESTIONS</span>
+      <section className="space-y-6">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-blue-600 dark:text-blue-400 uppercase tracking-widest font-semibold">
+            <HelpCircle className="w-4 h-4" />
+            <span>Engagement FAQ</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-950 dark:text-white">
+            Common Questions About Working Together
+          </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="divide-y divide-neutral-200 dark:divide-neutral-800 border-y border-neutral-200 dark:border-neutral-800">
           {faqs.map((faq, idx) => (
-            <div
-              key={idx}
-              className="p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/40 space-y-2"
-            >
-              <h3 className="text-sm font-bold text-neutral-900 dark:text-white">{faq.q}</h3>
-              <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            <div key={idx} className="py-6 space-y-2">
+              <h3 className="text-base sm:text-lg font-bold text-neutral-950 dark:text-white">
+                {faq.q}
+              </h3>
+              <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-3xl">
                 {faq.a}
               </p>
             </div>
           ))}
         </div>
+      </section>
 
-        {/* Bottom CTA banner */}
-        <div className="p-8 rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-xl shadow-blue-500/10">
-          <div className="space-y-2">
-            <h3 className="text-2xl font-bold tracking-tight">Ready to build something iconic?</h3>
-            <p className="text-sm text-blue-100 max-w-lg">
-              Book a direct consultation or send your RFP. Available for selected contracts in Q2 & Q3.
-            </p>
-          </div>
+      {/* CTA Footer */}
+      <section className="p-8 sm:p-12 rounded-3xl border border-neutral-200/90 dark:border-neutral-800/90 bg-neutral-50 dark:bg-neutral-900/60 text-center space-y-6 max-w-4xl mx-auto">
+        <div className="space-y-2 max-w-xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-950 dark:text-white">
+            Have a project brief ready?
+          </h2>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Let&apos;s review your objectives, determine technical feasibility, and prepare a tailored milestone proposal.
+          </p>
+        </div>
 
+        <div className="flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white text-neutral-950 font-semibold text-sm hover:bg-neutral-100 transition-colors shadow-md"
+            className="px-6 py-3 rounded-xl bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 text-xs font-bold font-mono tracking-wide hover:opacity-90 transition-all inline-flex items-center gap-2"
           >
-            <span>Start a Conversation</span>
-            <ArrowRight className="w-4 h-4" />
+            <span>START PROJECT BRIEF</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
+          <a
+            href="https://wa.me/923318917330?text=Assalam-o-Alaikum%20Usman!%20I%20want%20to%20hire%20you%20for%20a%20project."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold font-mono tracking-wide transition-all inline-flex items-center gap-2"
+          >
+            <span>WHATSAPP (+92 331 8917330)</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </a>
         </div>
       </section>
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { MessageSquare, X, Send, Sparkles } from 'lucide-react';
+import { MessageSquare, X, Send, Sparkles, Phone } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useSiteSettings } from '@/components/providers/SiteDataProvider';
 
@@ -30,7 +30,7 @@ export function FloatingWhatsApp() {
   };
 
   return (
-    <div className="fixed bottom-4 sm:bottom-6 right-3 sm:right-6 z-50 flex flex-col items-end">
+    <div className="fixed bottom-4 sm:bottom-6 left-3 sm:left-6 z-50 flex flex-col items-start select-none">
       {/* Popover Chat Prompt */}
       {isOpen && (
         <div className="mb-3 w-[calc(100vw-1.5rem)] sm:w-96 max-w-sm rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-3 duration-200">
@@ -53,7 +53,7 @@ export function FloatingWhatsApp() {
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white/80 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors"
+              className="text-white/80 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
               aria-label="Close WhatsApp chat"
             >
               <X className="w-4 h-4" />
@@ -82,7 +82,7 @@ export function FloatingWhatsApp() {
                   key={suggestion}
                   type="button"
                   onClick={() => setUserMsg(suggestion)}
-                  className="text-[10px] sm:text-[11px] px-2 py-1 rounded-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:border-emerald-500 transition-colors text-left"
+                  className="text-[10px] sm:text-[11px] px-2 py-1 rounded-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:border-emerald-500 transition-colors text-left cursor-pointer"
                 >
                   {suggestion}
                 </button>
@@ -101,7 +101,7 @@ export function FloatingWhatsApp() {
               <button
                 type="submit"
                 data-track="whatsapp_send_prompt"
-                className="p-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition-colors shrink-0 shadow-xs"
+                className="p-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition-colors shrink-0 shadow-xs cursor-pointer"
                 title="Send on WhatsApp"
               >
                 <Send className="w-3.5 h-3.5" />
@@ -111,13 +111,13 @@ export function FloatingWhatsApp() {
         </div>
       )}
 
-      {/* Floating Action Button */}
+      {/* Floating Action Button on Bottom Left */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         data-track="whatsapp_floating_button"
         data-track-label="Floating WhatsApp 03318917330"
         aria-label="Chat on WhatsApp 03318917330"
-        className="group relative flex items-center gap-2 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg hover:shadow-emerald-600/30 transition-all active:scale-95 duration-200"
+        className="group relative flex items-center gap-2 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg hover:shadow-emerald-600/30 transition-all active:scale-95 duration-200 cursor-pointer"
       >
         <span className="relative flex h-2.5 sm:h-3 w-2.5 sm:w-3">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-200 opacity-75" />

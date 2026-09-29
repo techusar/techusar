@@ -1,8 +1,12 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { getAllBlogPosts, getBlogCategories } from '@/lib/blog';
+import { getDbBlogs } from '@/lib/db';
 import { BlogListClient } from '@/components/blog/BlogListClient';
 import { BookOpen, Sparkles, Bot } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: 'Blog & Technical Articles — AI Bots, Web Dev & Design | TechUsar',
@@ -19,13 +23,13 @@ export const metadata: Metadata = {
     'Graphic design guides',
   ],
   alternates: {
-    canonical: 'https://techusar.dev/blog',
+    canonical: 'https://www.techusar.com/blog',
   },
   openGraph: {
     title: 'Blog & Technical Articles — AI Bots, Web Dev & Design | TechUsar',
     description:
       'Explore tutorials, guides, and engineering notes on custom AI bots, full-stack systems, and design architecture.',
-    url: 'https://techusar.dev/blog',
+    url: 'https://www.techusar.com/blog',
     type: 'website',
     siteName: 'TechUsar',
   },
@@ -37,9 +41,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogIndexPage() {
-  const posts = getAllBlogPosts();
-  const categories = getBlogCategories();
+export default async function BlogIndexPage() {
+  const dbPosts = await getDbBlogs();
+  const posts = dbPosts && dbPosts.length > 0 ? (dbPosts as any) : getAllBlogPosts();
+  const categories = Array.from(new Set(['All', ...posts.map((p: any) => p.category)]));
 
   // JSON-LD structured data for Blog
   const blogJsonLd = {
@@ -48,21 +53,21 @@ export default function BlogIndexPage() {
     name: 'TechUsar Blog & Engineering Articles',
     description:
       'Official technical blog and insights on AI Agent development, custom automation bots, Next.js engineering, and graphic design by Hafiz Muhammad Usman.',
-    url: 'https://techusar.dev/blog',
+    url: 'https://www.techusar.com/blog',
     author: {
       '@type': 'Person',
       name: 'Hafiz Muhammad Usman',
-      url: 'https://techusar.dev/about',
+      url: 'https://www.techusar.com/about',
     },
-    blogPost: posts.map((post) => ({
+    blogPost: posts.map((post: any) => ({
       '@type': 'BlogPosting',
       headline: post.title,
       description: post.excerpt,
-      url: `https://techusar.dev/blog/${post.slug}`,
-      datePublished: '2026-03-01',
+      url: `https://www.techusar.com/blog/${post.slug}`,
+      datePublished: post.date || '2026-03-01',
       author: {
         '@type': 'Person',
-        name: post.author.name,
+        name: post.author?.name || 'Hafiz Muhammad Usman',
       },
     })),
   };

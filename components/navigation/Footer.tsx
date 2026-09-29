@@ -49,12 +49,12 @@ export function Footer() {
               <ul className="space-y-2 text-sm">
                 <li>
                   <a
-                    href="https://tamplates.techusar.com"
+                    href="https://templates.techusar.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 hover:underline font-semibold"
                   >
-                    <span>tamplates.techusar.com</span>
+                    <span>templates.techusar.com</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </a>
                 </li>
@@ -71,7 +71,7 @@ export function Footer() {
                 </li>
                 <li>
                   <Link href="/templates" className="text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                    Next.js Templates Hub
+                    Next.js Templates
                   </Link>
                 </li>
                 <li>
