@@ -63,6 +63,63 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   });
 }
 
+function renderFormattedParagraph(text: string) {
+  const regex = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|`[^`]+`)/g;
+  const parts = text.split(regex);
+
+  return parts.map((part, i) => {
+    if (!part) return null;
+    if (part.startsWith('[') && part.includes('](') && part.endsWith(')')) {
+      const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      if (match) {
+        const [, label, url] = match;
+        const isExternal = url.startsWith('http');
+        if (isExternal) {
+          return (
+            <a
+              key={i}
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 dark:text-blue-400 font-semibold underline decoration-blue-500/40 hover:decoration-blue-500 transition-colors inline-flex items-center gap-0.5"
+            >
+              <span>{label}</span>
+              <ArrowUpRight className="w-3 h-3 inline-block shrink-0" />
+            </a>
+          );
+        }
+        return (
+          <Link
+            key={i}
+            href={url}
+            className="text-blue-600 dark:text-blue-400 font-semibold underline decoration-blue-500/40 hover:decoration-blue-500 transition-colors"
+          >
+            {label}
+          </Link>
+        );
+      }
+    }
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return (
+        <strong key={i} className="font-bold text-neutral-950 dark:text-white">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    if (part.startsWith('`') && part.endsWith('`')) {
+      return (
+        <code
+          key={i}
+          className="px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 font-mono text-xs text-blue-600 dark:text-blue-400"
+        >
+          {part.slice(1, -1)}
+        </code>
+      );
+    }
+    return <span key={i}>{part}</span>;
+  });
+}
+
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const post = getBlogPostBySlug(slug);
@@ -208,7 +265,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <div className="space-y-4 pt-1">
               {section.paragraphs.map((p, pIdx) => (
                 <p key={pIdx} className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
-                  {p}
+                  {renderFormattedParagraph(p)}
                 </p>
               ))}
             </div>

@@ -27,6 +27,8 @@ export interface BlogPost {
   cluster?: string;
   primaryKeyword?: string;
   date: string;
+  publishedAt?: string;
+  modifiedAt?: string;
   readTime: string;
   author: BlogAuthor;
   tags: string[];
@@ -76,8 +78,8 @@ export function generateBlogPostingSchema(post: BlogPost) {
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt,
-    datePublished: '2026-03-01T00:00:00+05:00',
-    dateModified: '2026-03-11T00:00:00+05:00',
+    datePublished: post.publishedAt || '2026-03-01T00:00:00+05:00',
+    dateModified: post.modifiedAt || post.publishedAt || '2026-10-10T00:00:00+05:00',
     image: post.coverImage || `${SITE_URL}/og-image.png`,
     author: {
       '@type': 'Person',

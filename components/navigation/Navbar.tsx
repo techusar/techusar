@@ -202,6 +202,12 @@ export function Navbar() {
   // Secondary navigation links (No playground or toy stuff - strictly real client & portfolio work)
   const secondaryLinks: NavItem[] = [
     {
+      label: 'AI Universal Workspace',
+      href: 'https://tools.techusar.com/ai-tools',
+      description: 'Writing, coding help & everyday productivity suite',
+      icon: Sparkles,
+    },
+    {
       label: 'AI Bots & Agents',
       href: '/ai-bot-development',
       description: 'WhatsApp, Telegram & 24/7 custom AI customer bots',
@@ -257,6 +263,12 @@ export function Navbar() {
       href: 'https://tools.techusar.com',
       description: 'Developer & accounting utilities suite',
       icon: Wrench,
+    },
+    {
+      label: 'AI Universal Workspace (tools.techusar.com/ai-tools)',
+      href: 'https://tools.techusar.com/ai-tools',
+      description: 'Writing, coding help, summaries & study tools',
+      icon: Sparkles,
     },
     {
       label: 'AI Bots & Agents',
@@ -446,22 +458,33 @@ export function Navbar() {
                   {/* Dropdown Footer */}
                   <div className="mt-3 pt-3 border-t border-neutral-100 dark:border-neutral-800 flex flex-wrap items-center justify-between gap-2 text-xs">
                     <a
-                      href="https://tools.techusar.com"
+                      href="https://tools.techusar.com/ai-tools"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 font-mono font-semibold text-[11px] hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-600 text-white font-mono font-bold text-[11px] hover:bg-blue-700 transition-colors shadow-2xs"
                     >
-                      <span>tools.techusar.com</span>
+                      <Sparkles className="w-3 h-3" />
+                      <span>AI Workspace</span>
                       <ArrowUpRight className="w-3 h-3" />
                     </a>
                     <div className="flex items-center gap-2">
+                      <a
+                        href="https://tools.techusar.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-mono text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 hover:underline inline-flex items-center gap-1"
+                      >
+                        <span>tools.techusar.com</span>
+                        <ArrowUpRight className="w-3 h-3" />
+                      </a>
+                      <span className="text-neutral-300 dark:text-neutral-700">&bull;</span>
                       <a
                         href="https://templates.techusar.com"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 hover:underline inline-flex items-center gap-1"
                       >
-                        <span>templates.techusar.com</span>
+                        <span>templates</span>
                         <ArrowUpRight className="w-3 h-3" />
                       </a>
                     </div>
@@ -517,7 +540,40 @@ export function Navbar() {
                   <div className="space-y-1">
                     {secondaryLinks.map((link) => {
                       const Icon = link.icon;
-                      const isActive = pathname === link.href || pathname.startsWith(link.href);
+                      const isExternal = link.href.startsWith('http');
+                      const isActive = !isExternal && (pathname === link.href || pathname.startsWith(link.href));
+                      const itemContent = (
+                        <>
+                          <div className="p-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 mt-0.5 shrink-0">
+                            <Icon className="w-3.5 h-3.5" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-1">
+                              <span className="font-medium text-neutral-900 dark:text-white block">{link.label}</span>
+                              {isExternal && <ArrowUpRight className="w-3 h-3 text-neutral-400 shrink-0" />}
+                            </div>
+                            <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5">
+                              {link.description}
+                            </p>
+                          </div>
+                        </>
+                      );
+
+                      if (isExternal) {
+                        return (
+                          <a
+                            key={link.href}
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => setMoreDropdownOpen(false)}
+                            className="flex items-start gap-2.5 p-2 rounded-xl text-xs transition-colors text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800/70 hover:text-neutral-950 dark:hover:text-white"
+                          >
+                            {itemContent}
+                          </a>
+                        );
+                      }
+
                       return (
                         <Link
                           key={link.href}
@@ -529,15 +585,7 @@ export function Navbar() {
                               : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800/70 hover:text-neutral-950 dark:hover:text-white'
                           }`}
                         >
-                          <div className="p-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 mt-0.5 shrink-0">
-                            <Icon className="w-3.5 h-3.5" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <span className="font-medium text-neutral-900 dark:text-white block">{link.label}</span>
-                            <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5">
-                              {link.description}
-                            </p>
-                          </div>
+                          {itemContent}
                         </Link>
                       );
                     })}
@@ -646,7 +694,40 @@ export function Navbar() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
                 {allDrawerLinks.map((link) => {
                   const Icon = link.icon;
-                  const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
+                  const isExternal = link.href.startsWith('http');
+                  const isActive = !isExternal && (pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href)));
+                  const drawerContent = (
+                    <>
+                      <div className="p-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 shrink-0">
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="font-medium text-neutral-950 dark:text-white text-xs flex items-center gap-1">
+                          <span>{link.label}</span>
+                          {isExternal && <ArrowUpRight className="w-3 h-3 text-neutral-400 shrink-0" />}
+                        </div>
+                        <div className="text-[11px] text-neutral-500 dark:text-neutral-400 truncate">
+                          {link.description}
+                        </div>
+                      </div>
+                    </>
+                  );
+
+                  if (isExternal) {
+                    return (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 p-2.5 rounded-xl text-xs transition-colors text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900"
+                      >
+                        {drawerContent}
+                      </a>
+                    );
+                  }
+
                   return (
                     <Link
                       key={link.href}
@@ -658,15 +739,7 @@ export function Navbar() {
                           : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900'
                       }`}
                     >
-                      <div className="p-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 shrink-0">
-                        <Icon className="w-4 h-4" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="font-medium text-neutral-950 dark:text-white text-xs">{link.label}</div>
-                        <div className="text-[11px] text-neutral-500 dark:text-neutral-400 truncate">
-                          {link.description}
-                        </div>
-                      </div>
+                      {drawerContent}
                     </Link>
                   );
                 })}

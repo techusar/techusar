@@ -10,6 +10,7 @@ import { ThemeLivePreviewModal } from '@/components/themes/ThemeLivePreviewModal
 import { PurchaseModal } from '@/components/themes/PurchaseModal';
 import { LightboxModal } from '@/components/design/LightboxModal';
 import { ContactForm } from '@/components/contact/ContactForm';
+import { AIWorkspaceSection } from '@/components/home/AIWorkspaceSection';
 import { useSiteData } from '@/components/providers/SiteDataProvider';
 import { projects } from '@/data/projects';
 import { themes } from '@/data/themes';
@@ -116,6 +117,10 @@ export default function HomePage() {
     {
       q: 'What is TechTools (tools.techusar.com) and are the tools free?',
       a: 'TechTools is TechUsar’s official live utilities platform (tools.techusar.com). It provides free, private, client-side developer and business calculators including instant PDF Invoicing & Tax calculation, Gross Margin & Markup, EMI Loan amortizations, and JSON formatting with zero sign-up required.',
+    },
+    {
+      q: 'What is the AI Universal Workspace on TechTools (tools.techusar.com/ai-tools)?',
+      a: 'The AI Universal Workspace is a free, in-browser productivity suite powered by Google Gemini 2.5 Flash. It helps you write, edit, summarize text, draft emails, and explain code in one place with zero sign-up friction and client-side data privacy.',
     },
     {
       q: 'How does your dual background in Graphic Design and Web Development benefit my project?',
@@ -360,6 +365,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 2.5 AI UNIVERSAL WORKSPACE & PRODUCTIVITY SUITE */}
+      <AIWorkspaceSection />
 
       {/* 3. ABOUT / INTRODUCTION SECTION */}
       <section id="about-intro" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

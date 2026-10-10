@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BlogPost } from '@/lib/blog';
-import { Search, Calendar, Clock, ArrowRight, Tag, Sparkles, Bot, MessageSquare } from 'lucide-react';
+import { Search, Calendar, Clock, ArrowRight, ArrowUpRight, Tag, Sparkles, Bot, MessageSquare } from 'lucide-react';
 
 interface BlogListClientProps {
   initialPosts: BlogPost[];
@@ -64,6 +64,45 @@ export function BlogListClient({ initialPosts, categories }: BlogListClientProps
               {cat}
             </button>
           ))}
+        </div>
+      </div>
+
+      {/* Featured AI Universal Workspace Discovery Banner */}
+      <div className="relative overflow-hidden rounded-3xl border-2 border-blue-500/30 bg-gradient-to-r from-blue-50/90 via-sky-50/50 to-white dark:from-blue-950/40 dark:via-neutral-900/90 dark:to-neutral-950 p-6 sm:p-8 shadow-xs">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="space-y-2 max-w-2xl">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-600/10 text-blue-700 dark:text-blue-300 text-xs font-mono font-bold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>TechTools AI Suite &bull; tools.techusar.com</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-extrabold text-neutral-950 dark:text-white">
+              One AI Workspace for Everyday Tasks
+            </h3>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              Writing, coding help, summarization, email drafting, and study assistance in one convenient workspace. Powered by Google Gemini 2.5 Flash on TechTools with complete in-browser privacy.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <a
+              href="https://tools.techusar.com/ai-tools"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-mono font-bold shadow-md transition-all active:scale-98"
+            >
+              <span>Try AI Workspace</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+            <a
+              href="https://tools.techusar.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 text-xs font-mono font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all shadow-xs"
+            >
+              <span>Free Tools</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
       </div>
 
