@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { SiteDataProvider } from '@/components/providers/SiteDataProvider';
@@ -220,6 +221,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth" data-theme="light">
       <head>
+        {/* Google tag (gtag.js) */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-PK0QX8J04V"
+        />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-PK0QX8J04V');`,
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('techusar-theme')||'light';var m=window.matchMedia('(prefers-color-scheme: dark)').matches;var isDark=t==='dark'||t==='matrix'||(t==='system'&&m);var root=document.documentElement;if(t==='matrix'){root.classList.add('dark','matrix');root.setAttribute('data-theme','matrix');}else if(isDark){root.classList.add('dark');root.classList.remove('matrix');root.setAttribute('data-theme','dark');}else{root.classList.remove('dark','matrix');root.setAttribute('data-theme','light');}}catch(e){}})();`,

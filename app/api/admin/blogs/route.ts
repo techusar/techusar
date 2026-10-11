@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { BlogPost } from '@/lib/blog';
 import { getDbBlogs, saveDbBlog, deleteDbBlog, isDbConfigured } from '@/lib/db';
+import { validateAdminRequest, unauthorizedResponse } from '@/lib/adminAuth';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  // Reading blogs is public (used in client and admin), but writing/deleting requires admin
   const posts = await getDbBlogs();
   return NextResponse.json({
     success: true,
@@ -15,10 +17,15 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const { authorized } = validateAdminRequest(req);
+  if (!authorized) {
+    return unauthorizedResponse();
+  }
+
   try {
     const body = await req.json();
 
-    if (!body.title) {
+    if (!body.title || typeof body.title !== 'string') {
       return NextResponse.json({ error: 'Title is required' }, { status: 400 });
     }
 
@@ -34,8 +41,8 @@ export async function POST(req: NextRequest) {
     const postData: BlogPost = {
       id,
       slug,
-      title: body.title,
-      excerpt: body.excerpt || body.title,
+      title: body.title.slice(0, 200),
+      excerpt: (body.excerpt || body.title).slice(0, 500),
       category: body.category || 'Engineering',
       date: body.date || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
       readTime: body.readTime || '5 min read',
@@ -45,18 +52,14 @@ export async function POST(req: NextRequest) {
         avatar: body.author?.avatar || 'https://api.dicebear.com/7.x/bottts/svg?seed=Usman',
       },
       tags: Array.isArray(body.tags)
-        ? body.tags
-        : typeof body.tags === 'string'
-        ? body.tags.split(',').map((s: string) => s.trim())
+        ? body.tags.slice(0, 10).map((t: unknown) => String(t).slice(0, 40))
         : ['TechUsar', 'Web Development'],
       featured: Boolean(body.featured),
       coverImage:
         body.coverImage ||
         'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200&auto=format&fit=crop',
       seoKeywords: Array.isArray(body.seoKeywords)
-        ? body.seoKeywords
-        : typeof body.seoKeywords === 'string'
-        ? body.seoKeywords.split(',').map((s: string) => s.trim())
+        ? body.seoKeywords.slice(0, 10).map((k: unknown) => String(k).slice(0, 60))
         : [body.title, 'TechUsar', 'Hafiz Muhammad Usman'],
       sections: Array.isArray(body.sections) && body.sections.length > 0
         ? body.sections
@@ -88,6 +91,11 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const { authorized } = validateAdminRequest(req);
+  if (!authorized) {
+    return unauthorizedResponse();
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');

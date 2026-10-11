@@ -100,11 +100,14 @@ export function AdminDashboard() {
 
   const fetchData = React.useCallback(async () => {
     setRefreshing(true);
+    const token = typeof window !== 'undefined' ? localStorage.getItem('techusar_admin_auth') : null;
+    const authHeaders: Record<string, string> = token ? { Authorization: `Bearer ${token}` } : {};
+
     try {
       const results = await Promise.allSettled([
-        fetch('/api/submissions', { cache: 'no-store' }),
-        fetch('/api/analytics', { cache: 'no-store' }),
-        fetch('/api/admin/settings', { cache: 'no-store' }),
+        fetch('/api/submissions', { cache: 'no-store', credentials: 'include', headers: authHeaders }),
+        fetch('/api/analytics', { cache: 'no-store', credentials: 'include', headers: authHeaders }),
+        fetch('/api/admin/settings', { cache: 'no-store', credentials: 'include', headers: authHeaders }),
       ]);
 
       const [subResult, anaResult, setResult] = results;
@@ -139,17 +142,30 @@ export function AdminDashboard() {
     }
   }, []);
 
-  // Check auth on mount
+  // Check auth on mount via server-side session endpoint
   useEffect(() => {
     const checkAuth = async () => {
-      const sessionToken = localStorage.getItem('techusar_admin_auth');
-      if (sessionToken) {
-        setIsAuthenticated(true);
-        await fetchData();
-      } else {
-        setIsAuthenticated(false);
-        setLoading(false);
+      try {
+        const token = localStorage.getItem('techusar_admin_auth');
+        const headers: Record<string, string> = token ? { Authorization: `Bearer ${token}` } : {};
+        const res = await fetch('/api/admin/session', {
+          method: 'POST',
+          credentials: 'include',
+          headers,
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.authenticated) {
+            setIsAuthenticated(true);
+            await fetchData();
+            return;
+          }
+        }
+      } catch {
+        // Fallback or unauthenticated
       }
+      setIsAuthenticated(false);
+      setLoading(false);
     };
     checkAuth();
   }, [fetchData]);
@@ -162,6 +178,7 @@ export function AdminDashboard() {
     try {
       const res = await fetch('/api/admin/login', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: loginUser, password: loginPass }),
       });
@@ -181,7 +198,10 @@ export function AdminDashboard() {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/admin/session', { method: 'DELETE', credentials: 'include' });
+    } catch {}
     localStorage.removeItem('techusar_admin_auth');
     setIsAuthenticated(false);
   };

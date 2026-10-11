@@ -16,11 +16,12 @@ export async function GET() {
         backend: ['Node.js', 'C# .NET', 'PostgreSQL', 'RESTful APIs', 'Docker', 'Edge Runtime'],
         design: ['Figma Token Architecture', 'Vector Graphics', 'Design Systems', 'Brand Identity', 'Print/Typography'],
       },
-      stats: {
-        marketplaceDownloads: 15400,
-        coreWebVitalsAverage: '99/100',
-        largestContentfulPaintMs: 84,
-        productionUptime: '99.98%',
+      benchmarks: {
+        architecture: 'Next.js 15 App Router + React 19 RSC',
+        typeSafety: 'Strict TypeScript',
+        stylingEngine: 'Tailwind CSS v4 + Motion',
+        renderingModel: 'Edge SSR & Static Pre-rendering',
+        databaseSupport: 'Neon Serverless PostgreSQL with schema migration',
       },
       contact: {
         email: 'techusar17@gmail.com',

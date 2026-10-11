@@ -2,11 +2,20 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import { getDbMedia, saveDbMedia, deleteDbMedia, isDbConfigured } from '@/lib/db';
+import { validateAdminRequest, unauthorizedResponse } from '@/lib/adminAuth';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 const UPLOADS_DIR = path.join(process.cwd(), 'public', 'uploads');
+const ALLOWED_MIME_TYPES = new Set([
+  'image/png',
+  'image/jpeg',
+  'image/webp',
+  'image/svg+xml',
+  'image/gif',
+]);
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 export interface MediaItem {
   id: string;
@@ -29,10 +38,16 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const { authorized } = validateAdminRequest(req);
+  if (!authorized) {
+    return unauthorizedResponse();
+  }
+
   try {
-    // Ensure uploads directory exists
     if (!fs.existsSync(UPLOADS_DIR)) {
-      fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+      try {
+        fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+      } catch {}
     }
 
     const contentType = req.headers.get('content-type') || '';
@@ -48,12 +63,19 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'No file provided in form data' }, { status: 400 });
       }
 
+      if (file.size > MAX_FILE_SIZE) {
+        return NextResponse.json({ error: 'File size exceeds 10MB limit' }, { status: 400 });
+      }
+
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
 
-      const ext = path.extname(file.name) || '.png';
+      const rawExt = path.extname(file.name).toLowerCase();
+      const ext = ['.png', '.jpg', '.jpeg', '.webp', '.svg', '.gif'].includes(rawExt) ? rawExt : '.png';
+      const mimeType = file.type && ALLOWED_MIME_TYPES.has(file.type) ? file.type : 'image/png';
+
       const safeBase = file.name
-        .replace(ext, '')
+        .replace(rawExt, '')
         .replace(/[^a-zA-Z0-9_-]/g, '_')
         .slice(0, 40);
       const timestamp = Date.now();
@@ -63,10 +85,9 @@ export async function POST(req: NextRequest) {
       try {
         fs.writeFileSync(filePath, buffer);
       } catch (fsErr) {
-        console.warn('[Media Upload] Could not write to disk (read-only or serverless), storing in database:', fsErr);
+        console.warn('[Media Upload] Could not write to disk, saving in database:', fsErr);
       }
 
-      const mimeType = file.type || (ext === '.svg' ? 'image/svg+xml' : ext === '.jpg' ? 'image/jpeg' : 'image/png');
       const base64Data = buffer.toString('base64');
       const dataUrl = `data:${mimeType};base64,${base64Data}`;
 
@@ -98,15 +119,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing dataUrl string' }, { status: 400 });
     }
 
-    // Match base64 data
-    const matches = dataUrl.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+    const matches = dataUrl.match(/^data:([A-Za-z0-9+/.-]+);base64,(.+)$/);
     if (!matches || matches.length !== 3) {
       return NextResponse.json({ error: 'Invalid base64 dataUrl format' }, { status: 400 });
     }
 
     const mime = matches[1];
+    if (!ALLOWED_MIME_TYPES.has(mime)) {
+      return NextResponse.json({ error: 'Unsupported file MIME type' }, { status: 400 });
+    }
+
     const base64Data = matches[2];
     const buffer = Buffer.from(base64Data, 'base64');
+
+    if (buffer.length > MAX_FILE_SIZE) {
+      return NextResponse.json({ error: 'File size exceeds 10MB limit' }, { status: 400 });
+    }
 
     let ext = '.png';
     if (mime.includes('jpeg') || mime.includes('jpg')) ext = '.jpg';
@@ -125,7 +153,7 @@ export async function POST(req: NextRequest) {
     try {
       fs.writeFileSync(filePath, buffer);
     } catch (fsErr) {
-      console.warn('[Media Upload] Could not write to disk (read-only or serverless), storing in database:', fsErr);
+      console.warn('[Media Upload] Could not write to disk, saving in database:', fsErr);
     }
 
     const newMedia: MediaItem = {
@@ -153,6 +181,11 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const { authorized } = validateAdminRequest(req);
+  if (!authorized) {
+    return unauthorizedResponse();
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
@@ -168,7 +201,6 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'Media item not found' }, { status: 404 });
     }
 
-    // Try deleting physical file
     const filePath = path.join(UPLOADS_DIR, itemToDelete.filename);
     if (fs.existsSync(filePath)) {
       try {

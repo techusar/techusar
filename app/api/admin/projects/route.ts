@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Project } from '@/types';
 import { getDbProjects, saveDbProject, deleteDbProject, isDbConfigured } from '@/lib/db';
+import { validateAdminRequest, unauthorizedResponse } from '@/lib/adminAuth';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -15,6 +16,11 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const { authorized } = validateAdminRequest(req);
+  if (!authorized) {
+    return unauthorizedResponse();
+  }
+
   try {
     const body = await req.json();
 
@@ -34,17 +40,15 @@ export async function POST(req: NextRequest) {
     const projectData: Project = {
       id,
       slug,
-      title: body.title,
-      client: body.client || 'Client Project',
+      title: String(body.title).slice(0, 200),
+      client: String(body.client || 'Client Project').slice(0, 100),
       category: body.category || 'Web App',
       year: body.year || new Date().getFullYear().toString(),
       role: body.role || 'Full-Stack Web Developer',
       shortDescription: body.shortDescription || body.description?.slice(0, 150) || '',
       description: body.description || body.shortDescription || '',
       technologies: Array.isArray(body.technologies)
-        ? body.technologies
-        : typeof body.technologies === 'string'
-        ? body.technologies.split(',').map((s: string) => s.trim())
+        ? body.technologies.slice(0, 20).map((s: unknown) => String(s).slice(0, 50))
         : ['Next.js', 'TypeScript', 'Tailwind CSS'],
       cover:
         body.cover ||
@@ -61,7 +65,7 @@ export async function POST(req: NextRequest) {
       designDirection: body.designDirection || 'Clean minimalist UI with high contrast and fast loading.',
       developmentDetails: body.developmentDetails || 'Full-stack development with edge performance and clean code.',
       metrics: body.metrics || [
-        { label: 'Performance', value: '99/100' },
+        { label: 'Quality Audit', value: 'Verified' },
         { label: 'Delivery', value: 'On Time' },
       ],
       keyFeatures: body.keyFeatures || [
@@ -87,6 +91,11 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const { authorized } = validateAdminRequest(req);
+  if (!authorized) {
+    return unauthorizedResponse();
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');

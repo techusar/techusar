@@ -1,15 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { testDbStatus, initDbSchema, isDbConfigured } from '@/lib/db';
+import { testDbStatus, initDbSchema } from '@/lib/db';
+import { validateAdminRequest, unauthorizedResponse } from '@/lib/adminAuth';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const { authorized } = validateAdminRequest(req);
+  if (!authorized) {
+    return unauthorizedResponse();
+  }
+
   const status = await testDbStatus();
   return NextResponse.json(status);
 }
 
 export async function POST(req: NextRequest) {
+  const { authorized } = validateAdminRequest(req);
+  if (!authorized) {
+    return unauthorizedResponse();
+  }
+
   try {
     const body = await req.json().catch(() => ({}));
     if (body.action === 'init-schema') {

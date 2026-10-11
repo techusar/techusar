@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Theme } from '@/types';
 import { getDbThemes, saveDbTheme, deleteDbTheme, isDbConfigured } from '@/lib/db';
+import { validateAdminRequest, unauthorizedResponse } from '@/lib/adminAuth';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -15,6 +16,11 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const { authorized } = validateAdminRequest(req);
+  if (!authorized) {
+    return unauthorizedResponse();
+  }
+
   try {
     const body = await req.json();
 
@@ -34,18 +40,16 @@ export async function POST(req: NextRequest) {
     const themeData: Theme = {
       id,
       slug,
-      name: body.name,
-      tagline: body.tagline || 'Modern production-ready web template.',
+      name: String(body.name).slice(0, 150),
+      tagline: String(body.tagline || 'Modern production-ready web template.').slice(0, 250),
       description: body.description || body.tagline || '',
       category: body.category || 'SaaS',
-      price: typeof body.price === 'number' ? body.price : Number(body.price) || 0,
+      price: typeof body.price === 'number' ? Math.max(0, body.price) : Math.max(0, Number(body.price) || 0),
       isFree: Boolean(body.isFree),
       isFeatured: Boolean(body.isFeatured),
       isPopular: Boolean(body.isPopular),
       technology: Array.isArray(body.technology)
-        ? body.technology
-        : typeof body.technology === 'string'
-        ? body.technology.split(',').map((s: string) => s.trim())
+        ? body.technology.slice(0, 15).map((s: unknown) => String(s).slice(0, 50))
         : ['Next.js 15', 'TypeScript', 'Tailwind CSS'],
       previewImage:
         body.previewImage ||
@@ -78,8 +82,8 @@ export async function POST(req: NextRequest) {
         : ['Hero Section', 'Features Bento Grid', 'Pricing Table', 'FAQ Accordion'],
       releaseDate: body.releaseDate || new Date().toISOString().split('T')[0],
       version: body.version || '1.0.0',
-      downloadsCount: Number(body.downloadsCount) || 120,
-      rating: Number(body.rating) || 4.9,
+      downloadsCount: Math.max(0, Number(body.downloadsCount) || 0),
+      rating: Math.min(5, Math.max(1, Number(body.rating) || 5)),
       license:
         body.license ||
         'Standard Commercial License (Unlimited Personal & Commercial Projects)',
@@ -110,6 +114,11 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const { authorized } = validateAdminRequest(req);
+  if (!authorized) {
+    return unauthorizedResponse();
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');

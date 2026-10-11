@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { DesignProject } from '@/types';
 import { getDbDesigns, saveDbDesign, deleteDbDesign, isDbConfigured } from '@/lib/db';
+import { validateAdminRequest, unauthorizedResponse } from '@/lib/adminAuth';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -15,6 +16,11 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const { authorized } = validateAdminRequest(req);
+  if (!authorized) {
+    return unauthorizedResponse();
+  }
+
   try {
     const body = await req.json();
 
@@ -34,10 +40,10 @@ export async function POST(req: NextRequest) {
     const designData: DesignProject = {
       id,
       slug,
-      title: body.title,
+      title: String(body.title).slice(0, 150),
       category: body.category || 'Brand Identity',
       year: body.year || new Date().getFullYear().toString(),
-      client: body.client || 'Private Client',
+      client: String(body.client || 'Private Client').slice(0, 100),
       cover:
         body.cover ||
         'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop',
@@ -52,9 +58,7 @@ export async function POST(req: NextRequest) {
       brief: body.brief || 'Develop a distinctive, high-impact design artifact.',
       concept: body.concept || 'Rooted in geometric Swiss balance and precision vector craftsmanship.',
       tools: Array.isArray(body.tools)
-        ? body.tools
-        : typeof body.tools === 'string'
-        ? body.tools.split(',').map((s: string) => s.trim())
+        ? body.tools.slice(0, 10).map((s: unknown) => String(s).slice(0, 50))
         : ['Adobe Illustrator', 'Photoshop', 'Figma'],
       colorPalette: Array.isArray(body.colorPalette) && body.colorPalette.length > 0
         ? body.colorPalette
@@ -65,7 +69,7 @@ export async function POST(req: NextRequest) {
           ],
       typography: Array.isArray(body.typography) && body.typography.length > 0
         ? body.typography
-        : [{ family: 'Inter Display / Helvetica Neue', role: 'Display & Identity', sample: 'TECHUSAR DESIGN 2026' }],
+        : [{ family: 'Inter Display / Helvetica Neue', role: 'Display & Identity', sample: 'TECHUSAR DESIGN' }],
       deliverables: Array.isArray(body.deliverables)
         ? body.deliverables
         : typeof body.deliverables === 'string'
@@ -95,6 +99,11 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const { authorized } = validateAdminRequest(req);
+  if (!authorized) {
+    return unauthorizedResponse();
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');

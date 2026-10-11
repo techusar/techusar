@@ -83,14 +83,14 @@ export function ContactForm() {
         }
       } else {
         setStatus('error');
-        setErrorMessage(data.error || 'Failed to submit form. Please try again.');
+        setErrorMessage(data.error || 'Failed to submit form. Please check your details and try again.');
       }
     } catch (err) {
       console.error('Submission failed:', err);
-      // Fallback: still generate WhatsApp url so user can reach out directly!
+      setStatus('error');
+      setErrorMessage('Network connection issue. Please verify your connection or click below to message Usman directly via WhatsApp.');
       const fallbackWa = `https://wa.me/923318917330?text=${encodeURIComponent(`Assalam-o-Alaikum Usman! Name: ${formData.name}, Email: ${formData.email}, Need: ${formData.projectType}, Budget: ${formData.budget}, Message: ${formData.message}`)}`;
       setWhatsappUrl(fallbackWa);
-      setStatus('success');
     }
   };
 
@@ -304,6 +304,24 @@ export function ContactForm() {
               className="w-full px-4 py-3 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800/50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 leading-relaxed text-neutral-900 dark:text-white"
             />
           </div>
+
+          {/* Error Message */}
+          {status === 'error' && (
+            <div className="p-4 rounded-xl border border-red-200 dark:border-red-900/60 bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 text-xs sm:text-sm space-y-2">
+              <p>{errorMessage}</p>
+              {whatsappUrl && (
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
+                >
+                  <MessageSquare className="w-3.5 h-3.5" />
+                  <span>Send directly via WhatsApp instead &rarr;</span>
+                </a>
+              )}
+            </div>
+          )}
 
           {/* Submit Button */}
           <button

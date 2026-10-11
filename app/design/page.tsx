@@ -41,7 +41,7 @@ export default async function DesignPage() {
     name: 'Graphic Design Showcase & Vector Systems — TechUsar',
     description:
       'Visual identity, Swiss typography posters, brand guidelines, and vector design systems created by Hafiz Muhammad Usman.',
-    url: 'https://techusar.dev/design',
+    url: 'https://www.techusar.com/design',
     mainEntity: {
       '@type': 'ItemList',
       itemListElement: designProjects.map((design, index) => ({
