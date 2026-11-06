@@ -221,6 +221,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth" data-theme="light">
       <head>
+        <meta name="p:domain_verify" content="b25c567a7410ea81976fd3e9eb4bdf96" />
         {/* Google tag (gtag.js) */}
         <Script
           strategy="afterInteractive"
